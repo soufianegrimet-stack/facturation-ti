@@ -211,6 +211,147 @@ function MainApp({ onLogout, currentUser }) {
     notify("Facture supprimée", "error");
   }
 
+  // ─── RELEVÉ CLIENT ──────────────────────────────────────────────────────────
+  function handleReleve(client, clientInvoices, format) {
+    const dateNow = new Date().toLocaleDateString("fr-FR");
+    if (format === "excel") {
+      exportReleveExcel(client, clientInvoices, dateNow);
+    } else {
+      exportRelevePDF(client, clientInvoices, dateNow);
+    }
+  }
+
+  function exportReleveExcel(client, invs, dateNow) {
+    const rows = [
+      ["MAGHREB TRANS SOLUTIONS SARL"],
+      ["29 Rue Amr Ibn Ass, 3ème Étg N°2, Tanger 90000, Maroc"],
+      [""],
+      [`RELEVÉ DE COMPTE — ${client.nom}`],
+      [`Édité le : ${dateNow}`],
+      [""],
+      ["N° Facture", "Date", "Échéance", "Désignation", "HT", "TVA", "TTC", "Devise", "Statut"],
+    ];
+    invs.forEach(inv => {
+      const ht = inv.lignes.reduce((s, l) => s + (Number(l.qte)||0) * (Number(l.pu)||0), 0);
+      const tva = inv.tva ? ht * 0.2 : 0;
+      const ttc = ht + tva;
+      const desc = inv.lignes.map(l => l.desc).filter(Boolean).join(" / ").slice(0, 60);
+      rows.push([inv.id, inv.date, inv.echeance || "", desc, ht.toFixed(2), tva.toFixed(2), ttc.toFixed(2), inv.devise || "MAD", STATUS[inv.status]?.label || inv.status]);
+    });
+    const totalHT = invs.reduce((s,i) => s + i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0), 0);
+    const totalTTC = invs.reduce((s,i) => { const ht = i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0); return s + (i.tva ? ht*1.2 : ht); }, 0);
+    rows.push(["", "", "", "TOTAL", totalHT.toFixed(2), "", totalTTC.toFixed(2), "", ""]);
+
+    // Convert to CSV with BOM for Excel
+    const csv = "﻿" + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(";")).join("
+");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `Releve_${client.nom.replace(/\s+/g,"_")}_${dateNow.replace(/\//g,"-")}.csv`;
+    a.click(); URL.revokeObjectURL(url);
+    notify("Relevé Excel téléchargé ✓");
+  }
+
+  function exportRelevePDF(client, invs, dateNow) {
+    const totalHT = invs.reduce((s,i) => s + i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0), 0);
+    const totalTTC = invs.reduce((s,i) => { const ht = i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0); return s + (i.tva ? ht*1.2 : ht); }, 0);
+    const paid = invs.filter(i=>i.status==="paid").reduce((s,i) => { const ht = i.lignes.reduce((a,l)=>a+(Number(l.qte)||0)*(Number(l.pu)||0),0); return s+(i.tva?ht*1.2:ht); }, 0);
+    const rows = invs.map(inv => {
+      const ht = inv.lignes.reduce((s,l) => s + (Number(l.qte)||0)*(Number(l.pu)||0), 0);
+      const ttc = inv.tva ? ht * 1.2 : ht;
+      const st = STATUS[inv.status];
+      const desc = inv.lignes.map(l=>l.desc).filter(Boolean).join(", ").slice(0,45);
+      return `<tr style="border-bottom:1px solid #e2e8f0">
+        <td style="padding:8px 10px;font-size:12px;color:#0f172a;font-weight:600">${inv.id}</td>
+        <td style="padding:8px 10px;font-size:12px;color:#475569">${inv.date ? new Date(inv.date).toLocaleDateString("fr-FR") : ""}</td>
+        <td style="padding:8px 10px;font-size:12px;color:#475569">${inv.echeance ? new Date(inv.echeance).toLocaleDateString("fr-FR") : "—"}</td>
+        <td style="padding:8px 10px;font-size:11px;color:#64748b;max-width:180px">${desc}</td>
+        <td style="padding:8px 10px;font-size:12px;text-align:right;font-weight:700">${ttc.toFixed(2)} ${inv.devise||"MAD"}</td>
+        <td style="padding:8px 10px;text-align:center"><span style="background:${st?.bg};color:${st?.color};padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700">${st?.label||inv.status}</span></td>
+      </tr>`;
+    }).join("");
+
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
+    <title>Relevé — ${client.nom}</title>
+    <style>
+      @page { size: A4; margin: 12mm; }
+      body { font-family: 'Segoe UI', sans-serif; color: #0f172a; margin:0; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    </style></head><body>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:3px solid #0f172a">
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#0f172a;letter-spacing:2px">MAGHREB TRANS SOLUTIONS</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px">29 Rue Amr Ibn Ass, 3ème Étg N°2 — Tanger 90000, Maroc</div>
+        <div style="font-size:11px;color:#64748b">+212 669 60 86 53 · facturation@maghrebtranssolutions.com</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:26px;font-weight:900;color:#3b82f6;letter-spacing:3px">RELEVÉ</div>
+        <div style="font-size:12px;color:#64748b">Édité le ${dateNow}</div>
+      </div>
+    </div>
+
+    <div style="background:#f0f7ff;border-left:4px solid #3b82f6;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Client</div>
+      <div style="font-size:18px;font-weight:800;color:#0f172a">${client.nom}</div>
+      ${client.email ? `<div style="font-size:12px;color:#475569">${client.email}</div>` : ""}
+      ${client.tel ? `<div style="font-size:12px;color:#475569">${client.tel}</div>` : ""}
+      ${client.rc ? `<div style="font-size:12px;color:#475569">RC : ${client.rc}</div>` : ""}
+    </div>
+
+    <div style="display:flex;gap:12px;margin-bottom:20px">
+      <div style="flex:1;background:#f8fafc;border-radius:8px;padding:12px 16px;text-align:center">
+        <div style="font-size:22px;font-weight:900;color:#3b82f6">${invs.length}</div>
+        <div style="font-size:11px;color:#64748b">Factures</div>
+      </div>
+      <div style="flex:1;background:#f8fafc;border-radius:8px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;font-weight:900;color:#0f172a">${totalTTC.toFixed(2)}</div>
+        <div style="font-size:11px;color:#64748b">Total TTC</div>
+      </div>
+      <div style="flex:1;background:#f0fdf4;border-radius:8px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;font-weight:900;color:#22c55e">${paid.toFixed(2)}</div>
+        <div style="font-size:11px;color:#64748b">Encaissé</div>
+      </div>
+      <div style="flex:1;background:#fef2f2;border-radius:8px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;font-weight:900;color:#ef4444">${(totalTTC - paid).toFixed(2)}</div>
+        <div style="font-size:11px;color:#64748b">Restant dû</div>
+      </div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr style="background:#0f172a;color:white">
+          <th style="padding:10px;text-align:left;font-size:11px;letter-spacing:1px">N° FACTURE</th>
+          <th style="padding:10px;text-align:left;font-size:11px;letter-spacing:1px">DATE</th>
+          <th style="padding:10px;text-align:left;font-size:11px;letter-spacing:1px">ÉCHÉANCE</th>
+          <th style="padding:10px;text-align:left;font-size:11px;letter-spacing:1px">DÉSIGNATION</th>
+          <th style="padding:10px;text-align:right;font-size:11px;letter-spacing:1px">MONTANT</th>
+          <th style="padding:10px;text-align:center;font-size:11px;letter-spacing:1px">STATUT</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+      <tfoot>
+        <tr style="background:#0f172a;color:white">
+          <td colspan="4" style="padding:10px;font-weight:700;font-size:13px">TOTAL GÉNÉRAL</td>
+          <td style="padding:10px;text-align:right;font-weight:900;font-size:14px">${totalTTC.toFixed(2)}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div style="margin-top:20px;display:flex;justify-content:space-between;padding-top:12px;border-top:2px solid #0f172a;font-size:10px;color:#94a3b8">
+      <span>MAGHREB TRANS SOLUTIONS SARL · RC 130319 · IF: 12345678 · ICE: 003133212000080</span>
+      <span>Tanger, Maroc</span>
+    </div>
+    <script>window.onload=()=>{window.print();}</script>
+    </body></html>`;
+
+    const w = window.open("", "_blank", "width=900,height=1200");
+    w.document.write(html);
+    w.document.close();
+    notify("Relevé PDF généré ✓");
+  }
+
   function saveClient(cl) {
     if (clients.find(c => c.id === cl.id)) {
       setClients(clients.map(c => c.id === cl.id ? cl : c));
@@ -355,6 +496,7 @@ function MainApp({ onLogout, currentUser }) {
             onSelect={(c) => { setSelectedClient(c); setView("client-detail"); }}
             onEdit={setEditingClient}
             onDelete={deleteClient}
+            onReleve={handleReleve}
           />
         )}
 
@@ -369,6 +511,7 @@ function MainApp({ onLogout, currentUser }) {
             onEdit={() => setEditingClient(selectedClient)}
             onDelete={() => deleteClient(selectedClient.id)}
             onBack={() => { setSelectedClient(null); setView("clients"); }}
+            onReleve={handleReleve}
           />
         )}
 
@@ -890,7 +1033,7 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
 }
 
 // ─── CLIENTS ──────────────────────────────────────────────────────────────────
-function Clients({ clients, invoices, calcTotal, onNew, onSelect, onEdit, onDelete }) {
+function Clients({ clients, invoices, calcTotal, onNew, onSelect, onEdit, onDelete, onReleve }) {
   const [search, setSearch] = useState("");
   const filtered = clients.filter(c => c.nom.toLowerCase().includes(search.toLowerCase()) || c.ville.toLowerCase().includes(search.toLowerCase()));
   return (
@@ -917,10 +1060,12 @@ function Clients({ clients, invoices, calcTotal, onNew, onSelect, onEdit, onDele
                 <div style={{ fontSize:11, color:"#94a3b8" }}>factures</div>
                 <div style={{ fontSize:13, fontWeight:600, color:"#3b82f6", marginTop:2 }}>{formatMoney(total)}</div>
               </div>
-              <div style={{ display:"flex", gap:4 }}>
-                <button style={S.iconBtn} onClick={() => onSelect(c)}>👁️</button>
-                <button style={S.iconBtn} onClick={() => onEdit(c)}>✏️</button>
-                <button style={S.iconBtn} onClick={() => onDelete(c.id)}>🗑️</button>
+              <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+                <button style={S.iconBtn} onClick={() => onSelect(c)} title="Voir">👁️</button>
+                <button style={S.iconBtn} onClick={() => onEdit(c)} title="Modifier">✏️</button>
+                <button style={{ ...S.iconBtn, fontSize:12, padding:"4px 8px", background:"#f0fdf4", color:"#166534", fontWeight:700, borderRadius:6 }} onClick={() => onReleve(c, invoices.filter(i=>i.clientId===c.id), "excel")} title="Relevé Excel">📊 Excel</button>
+                <button style={{ ...S.iconBtn, fontSize:12, padding:"4px 8px", background:"#fef2f2", color:"#991b1b", fontWeight:700, borderRadius:6 }} onClick={() => onReleve(c, invoices.filter(i=>i.clientId===c.id), "pdf")} title="Relevé PDF">📄 PDF</button>
+                <button style={S.iconBtn} onClick={() => onDelete(c.id)} title="Supprimer">🗑️</button>
               </div>
             </div>
           );
@@ -932,12 +1077,14 @@ function Clients({ clients, invoices, calcTotal, onNew, onSelect, onEdit, onDele
 }
 
 // ─── CLIENT DETAIL ────────────────────────────────────────────────────────────
-function ClientDetail({ client, invoices, calcTotal, onEdit, onDelete, onBack }) {
+function ClientDetail({ client, invoices, calcTotal, onEdit, onDelete, onBack, onReleve }) {
   return (
     <div style={S.page}>
       <div style={S.pageHdr}>
         <button style={S.backBtn} onClick={onBack}>← Retour</button>
-        <div style={{ display:"flex", gap:8 }}>
+        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+          <button style={{ ...S.secondaryBtn, background:"#f0fdf4", color:"#166534", border:"1.5px solid #bbf7d0" }} onClick={() => onReleve(client, invoices, "excel")}>📊 Relevé Excel</button>
+          <button style={{ ...S.secondaryBtn, background:"#fef2f2", color:"#991b1b", border:"1.5px solid #fecaca" }} onClick={() => onReleve(client, invoices, "pdf")}>📄 Relevé PDF</button>
           <button style={S.secondaryBtn} onClick={onEdit}>✏️ Modifier</button>
           <button style={S.dangerBtn} onClick={onDelete}>🗑️ Supprimer</button>
         </div>
