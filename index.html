@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facturation — Transport International</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; }
+      @media print {
+        body * { visibility: hidden !important; }
+        #invoice-print, #invoice-print * { visibility: visible !important; }
+        #invoice-print { position: fixed; top: 0; left: 0; width: 100%; background: white; padding: 40px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
