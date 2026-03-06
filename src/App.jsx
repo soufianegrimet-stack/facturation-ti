@@ -1,5 +1,107 @@
 import { useState, useEffect } from "react";
 
+// ─── MOT DE PASSE ─────────────────────────────────────────────────────────────
+const APP_PASSWORD = "MTS2024";
+
+function LoginScreen({ onLogin }) {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  const handleSubmit = () => {
+    if (code === APP_PASSWORD) {
+      sessionStorage.setItem("mts_auth", "1");
+      onLogin();
+    } else {
+      setError(true);
+      setShake(true);
+      setCode("");
+      setTimeout(() => setShake(false), 500);
+    }
+  };
+
+  return (
+    <div style={{
+      minHeight: "100vh", background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)",
+      display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', sans-serif"
+    }}>
+      <div style={{
+        background: "white", borderRadius: 16, padding: "48px 40px", width: 360,
+        boxShadow: "0 25px 60px rgba(0,0,0,0.4)",
+        animation: shake ? "shake 0.4s ease" : "none"
+      }}>
+        <style>{`
+          @keyframes shake {
+            0%,100%{transform:translateX(0)}
+            20%{transform:translateX(-10px)}
+            40%{transform:translateX(10px)}
+            60%{transform:translateX(-8px)}
+            80%{transform:translateX(8px)}
+          }
+        `}</style>
+
+        {/* Logo MTS */}
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{
+            width: 64, height: 64, background: "#0f172a", borderRadius: 12,
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            marginBottom: 12
+          }}>
+            <span style={{ color: "white", fontWeight: 900, fontSize: 20, letterSpacing: 1 }}>MTS</span>
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#0f172a" }}>MAGHREB TRANS SOLUTIONS</div>
+          <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>Système de Facturation</div>
+        </div>
+
+        {/* Champ code */}
+        <div style={{ marginBottom: 8 }}>
+          <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 8 }}>
+            🔒 Code d'accès
+          </label>
+          <input
+            type="password"
+            value={code}
+            onChange={e => { setCode(e.target.value); setError(false); }}
+            onKeyDown={e => e.key === "Enter" && handleSubmit()}
+            placeholder="Entrez le code..."
+            autoFocus
+            style={{
+              width: "100%", padding: "12px 16px", fontSize: 16, borderRadius: 8,
+              border: error ? "2px solid #ef4444" : "2px solid #e2e8f0",
+              outline: "none", boxSizing: "border-box",
+              background: error ? "#fef2f2" : "white",
+              transition: "border 0.2s"
+            }}
+          />
+          {error && (
+            <div style={{ color: "#ef4444", fontSize: 13, marginTop: 6, fontWeight: 500 }}>
+              ❌ Code incorrect. Veuillez réessayer.
+            </div>
+          )}
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          style={{
+            width: "100%", padding: "13px", background: "#0f172a", color: "white",
+            border: "none", borderRadius: 8, fontSize: 15, fontWeight: 700,
+            cursor: "pointer", marginTop: 16, letterSpacing: 0.5,
+            transition: "background 0.2s"
+          }}
+          onMouseOver={e => e.target.style.background = "#1e293b"}
+          onMouseOut={e => e.target.style.background = "#0f172a"}
+        >
+          Accéder à l'application →
+        </button>
+
+        <div style={{ textAlign: "center", marginTop: 20, fontSize: 12, color: "#94a3b8" }}>
+          Accès réservé aux équipes MTS
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── PERSISTENCE ──────────────────────────────────────────────────────────────
 function useLocalStorage(key, initial) {
   const [state, setState] = useState(() => {
@@ -49,7 +151,7 @@ function calcHT(inv) { return inv.lignes.reduce((s, l) => s + (Number(l.qte)||0)
 function calcTotal(inv) { const ht = calcHT(inv); return inv.tva ? ht * 1.2 : ht; }
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
-export default function App() {
+function MainApp({ onLogout }) {
   const [clients, setClients] = useLocalStorage("ti_clients", INIT_CLIENTS);
   const [invoices, setInvoices] = useLocalStorage("ti_invoices", INIT_INVOICES);
   const [view, setView] = useState("dashboard");
@@ -145,10 +247,28 @@ export default function App() {
             );
           })}
         </nav>
-        {sidebarOpen && (
+        {sidebarOpen ? (
           <div style={S.sideFooter}>
             <div style={{ color: "#475569", fontSize: 11 }}>Tanger · Maroc</div>
             <div style={{ color: "#334155", fontSize: 10, marginTop: 2 }}>v1.0.0</div>
+            <button
+              onClick={() => { sessionStorage.removeItem("mts_auth"); onLogout(); }}
+              style={{
+                marginTop: 10, width: "100%", padding: "7px", background: "#1e293b",
+                color: "#94a3b8", border: "1px solid #334155", borderRadius: 6,
+                fontSize: 11, cursor: "pointer", fontWeight: 600
+              }}
+              onMouseOver={e => e.target.style.color="#ef4444"}
+              onMouseOut={e => e.target.style.color="#94a3b8"}
+            >🔒 Déconnexion</button>
+          </div>
+        ) : (
+          <div style={{ padding: "12px 0", textAlign: "center" }}>
+            <button
+              onClick={() => { sessionStorage.removeItem("mts_auth"); onLogout(); }}
+              title="Déconnexion"
+              style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 16 }}
+            >🔒</button>
           </div>
         )}
       </aside>
@@ -928,3 +1048,10 @@ const S = {
   invLogo:    { width:52, height:52, lineHeight:"52px", borderRadius:12, background:"linear-gradient(135deg,#3b82f6,#1d4ed8)", color:"#fff", textAlign:"center", fontWeight:900, fontSize:20, marginBottom:10 },
   invClientBox:{ background:"#f8fafc", borderRadius:10, padding:"16px 20px", marginBottom:24, display:"inline-block", minWidth:240 },
 };
+
+// ─── ROOT APP ─────────────────────────────────────────────────────────────────
+export default function App() {
+  const [authenticated, setAuthenticated] = useState(() => sessionStorage.getItem("mts_auth") === "1");
+  if (!authenticated) return <LoginScreen onLogin={() => setAuthenticated(true)} />;
+  return <MainApp onLogout={() => setAuthenticated(false)} />;
+}
