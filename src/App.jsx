@@ -377,8 +377,7 @@ function MainApp({ onLogout, currentUser }) {
     { id: "dashboard", icon: "◈", label: "Tableau de bord" },
     { id: "factures",  icon: "📄", label: "Factures" },
     { id: "clients",   icon: "👥", label: "Clients" },
-    { id: "releves",   icon: "📊", label: "Relevés" },
-    { id: "releves", label: "Releves" },{ id: "paiements", icon: "💳", label: "Paiements" },
+    { id: "paiements", icon: "💳", label: "Paiements" },
   ];
 
   const isFactures = ["factures","invoice-detail"].includes(view);
@@ -1330,4 +1329,5 @@ export default function App() {
   if (!authenticated) return <LoginScreen onLogin={(user) => { setAuthenticated(true); setCurrentUser(user); }} />;
   return <MainApp onLogout={() => { sessionStorage.removeItem("mts_user"); setAuthenticated(false); setCurrentUser(null); }} currentUser={currentUser} />;
 }
+
 
