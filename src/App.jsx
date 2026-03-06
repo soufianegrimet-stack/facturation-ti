@@ -1,21 +1,25 @@
 import { useState, useEffect } from "react";
 
-// ─── MOT DE PASSE ─────────────────────────────────────────────────────────────
-const APP_PASSWORD = "MTS2024";
+// ─── UTILISATEURS ─────────────────────────────────────────────────────────────
+const USERS = [
+  { id: "soufiane", nom: "Soufiane Grimet", role: "Gérant", password: "MTS2024", color: "#3b82f6", initiales: "SG" },
+  { id: "ikram",    nom: "Ikram Lakhdar",   role: "Responsable Facturation", password: "IKRAM2024", color: "#8b5cf6", initiales: "IL" },
+];
 
 function LoginScreen({ onLogin }) {
-  const [code, setCode] = useState("");
-  const [error, setError] = useState(false);
-  const [shake, setShake] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [password, setPassword] = useState("");
+  const [error, setError]       = useState(false);
+  const [shake, setShake]       = useState(false);
 
   const handleSubmit = () => {
-    if (code === APP_PASSWORD) {
+    if (!selected) return;
+    if (password === selected.password) {
       sessionStorage.setItem("mts_auth", "1");
-      onLogin();
+      sessionStorage.setItem("mts_user", JSON.stringify(selected));
+      onLogin(selected);
     } else {
-      setError(true);
-      setShake(true);
-      setCode("");
+      setError(true); setShake(true); setPassword("");
       setTimeout(() => setShake(false), 500);
     }
   };
@@ -26,7 +30,7 @@ function LoginScreen({ onLogin }) {
       display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Segoe UI', sans-serif"
     }}>
       <div style={{
-        background: "white", borderRadius: 16, padding: "48px 40px", width: 360,
+        background: "white", borderRadius: 16, padding: "48px 40px", width: 380,
         boxShadow: "0 25px 60px rgba(0,0,0,0.4)",
         animation: shake ? "shake 0.4s ease" : "none"
       }}>
@@ -40,63 +44,71 @@ function LoginScreen({ onLogin }) {
           }
         `}</style>
 
-        {/* Logo MTS */}
-        <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div style={{
-            width: 64, height: 64, background: "#0f172a", borderRadius: 12,
-            display: "inline-flex", alignItems: "center", justifyContent: "center",
-            marginBottom: 12
-          }}>
-            <span style={{ color: "white", fontWeight: 900, fontSize: 20, letterSpacing: 1 }}>MTS</span>
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <div style={{ width:64, height:64, background:"#0f172a", borderRadius:12, display:"inline-flex", alignItems:"center", justifyContent:"center", marginBottom:12 }}>
+            <span style={{ color:"white", fontWeight:900, fontSize:20, letterSpacing:1 }}>MTS</span>
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "#0f172a" }}>MAGHREB TRANS SOLUTIONS</div>
-          <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>Système de Facturation</div>
+          <div style={{ fontSize:18, fontWeight:700, color:"#0f172a" }}>MAGHREB TRANS SOLUTIONS</div>
+          <div style={{ fontSize:13, color:"#64748b", marginTop:4 }}>Système de Facturation</div>
         </div>
 
-        {/* Champ code */}
-        <div style={{ marginBottom: 8 }}>
-          <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 8 }}>
-            🔒 Code d'accès
-          </label>
-          <input
-            type="password"
-            value={code}
-            onChange={e => { setCode(e.target.value); setError(false); }}
-            onKeyDown={e => e.key === "Enter" && handleSubmit()}
-            placeholder="Entrez le code..."
-            autoFocus
-            style={{
-              width: "100%", padding: "12px 16px", fontSize: 16, borderRadius: 8,
-              border: error ? "2px solid #ef4444" : "2px solid #e2e8f0",
-              outline: "none", boxSizing: "border-box",
-              background: error ? "#fef2f2" : "white",
-              transition: "border 0.2s"
-            }}
-          />
-          {error && (
-            <div style={{ color: "#ef4444", fontSize: 13, marginTop: 6, fontWeight: 500 }}>
-              ❌ Code incorrect. Veuillez réessayer.
-            </div>
-          )}
+        {/* Choix utilisateur */}
+        <div style={{ marginBottom:20 }}>
+          <div style={{ fontSize:13, fontWeight:600, color:"#374151", marginBottom:10 }}>👤 Qui êtes-vous ?</div>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {USERS.map(u => (
+              <div key={u.id} onClick={() => { setSelected(u); setError(false); setPassword(""); }}
+                style={{
+                  padding:"14px 16px", borderRadius:10, cursor:"pointer", display:"flex", alignItems:"center", gap:12,
+                  border: selected?.id === u.id ? `2px solid ${u.color}` : "2px solid #e2e8f0",
+                  background: selected?.id === u.id ? `${u.color}10` : "#f8fafc",
+                  transition:"all 0.15s"
+                }}>
+                <div style={{ width:40, height:40, borderRadius:10, background:u.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:14, flexShrink:0 }}>
+                  {u.initiales}
+                </div>
+                <div>
+                  <div style={{ fontWeight:700, color:"#0f172a", fontSize:14 }}>{u.nom}</div>
+                  <div style={{ fontSize:12, color:"#64748b" }}>{u.role}</div>
+                </div>
+                {selected?.id === u.id && <span style={{ marginLeft:"auto", color:u.color, fontSize:18 }}>✓</span>}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <button
-          onClick={handleSubmit}
+        {/* Mot de passe */}
+        {selected && (
+          <div style={{ marginBottom:8 }}>
+            <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:8 }}>
+              🔒 Mot de passe
+            </label>
+            <input
+              type="password" value={password} autoFocus
+              onChange={e => { setPassword(e.target.value); setError(false); }}
+              onKeyDown={e => e.key === "Enter" && handleSubmit()}
+              placeholder="Entrez votre mot de passe..."
+              style={{
+                width:"100%", padding:"12px 16px", fontSize:15, borderRadius:8, boxSizing:"border-box",
+                border: error ? "2px solid #ef4444" : `2px solid ${selected.color}`,
+                outline:"none", background: error ? "#fef2f2" : "white"
+              }}
+            />
+            {error && <div style={{ color:"#ef4444", fontSize:13, marginTop:6, fontWeight:500 }}>❌ Mot de passe incorrect.</div>}
+          </div>
+        )}
+
+        <button onClick={handleSubmit} disabled={!selected}
           style={{
-            width: "100%", padding: "13px", background: "#0f172a", color: "white",
-            border: "none", borderRadius: 8, fontSize: 15, fontWeight: 700,
-            cursor: "pointer", marginTop: 16, letterSpacing: 0.5,
-            transition: "background 0.2s"
-          }}
-          onMouseOver={e => e.target.style.background = "#1e293b"}
-          onMouseOut={e => e.target.style.background = "#0f172a"}
-        >
-          Accéder à l'application →
+            width:"100%", padding:"13px", background: selected ? selected.color : "#94a3b8",
+            color:"white", border:"none", borderRadius:8, fontSize:15, fontWeight:700,
+            cursor: selected ? "pointer" : "not-allowed", marginTop:16, letterSpacing:0.5
+          }}>
+          {selected ? `Connexion — ${selected.nom}` : "Sélectionnez un utilisateur"} →
         </button>
 
-        <div style={{ textAlign: "center", marginTop: 20, fontSize: 12, color: "#94a3b8" }}>
-          Accès réservé aux équipes MTS
-        </div>
+        <div style={{ textAlign:"center", marginTop:16, fontSize:11, color:"#94a3b8" }}>Accès réservé aux équipes MTS</div>
       </div>
     </div>
   );
@@ -152,7 +164,7 @@ function calcHT(inv) { return inv.lignes.reduce((s, l) => s + (Number(l.qte)||0)
 function calcTotal(inv) { const ht = calcHT(inv); return inv.tva ? ht * 1.2 : ht; }
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
-function MainApp({ onLogout }) {
+function MainApp({ onLogout, currentUser }) {
   const [clients, setClients] = useLocalStorage("ti_clients", INIT_CLIENTS);
   const [invoices, setInvoices] = useLocalStorage("ti_invoices", INIT_INVOICES);
   const [view, setView] = useState("dashboard");
@@ -176,11 +188,15 @@ function MainApp({ onLogout }) {
   };
 
   function saveInvoice(inv) {
+    const now = new Date().toISOString();
+    const userInfo = currentUser ? { nom: currentUser.nom, initiales: currentUser.initiales, color: currentUser.color } : { nom: "Inconnu", initiales: "?", color: "#94a3b8" };
     if (invoices.find(i => i.id === inv.id)) {
-      setInvoices(invoices.map(i => i.id === inv.id ? inv : i));
+      const updated = { ...inv, modifie: { par: userInfo, le: now } };
+      setInvoices(invoices.map(i => i.id === inv.id ? updated : i));
       notify("Facture mise à jour ✓");
     } else {
-      setInvoices([inv, ...invoices]);
+      const created = { ...inv, cree: { par: userInfo, le: now } };
+      setInvoices([created, ...invoices]);
       notify("Facture créée ✓");
     }
     setEditingInvoice(null);
@@ -250,12 +266,22 @@ function MainApp({ onLogout }) {
         </nav>
         {sidebarOpen ? (
           <div style={S.sideFooter}>
+            {currentUser && (
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10, padding:"8px 10px", background:"#1e293b", borderRadius:8 }}>
+                <div style={{ width:32, height:32, borderRadius:8, background:currentUser.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:12, flexShrink:0 }}>
+                  {currentUser.initiales}
+                </div>
+                <div>
+                  <div style={{ color:"#e2e8f0", fontSize:12, fontWeight:700 }}>{currentUser.nom}</div>
+                  <div style={{ color:"#64748b", fontSize:10 }}>{currentUser.role}</div>
+                </div>
+              </div>
+            )}
             <div style={{ color: "#475569", fontSize: 11 }}>Tanger · Maroc</div>
-            <div style={{ color: "#334155", fontSize: 10, marginTop: 2 }}>v1.0.0</div>
             <button
-              onClick={() => { sessionStorage.removeItem("mts_auth"); onLogout(); }}
+              onClick={() => { sessionStorage.removeItem("mts_auth"); sessionStorage.removeItem("mts_user"); onLogout(); }}
               style={{
-                marginTop: 10, width: "100%", padding: "7px", background: "#1e293b",
+                marginTop: 8, width: "100%", padding: "7px", background: "#1e293b",
                 color: "#94a3b8", border: "1px solid #334155", borderRadius: 6,
                 fontSize: 11, cursor: "pointer", fontWeight: 600
               }}
@@ -265,8 +291,13 @@ function MainApp({ onLogout }) {
           </div>
         ) : (
           <div style={{ padding: "12px 0", textAlign: "center" }}>
+            {currentUser && (
+              <div title={currentUser.nom} style={{ width:32, height:32, borderRadius:8, background:currentUser.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:11, margin:"0 auto 8px" }}>
+                {currentUser.initiales}
+              </div>
+            )}
             <button
-              onClick={() => { sessionStorage.removeItem("mts_auth"); onLogout(); }}
+              onClick={() => { sessionStorage.removeItem("mts_auth"); sessionStorage.removeItem("mts_user"); onLogout(); }}
               title="Déconnexion"
               style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 16 }}
             >🔒</button>
@@ -743,6 +774,23 @@ ${notesHTML}
         </div>
 
         {inv.notes && <div style={{ background:"#f8fafc", borderRadius:8, padding:"10px 14px", fontSize:12, color:"#64748b", marginBottom:16 }}><strong>Notes :</strong> {inv.notes}</div>}
+        
+        {/* Traçabilité */}
+        <div style={{ display:"flex", gap:12, marginBottom:16, flexWrap:"wrap" }}>
+          {inv.cree && (
+            <div style={{ display:"flex", alignItems:"center", gap:8, background:"#f0fdf4", border:"1px solid #bbf7d0", borderRadius:8, padding:"6px 12px", fontSize:12 }}>
+              <div style={{ width:24, height:24, borderRadius:6, background:inv.cree.par.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:10 }}>{inv.cree.par.initiales}</div>
+              <span style={{ color:"#166534" }}>Créé par <strong>{inv.cree.par.nom}</strong> · {new Date(inv.cree.le).toLocaleDateString("fr-FR", {day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}</span>
+            </div>
+          )}
+          {inv.modifie && (
+            <div style={{ display:"flex", alignItems:"center", gap:8, background:"#eff6ff", border:"1px solid #bfdbfe", borderRadius:8, padding:"6px 12px", fontSize:12 }}>
+              <div style={{ width:24, height:24, borderRadius:6, background:inv.modifie.par.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:10 }}>{inv.modifie.par.initiales}</div>
+              <span style={{ color:"#1e40af" }}>Modifié par <strong>{inv.modifie.par.nom}</strong> · {new Date(inv.modifie.le).toLocaleDateString("fr-FR", {day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}</span>
+            </div>
+          )}
+        </div>
+
         <div style={{ textAlign:"center", color:"#94a3b8", fontSize:11, borderTop:"1px solid #e2e8f0", paddingTop:14 }}>
           Merci de votre confiance — MAGHREB TRANS SOLUTIONS SARL · RC 130319 · Tanger, Maroc
         </div>
@@ -1062,6 +1110,9 @@ const S = {
 // ─── ROOT APP ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [authenticated, setAuthenticated] = useState(() => sessionStorage.getItem("mts_auth") === "1");
-  if (!authenticated) return <LoginScreen onLogin={() => setAuthenticated(true)} />;
-  return <MainApp onLogout={() => setAuthenticated(false)} />;
+  const [currentUser, setCurrentUser] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem("mts_user")) || null; } catch { return null; }
+  });
+  if (!authenticated) return <LoginScreen onLogin={(user) => { setAuthenticated(true); setCurrentUser(user); }} />;
+  return <MainApp onLogout={() => { sessionStorage.removeItem("mts_user"); setAuthenticated(false); setCurrentUser(null); }} currentUser={currentUser} />;
 }
