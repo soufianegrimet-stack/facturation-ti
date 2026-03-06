@@ -103,9 +103,19 @@ function LoginScreen({ onLogin }) {
 }
 
 // ─── PERSISTENCE ──────────────────────────────────────────────────────────────
+const DATA_VERSION = "v2026-01"; // Change this to force reset
+
 function useLocalStorage(key, initial) {
   const [state, setState] = useState(() => {
     try {
+      const versionKey = key + "_version";
+      const savedVersion = localStorage.getItem(versionKey);
+      // If version changed, reset to fresh data
+      if (savedVersion !== DATA_VERSION) {
+        localStorage.setItem(versionKey, DATA_VERSION);
+        localStorage.removeItem(key);
+        return initial;
+      }
       const saved = localStorage.getItem(key);
       return saved ? JSON.parse(saved) : initial;
     } catch { return initial; }
