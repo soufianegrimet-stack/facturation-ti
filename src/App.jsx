@@ -377,11 +377,13 @@ function MainApp({ onLogout, currentUser }) {
     { id: "dashboard", icon: "◈", label: "Tableau de bord" },
     { id: "factures",  icon: "📄", label: "Factures" },
     { id: "clients",   icon: "👥", label: "Clients" },
+    { id: "releves",   icon: "📊", label: "Relevés" },
     { id: "paiements", icon: "💳", label: "Paiements" },
   ];
 
   const isFactures = ["factures","invoice-detail"].includes(view);
   const isClients  = ["clients","client-detail"].includes(view);
+  const isReleves  = view === "releves";
 
   return (
     <div style={S.root}>
@@ -519,6 +521,10 @@ function MainApp({ onLogout, currentUser }) {
           <Paiements invoices={invoices} clients={clients} calcTotal={calcTotal}
             onStatus={(id, s) => { setInvoices(invoices.map(i => i.id === id ? { ...i, status: s } : i)); notify("Paiement enregistré ✓"); }}
           />
+        )}
+
+        {view === "releves" && (
+          <Releves clients={clients} invoices={invoices} calcTotal={calcTotal} onReleve={handleReleve} />
         )}
       </main>
     </div>
@@ -1197,6 +1203,67 @@ function Paiements({ invoices, clients, calcTotal, onStatus }) {
             {pending.length === 0 && <tr><td colSpan={6} style={{ ...S.td, textAlign:"center", color:"#22c55e", padding:32 }}>✓ Aucun paiement en attente</td></tr>}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+// ─── RELEVÉS ──────────────────────────────────────────────────────────────────
+function Releves({ clients, invoices, calcTotal, onReleve }) {
+  const [search, setSearch] = useState("");
+  const [selectedClient, setSelectedClient] = useState(null);
+
+  const filtered = clients.filter(c =>
+    c.nom.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div style={S.page}>
+      <div style={S.pageHdr}>
+        <h1 style={S.pageTitle}>📊 Relevés Clients</h1>
+      </div>
+      <div style={{ fontSize:14, color:"#64748b", marginBottom:20 }}>
+        Sélectionnez un client pour générer son relevé de compte en Excel ou PDF.
+      </div>
+      <input style={{ ...S.input, width:300, marginBottom:20 }}
+        placeholder="🔍 Rechercher un client..."
+        value={search} onChange={e => setSearch(e.target.value)} />
+
+      <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+        {filtered.map(c => {
+          const cInvs = invoices.filter(i => i.clientId === c.id);
+          const total = cInvs.reduce((s, i) => s + calcTotal(i), 0);
+          const paid  = cInvs.filter(i => i.status === "paid").reduce((s,i) => s + calcTotal(i), 0);
+          const due   = total - paid;
+          return (
+            <div key={c.id} style={{ background:"white", borderRadius:12, padding:"18px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", display:"flex", alignItems:"center", gap:16 }}>
+              <div style={{ ...S.clientAvatar, flexShrink:0 }}>{c.nom[0]}</div>
+              <div style={{ flex:1 }}>
+                <div style={{ fontWeight:700, color:"#0f172a", fontSize:16 }}>{c.nom}</div>
+                <div style={{ color:"#64748b", fontSize:13, marginTop:2 }}>
+                  {cInvs.length} facture{cInvs.length > 1 ? "s" : ""} · Total : <strong>{total.toFixed(2)}</strong>
+                  {due > 0 && <span style={{ color:"#ef4444", marginLeft:8 }}>· Dû : <strong>{due.toFixed(2)}</strong></span>}
+                  {due === 0 && cInvs.length > 0 && <span style={{ color:"#22c55e", marginLeft:8 }}>· ✓ Soldé</span>}
+                </div>
+              </div>
+              <div style={{ display:"flex", gap:10 }}>
+                <button
+                  onClick={() => onReleve(c, cInvs, "excel")}
+                  style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 18px", borderRadius:8, border:"none", background:"#f0fdf4", color:"#166534", fontWeight:700, fontSize:13, cursor:"pointer" }}>
+                  📊 Excel
+                </button>
+                <button
+                  onClick={() => onReleve(c, cInvs, "pdf")}
+                  style={{ display:"flex", alignItems:"center", gap:6, padding:"10px 18px", borderRadius:8, border:"none", background:"#fef2f2", color:"#991b1b", fontWeight:700, fontSize:13, cursor:"pointer" }}>
+                  📄 PDF
+                </button>
+              </div>
+            </div>
+          );
+        })}
+        {filtered.length === 0 && (
+          <div style={{ textAlign:"center", color:"#94a3b8", padding:60, fontSize:15 }}>Aucun client trouvé</div>
+        )}
       </div>
     </div>
   );
