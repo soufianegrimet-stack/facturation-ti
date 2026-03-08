@@ -602,6 +602,24 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
   const attente   = invoices.filter(i => i.status === "sent").reduce((s, i) => s + calcTotal(i), 0);
   const retard    = invoices.filter(i => i.status === "overdue").reduce((s, i) => s + calcTotal(i), 0);
   const recent    = [...invoices].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 6);
+  const [migrating, setMigrating] = useState(false);
+  const [migrated, setMigrated] = useState(() => { try { return localStorage.getItem("mts_migrated") === "1"; } catch(e) { return false; } });
+
+  async function migrateToSupabase() {
+    if (!window.confirm("Migrer les factures et clients vers Supabase ? Cette opération est unique.")) return;
+    setMigrating(true);
+    try {
+      for (const c of clients) await db.upsertClient(c);
+      for (const inv of invoices) await db.upsertInvoice(inv);
+      localStorage.setItem("mts_migrated", "1");
+      setMigrated(true);
+      alert("✅ Migration réussie ! Vos données sont sécurisées sur Supabase.");
+    } catch(e) {
+      alert("Erreur migration: " + e.message);
+    }
+    setMigrating(false);
+  }
+
   return (
     <div style={S.page}>
       <h1 style={S.pageTitle}>Tableau de bord</h1>
