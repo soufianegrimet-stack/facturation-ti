@@ -620,7 +620,7 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
   const retard    = invoices.filter(i => getStatus(i) === "overdue").reduce((s, i) => s + calcTotal(i), 0);
   const recent    = [...invoices].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 6);
   const [migrating, setMigrating] = useState(false);
-  const [migrated, setMigrated] = useState(false); // toujours afficher le bouton migration
+  const [migrated, setMigrated] = useState(() => clients.length > 0);
 
   async function migrateToSupabase() {
     if (!window.confirm("Migrer les factures et clients vers Supabase ? Cette opération est unique.")) return;
