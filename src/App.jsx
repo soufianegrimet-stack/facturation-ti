@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 const SUPABASE_URL = "https://jwoikieeyjsejyxnkiic.supabase.co";
 const SUPABASE_PUB = "sb_publishable_b5-yWlOhHtI-IA0jzyDr4g_b2KUf3nW";
 // anon JWT généré depuis legacy secret
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzQxMzkyMDAwLCJleHAiOjE4OTkxNTg0MDB9.wwlZ3oGufzmbH2k18nMYdJcFqqvznhDNmjzMLYnxf1k";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b2lraWVleWpzZWp5eG5raWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4OTk5MTksImV4cCI6MjA4ODQ3NTkxOX0.NIruTJ37hnPpAqzKQ3C1HaGKgXhO0ZeofTDJZJlxsSk";
 
 async function sbFetch(path, options = {}) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
