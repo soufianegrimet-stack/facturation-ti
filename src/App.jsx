@@ -469,6 +469,7 @@ function MainApp({ onLogout, currentUser }) {
     { id: "releves",   icon: "📊", label: "Relevés" },
     { id: "ventes",    icon: "📈", label: "Ventes" },
     { id: "paiements", icon: "💳", label: "Paiements" },
+    { id: "modeles",   icon: "📋", label: "Modèles" },
   ];
 
   const isFactures = ["factures","invoice-detail"].includes(view);
@@ -616,6 +617,15 @@ function MainApp({ onLogout, currentUser }) {
         {view === "ventes" && (
           <RelevesVentes invoices={invoices} clients={clients} calcHT={calcHT} calcTVA={calcTVA} calcTotal={calcTotal} />
         )}
+        {view === "modeles" && (
+          <Modeles invoices={invoices} clients={clients} calcHT={calcHT} calcTVA={calcTVA} calcTotal={calcTotal}
+            onUseTemplate={(tpl) => {
+              setEditingInvoice({ ...tpl, id: nextInvoiceId(), date: today(), echeance: "", status: "draft", cree: null, modifie: null });
+              setView("invoice-form");
+              notify("Modèle chargé — complétez et enregistrez ✓");
+            }}
+          />
+        )}
         {view === "releves" && (
           <Releves clients={clients} invoices={invoices} calcTotal={calcTotal} onReleve={handleReleve} />
         )}
@@ -626,10 +636,15 @@ function MainApp({ onLogout, currentUser }) {
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
-  const revenu    = invoices.filter(i => getStatus(i) === "paid").reduce((s, i) => s + calcTotal(i), 0);
+  const paidInvs  = invoices.filter(i => getStatus(i) === "paid");
   const attente   = invoices.filter(i => getStatus(i) === "sent").reduce((s, i) => s + calcTotal(i), 0);
   const retard    = invoices.filter(i => getStatus(i) === "overdue").reduce((s, i) => s + calcTotal(i), 0);
   const recent    = [...invoices].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 6);
+  // Revenus par devise
+  const revenuParDevise = ["MAD","EUR","USD"].map(devise => ({
+    devise,
+    total: paidInvs.filter(i => (i.devise||"MAD") === devise).reduce((s,i) => s + calcTotal(i), 0)
+  })).filter(d => d.total > 0);
   const [migrating, setMigrating] = useState(false);
   const [migrated, setMigrated] = useState(() => clients.length > 0);
 
@@ -669,11 +684,28 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
         </div>
       )}
       <div style={S.statGrid}>
+        {/* Revenus encaissés par devise */}
+        <div style={{ ...S.statCard, gridColumn: revenuParDevise.length > 1 ? "span 2" : "span 1" }}>
+          <div style={S.statLbl}>Revenus encaissés</div>
+          {revenuParDevise.length === 0 ? (
+            <div style={{ ...S.statVal, color:"#22c55e" }}>0,00 MAD</div>
+          ) : (
+            <div style={{ display:"flex", gap:16, justifyContent:"center", flexWrap:"wrap", marginTop:4 }}>
+              {revenuParDevise.map(({ devise, total }) => (
+                <div key={devise} style={{ textAlign:"center" }}>
+                  <div style={{ fontSize:20, fontWeight:800, color:"#22c55e" }}>
+                    {total.toLocaleString("fr-FR",{minimumFractionDigits:2})}
+                  </div>
+                  <div style={{ fontSize:12, fontWeight:700, color:"#22c55e", background:"#f0fdf4", borderRadius:4, padding:"1px 8px", marginTop:2, display:"inline-block" }}>{devise}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         {[
-          { label: "Revenus encaissés", value: formatMoney(revenu),  color: "#22c55e" },
-          { label: "En attente",        value: formatMoney(attente),  color: "#3b82f6" },
-          { label: "En retard",         value: formatMoney(retard),   color: "#ef4444" },
-          { label: "Clients actifs",    value: clients.length,        color: "#f59e0b" },
+          { label: "En attente",     value: formatMoney(attente), color: "#3b82f6" },
+          { label: "En retard",      value: formatMoney(retard),  color: "#ef4444" },
+          { label: "Clients actifs", value: clients.length,       color: "#f59e0b" },
         ].map((s, i) => (
           <div key={i} style={S.statCard}>
             <div style={{ ...S.statVal, color: s.color }}>{s.value}</div>
@@ -681,6 +713,65 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
           </div>
         ))}
       </div>
+      {/* GRAPHIQUES */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:28 }}>
+        {/* Courbe revenus par mois */}
+        <div style={{ background:"#fff", borderRadius:12, padding:"20px", boxShadow:"0 1px 4px rgba(0,0,0,.07)" }}>
+          <div style={{ fontWeight:700, fontSize:14, color:"#0f172a", marginBottom:16 }}>📊 Chiffre d'affaires mensuel</div>
+          {(() => {
+            const months = ["Jan","Fév","Mar","Apr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+            const year = new Date().getFullYear();
+            const data = months.map((m, idx) => {
+              const total = invoices.filter(i => {
+                const d = new Date(i.date);
+                return d.getFullYear() === year && d.getMonth() === idx;
+              }).reduce((s,i) => s + calcTotal(i), 0);
+              return { m, total };
+            });
+            const max = Math.max(...data.map(d => d.total), 1);
+            return (
+              <div style={{ display:"flex", alignItems:"flex-end", gap:4, height:120 }}>
+                {data.map(({ m, total }) => (
+                  <div key={m} style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+                    <div style={{ fontSize:9, color:"#64748b", fontWeight:600 }}>{total > 0 ? Math.round(total/1000)+"k" : ""}</div>
+                    <div style={{ width:"100%", background: total > 0 ? "#3b82f6" : "#e2e8f0", borderRadius:"3px 3px 0 0", height: Math.max((total/max)*90, total > 0 ? 4 : 2), transition:"height .3s" }} title={total.toLocaleString("fr-FR",{minimumFractionDigits:2})+" MAD"} />
+                    <div style={{ fontSize:9, color:"#94a3b8" }}>{m}</div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* Camembert par client */}
+        <div style={{ background:"#fff", borderRadius:12, padding:"20px", boxShadow:"0 1px 4px rgba(0,0,0,.07)" }}>
+          <div style={{ fontWeight:700, fontSize:14, color:"#0f172a", marginBottom:16 }}>🏆 Top clients (CA total)</div>
+          {(() => {
+            const COLORS = ["#3b82f6","#22c55e","#f59e0b","#ef4444","#8b5cf6","#06b6d4","#ec4899","#84cc16"];
+            const byClient = clients.map(c => ({
+              nom: c.nom.split(" ")[0],
+              total: invoices.filter(i => i.clientId === c.id).reduce((s,i) => s + calcTotal(i), 0)
+            })).filter(c => c.total > 0).sort((a,b) => b.total - a.total).slice(0,6);
+            const grandTotal = byClient.reduce((s,c) => s + c.total, 0) || 1;
+            return (
+              <div>
+                {byClient.map((c, i) => (
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+                    <div style={{ width:10, height:10, borderRadius:"50%", background:COLORS[i], flexShrink:0 }} />
+                    <div style={{ flex:1, fontSize:12, color:"#334155", fontWeight:600, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{c.nom}</div>
+                    <div style={{ width:80, height:8, background:"#f1f5f9", borderRadius:4, overflow:"hidden" }}>
+                      <div style={{ height:"100%", width:(c.total/grandTotal*100)+"%", background:COLORS[i], borderRadius:4 }} />
+                    </div>
+                    <div style={{ fontSize:11, color:"#64748b", width:36, textAlign:"right" }}>{Math.round(c.total/grandTotal*100)}%</div>
+                  </div>
+                ))}
+                {byClient.length === 0 && <div style={{ color:"#94a3b8", fontSize:13 }}>Aucune donnée</div>}
+              </div>
+            );
+          })()}
+        </div>
+      </div>
+
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", margin:"28px 0 14px" }}>
         <h2 style={{ fontSize:17, fontWeight:700, color:"#0f172a" }}>Factures récentes</h2>
         <button style={S.linkBtn} onClick={() => onGoto("factures")}>Voir tout →</button>
@@ -1036,6 +1127,15 @@ ${notesHTML}
         <div style={{ display:"flex", gap:8 }}>
           <button style={S.secondaryBtn} onClick={onEdit}>✏️ Modifier</button>
           <button style={S.printBtn} onClick={handlePrint}>🖨️ Imprimer / PDF A4</button>
+          <button style={{ ...S.secondaryBtn, background:"#eff6ff", color:"#1d4ed8", border:"1.5px solid #bfdbfe" }} onClick={() => {
+            const cl2 = clients.find(c => c.id === inv.clientId) || {};
+            const subject = encodeURIComponent(`Facture ${inv.id} — MAGHREB TRANS SOLUTIONS SARL`);
+            const body = encodeURIComponent(
+              `Madame, Monsieur,\n\nVeuillez trouver ci-joint la facture ${inv.id} d'un montant de ${calcTotal(inv).toLocaleString('fr-FR',{minimumFractionDigits:2})} ${inv.devise||'MAD'}.\n\nDate d'échéance : ${formatDate(inv.echeance) || '—'}\n\nNous restons à votre disposition pour tout renseignement.\n\nCordialement,\nMAGHREB TRANS SOLUTIONS SARL\nTél : +212 669 60 86 53\nfacturation@maghrebtranssolutions.com`
+            );
+            const to = cl2.email ? encodeURIComponent(cl2.email) : '';
+            window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+          }}>✉️ Email</button>
           <button style={S.dangerBtn} onClick={onDelete}>🗑️</button>
         </div>
       </div>
@@ -1476,6 +1576,131 @@ function Releves({ clients, invoices, calcTotal, onReleve }) {
   );
 }
 
+
+
+// ─── EXPORT EXCEL GLOBAL ─────────────────────────────────────────────────────
+function exportExcelGlobal(invoices, clients, calcHT, calcTVA, calcTotal) {
+  const rows = [["N° Facture","Date","Échéance","Client","Description","HT","TVA","TTC","Devise","Statut","Réf. Client","Réf. MTS"]];
+  invoices.forEach(inv => {
+    const cl = clients.find(c => c.id === inv.clientId);
+    const desc = inv.lignes.map(l => l.desc).filter(Boolean).join(" | ").substring(0,80);
+    rows.push([
+      inv.id, inv.date, inv.echeance||"",
+      cl?.nom||"",
+      desc,
+      calcHT(inv).toFixed(2),
+      calcTVA(inv).toFixed(2),
+      calcTotal(inv).toFixed(2),
+      inv.devise||"MAD",
+      STATUS[getStatus(inv)]?.label||"",
+      inv.refClient||"",
+      inv.refMTS||""
+    ]);
+  });
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const bom = "\uFEFF";
+  const blob = new Blob([bom + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `MTS_Export_Factures_${new Date().toISOString().split("T")[0]}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ─── MODÈLES DE FACTURES ─────────────────────────────────────────────────────
+function Modeles({ invoices, clients, calcHT, calcTVA, calcTotal, onUseTemplate }) {
+  const STORAGE_KEY = "mts_modeles_v1";
+  const [modeles, setModeles] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
+  });
+  const [saving, setSaving] = useState(false);
+  const [selectedInv, setSelectedInv] = useState("");
+
+  function saveModele() {
+    const inv = invoices.find(i => i.id === selectedInv);
+    if (!inv) return;
+    const name = window.prompt("Nom du modèle :", inv.lignes[0]?.desc || inv.id);
+    if (!name) return;
+    const tpl = { ...inv, _modeleName: name, _modeleId: Date.now().toString() };
+    const next = [...modeles, tpl];
+    setModeles(next);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    setSaving(false);
+    setSelectedInv("");
+  }
+
+  function deleteModele(id) {
+    if (!window.confirm("Supprimer ce modèle ?")) return;
+    const next = modeles.filter(m => m._modeleId !== id);
+    setModeles(next);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  }
+
+  const cl = (clientId) => clients.find(c => c.id === clientId);
+
+  return (
+    <div style={S.page}>
+      <div style={S.pageHdr}>
+        <h1 style={S.pageTitle}>📋 Modèles de factures</h1>
+        <div style={{ display:"flex", gap:8 }}>
+          <button style={{ ...S.primaryBtn, background:"#16a34a" }}
+            onClick={() => exportExcelGlobal(invoices, clients, calcHT, calcTVA, calcTotal)}>
+            📥 Export Excel complet
+          </button>
+        </div>
+      </div>
+      <div style={{ color:"#64748b", fontSize:14, marginBottom:20 }}>
+        Sauvegardez des factures types pour les réutiliser rapidement.
+      </div>
+
+      {/* Créer un modèle depuis une facture existante */}
+      <div style={{ background:"#fff", borderRadius:12, padding:"20px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", marginBottom:24 }}>
+        <div style={{ fontWeight:700, fontSize:15, color:"#0f172a", marginBottom:14 }}>➕ Créer un modèle depuis une facture existante</div>
+        <div style={{ display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+          <select style={{ ...S.input, flex:1, minWidth:250 }} value={selectedInv} onChange={e => setSelectedInv(e.target.value)}>
+            <option value="">— Choisir une facture —</option>
+            {[...invoices].sort((a,b) => b.date.localeCompare(a.date)).map(inv => (
+              <option key={inv.id} value={inv.id}>{inv.id} — {cl(inv.clientId)?.nom||"?"} — {inv.lignes[0]?.desc?.substring(0,40)||"…"}</option>
+            ))}
+          </select>
+          <button style={S.primaryBtn} onClick={saveModele} disabled={!selectedInv}>💾 Sauvegarder comme modèle</button>
+        </div>
+      </div>
+
+      {/* Liste des modèles */}
+      {modeles.length === 0 ? (
+        <div style={{ textAlign:"center", color:"#94a3b8", padding:60, fontSize:15, background:"#fff", borderRadius:12, boxShadow:"0 1px 4px rgba(0,0,0,.07)" }}>
+          Aucun modèle sauvegardé.<br/><span style={{ fontSize:13 }}>Choisissez une facture ci-dessus pour créer votre premier modèle.</span>
+        </div>
+      ) : (
+        <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+          {modeles.map(m => (
+            <div key={m._modeleId} style={{ background:"#fff", borderRadius:12, padding:"18px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", display:"flex", alignItems:"center", gap:16 }}>
+              <div style={{ width:44, height:44, borderRadius:10, background:"linear-gradient(135deg,#6366f1,#3b82f6)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>📋</div>
+              <div style={{ flex:1 }}>
+                <div style={{ fontWeight:700, color:"#0f172a", fontSize:15 }}>{m._modeleName}</div>
+                <div style={{ color:"#64748b", fontSize:12, marginTop:3 }}>
+                  Client : <strong>{cl(m.clientId)?.nom||"—"}</strong> &nbsp;·&nbsp;
+                  {m.lignes.length} ligne{m.lignes.length>1?"s":""} &nbsp;·&nbsp;
+                  Total : <strong>{calcTotal(m).toLocaleString("fr-FR",{minimumFractionDigits:2})} {m.devise||"MAD"}</strong> &nbsp;·&nbsp;
+                  Devise : {m.devise||"MAD"}
+                </div>
+                <div style={{ fontSize:11, color:"#94a3b8", marginTop:2 }}>
+                  {m.lignes.map(l => l.desc).filter(Boolean).slice(0,3).join(" · ")}
+                </div>
+              </div>
+              <div style={{ display:"flex", gap:8 }}>
+                <button style={{ ...S.primaryBtn, fontSize:13, padding:"8px 16px" }} onClick={() => onUseTemplate(m)}>
+                  ▶ Utiliser
+                </button>
+                <button style={{ ...S.dangerBtn, fontSize:13 }} onClick={() => deleteModele(m._modeleId)}>🗑️</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ─── RELEVÉ GLOBAL DES VENTES ─────────────────────────────────────────────────
 function RelevesVentes({ invoices, clients, calcHT, calcTVA, calcTotal }) {
