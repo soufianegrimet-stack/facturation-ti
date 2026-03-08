@@ -603,7 +603,7 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
   const retard    = invoices.filter(i => i.status === "overdue").reduce((s, i) => s + calcTotal(i), 0);
   const recent    = [...invoices].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 6);
   const [migrating, setMigrating] = useState(false);
-  const [migrated, setMigrated] = useState(() => { try { return localStorage.getItem("mts_migrated") === "1"; } catch(e) { return false; } });
+  const [migrated, setMigrated] = useState(false); // toujours afficher le bouton migration
 
   async function migrateToSupabase() {
     if (!window.confirm("Migrer les factures et clients vers Supabase ? Cette opération est unique.")) return;
