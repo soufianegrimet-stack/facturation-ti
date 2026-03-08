@@ -1,4 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
+// ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
+const SUPABASE_URL = "https://jwoikieeyjsejyxnkiic.supabase.co";
+const SUPABASE_KEY = "sb_publishable_b5-yWlOhHtI-IA0jzyDr4g_b2KUf3nW";
+
+async function sbFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Content-Type": "application/json",
+      "Prefer": options.prefer || "return=representation",
+      ...options.headers
+    },
+    ...options
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+  const text = await res.text();
+  return text ? JSON.parse(text) : [];
+}
+
+const db = {
+  getClients: () => sbFetch("clients?order=id"),
+  getInvoices: () => sbFetch("invoices?order=id"),
+  upsertClient: (c) => sbFetch("clients", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", headers: { "Prefer": "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(c) }),
+  upsertInvoice: (i) => sbFetch("invoices", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", headers: { "Prefer": "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(i) }),
+  deleteClient: (id) => sbFetch(`clients?id=eq.${id}`, { method: "DELETE" }),
+  deleteInvoice: (id) => sbFetch(`invoices?id=eq.${id}`, { method: "DELETE" }),
+};
 
 // ─── UTILISATEURS ─────────────────────────────────────────────────────────────
 const USERS = [
@@ -165,8 +197,39 @@ function calcTotal(inv) { const ht = calcHT(inv); return inv.tva ? ht * 1.2 : ht
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function MainApp({ onLogout, currentUser }) {
-  const [clients, setClients] = useLocalStorage("ti_clients", INIT_CLIENTS);
-  const [invoices, setInvoices] = useLocalStorage("ti_invoices", INIT_INVOICES);
+  const [clients, setClientsState] = useState(INIT_CLIENTS);
+  const [invoices, setInvoicesState] = useState(INIT_INVOICES);
+  const [dbReady, setDbReady] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+
+  // Load from Supabase on mount
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [cls, invs] = await Promise.all([db.getClients(), db.getInvoices()]);
+        if (cls.length > 0) setClientsState(cls);
+        if (invs.length > 0) setInvoicesState(invs);
+        setDbReady(true);
+      } catch(e) {
+        console.warn("Supabase load failed, using local data:", e.message);
+        setDbReady(true);
+      }
+    }
+    loadData();
+  }, []);
+
+  // Sync wrappers
+  async function setClients(updater) {
+    const next = typeof updater === "function" ? updater(clients) : updater;
+    setClientsState(next);
+    try { for (const c of next) await db.upsertClient(c); } catch(e) { console.warn("Sync error:", e.message); }
+  }
+
+  async function setInvoices(updater) {
+    const next = typeof updater === "function" ? updater(invoices) : updater;
+    setInvoicesState(next);
+    try { for (const i of next) await db.upsertInvoice(i); } catch(e) { console.warn("Sync error:", e.message); }
+  }
   const [view, setView] = useState("dashboard");
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [editingInvoice, setEditingInvoice] = useState(null);
@@ -297,6 +360,8 @@ function MainApp({ onLogout, currentUser }) {
       ${client.email ? `<div style="font-size:12px;color:#475569">${client.email}</div>` : ""}
       ${client.tel ? `<div style="font-size:12px;color:#475569">${client.tel}</div>` : ""}
       ${client.rc ? `<div style="font-size:12px;color:#475569">RC : ${client.rc}</div>` : ""}
+      ${client.ice ? `<div style="font-size:12px;color:#475569;font-weight:600">ICE : ${client.ice}</div>` : ""}
+      ${client.if_num ? `<div style="font-size:12px;color:#475569">IF : ${client.if_num}</div>` : ""}
     </div>
 
     <div style="display:flex;gap:12px;margin-bottom:20px">
@@ -377,6 +442,7 @@ function MainApp({ onLogout, currentUser }) {
     { id: "dashboard", icon: "◈", label: "Tableau de bord" },
     { id: "factures",  icon: "📄", label: "Factures" },
     { id: "clients",   icon: "👥", label: "Clients" },
+    { id: "releves",   icon: "📊", label: "Relevés" },
     { id: "paiements", icon: "💳", label: "Paiements" },
   ];
 
@@ -493,7 +559,7 @@ function MainApp({ onLogout, currentUser }) {
 
         {isClients && !editingClient && view === "clients" && (
           <Clients clients={clients} invoices={invoices} calcTotal={calcTotal}
-            onNew={() => setEditingClient({ id: `C${String(clients.length + 1).padStart(3, "0")}`, nom: "", email: "", tel: "", ville: "", rc: "" })}
+            onNew={() => setEditingClient({ id: `C${String(clients.length + 1).padStart(3, "0")}`, nom: "", email: "", tel: "", ville: "", rc: "", ice: "", if_num: "", adresse: "" })}
             onSelect={(c) => { setSelectedClient(c); setView("client-detail"); }}
             onEdit={setEditingClient}
             onDelete={deleteClient}
@@ -539,6 +605,23 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
   return (
     <div style={S.page}>
       <h1 style={S.pageTitle}>Tableau de bord</h1>
+      {!migrated && (
+        <div style={{ background:"linear-gradient(135deg,#0f172a,#1e3a5f)", borderRadius:12, padding:"18px 24px", marginBottom:20, display:"flex", alignItems:"center", justifyContent:"space-between", gap:16 }}>
+          <div>
+            <div style={{ color:"white", fontWeight:700, fontSize:15 }}>Securisez vos donnees sur Supabase</div>
+            <div style={{ color:"#94a3b8", fontSize:13, marginTop:4 }}>Migrez vos 85 factures et 13 clients vers le cloud. Operation unique.</div>
+          </div>
+          <button onClick={migrateToSupabase} disabled={migrating}
+            style={{ padding:"12px 24px", background:"#3b82f6", color:"white", border:"none", borderRadius:8, fontWeight:700, fontSize:14, cursor:"pointer", whiteSpace:"nowrap", flexShrink:0 }}>
+            {migrating ? "Migration en cours..." : "Migrer vers Supabase"}
+          </button>
+        </div>
+      )}
+      {migrated && (
+        <div style={{ background:"#f0fdf4", border:"1.5px solid #bbf7d0", borderRadius:10, padding:"12px 20px", marginBottom:16, display:"flex", alignItems:"center", gap:10, fontSize:13, color:"#166534" }}>
+          <span style={{ fontSize:18 }}>✅</span> <strong>Donnees securisees sur Supabase</strong> — sauvegarde automatique active
+        </div>
+      )}
       <div style={S.statGrid}>
         {[
           { label: "Revenus encaissés", value: formatMoney(revenu),  color: "#22c55e" },
@@ -683,7 +766,7 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBa
            <strong>Notes :</strong> ${inv.notes}
          </div>`
       : '';
-    const clientInfos = [cl.adresse, cl.ville, cl.email, cl.tel, cl.rc ? 'RC : '+cl.rc : ''].filter(Boolean).map(v=>`<div>${v}</div>`).join('');
+    const clientInfos = [cl.adresse, cl.ville, cl.email, cl.tel, cl.rc ? 'RC : '+cl.rc : '', cl.ice ? 'ICE : '+cl.ice : '', cl.if_num ? 'IF : '+cl.if_num : ''].filter(Boolean).map(v=>`<div>${v}</div>`).join('');
     const statusStyle = `background:${st.bg};color:${st.color};padding:4px 14px;border-radius:20px;font-weight:800;font-size:10px;display:inline-block;letter-spacing:0.5px`;
 
     const html = `<!DOCTYPE html>
@@ -1059,6 +1142,7 @@ function Clients({ clients, invoices, calcTotal, onNew, onSelect, onEdit, onDele
                 <div style={{ fontWeight:700, color:"#0f172a", fontSize:16 }}>{c.nom}</div>
                 <div style={{ color:"#64748b", fontSize:13, marginTop:2 }}>{c.ville} · {c.email}</div>
                 <div style={{ color:"#94a3b8", fontSize:12, marginTop:2 }}>{c.tel}</div>
+                {c.ice && <div style={{ color:"#3b82f6", fontSize:11, marginTop:2, fontWeight:600 }}>ICE: {c.ice}</div>}
               </div>
               <div style={{ textAlign:"center", minWidth:80 }}>
                 <div style={{ fontWeight:800, fontSize:20, color:"#0f172a" }}>{cInvs.length}</div>
@@ -1099,7 +1183,7 @@ function ClientDetail({ client, invoices, calcTotal, onEdit, onDelete, onBack, o
           <div style={{ ...S.clientAvatar, margin:"0 auto 16px", fontSize:32, width:64, height:64, lineHeight:"64px" }}>{client.nom[0]}</div>
           <h2 style={{ textAlign:"center", margin:"0 0 4px", color:"#0f172a" }}>{client.nom}</h2>
           <p style={{ textAlign:"center", color:"#64748b", marginBottom:20 }}>{client.ville}</p>
-          {[["Email",client.email],["Téléphone",client.tel],["RC",client.rc]].filter(([,v])=>v).map(([k,v])=>(
+          {[["Email",client.email],["Téléphone",client.tel],["RC",client.rc],["ICE",client.ice],["IF",client.if_num],["Adresse",client.adresse]].filter(([,v])=>v).map(([k,v])=>(
             <div key={k} style={{ marginBottom:10 }}>
               <div style={{ fontSize:12, color:"#94a3b8", textTransform:"uppercase" }}>{k}</div>
               <div style={{ color:"#0f172a", fontWeight:500 }}>{v}</div>
@@ -1149,7 +1233,7 @@ function ClientForm({ client, onSave, onCancel }) {
         </div>
       </div>
       <div style={{ ...S.formCard, maxWidth:480 }}>
-        {[["nom","Nom / Raison sociale"],["email","Email"],["tel","Téléphone"],["ville","Ville"],["rc","Registre du commerce"]].map(([k,label]) => (
+        {[["nom","Nom / Raison sociale"],["email","Email"],["tel","Téléphone"],["ville","Ville / Pays"],["rc","Registre du commerce (RC)"],["ice","ICE (Identifiant Commun Entreprise)"],["if_num","IF (Identifiant Fiscal)"],["adresse","Adresse complète"]].map(([k,label]) => (
           <div key={k}>
             <label style={S.label}>{label}</label>
             <input style={S.input} value={form[k]||""} onChange={e => setForm(f => ({ ...f, [k]:e.target.value }))} />
@@ -1329,5 +1413,3 @@ export default function App() {
   if (!authenticated) return <LoginScreen onLogin={(user) => { setAuthenticated(true); setCurrentUser(user); }} />;
   return <MainApp onLogout={() => { sessionStorage.removeItem("mts_user"); setAuthenticated(false); setCurrentUser(null); }} currentUser={currentUser} />;
 }
-
-
