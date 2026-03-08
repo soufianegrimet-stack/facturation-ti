@@ -306,8 +306,7 @@ function MainApp({ onLogout, currentUser }) {
     rows.push(["", "", "", "TOTAL", totalHT.toFixed(2), "", totalTTC.toFixed(2), "", ""]);
 
     // Convert to CSV with BOM for Excel
-    const csv = "﻿" + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(";")).join("
-");
+    const csv = "﻿" + rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(";")).join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
