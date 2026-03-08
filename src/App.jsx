@@ -37,9 +37,11 @@ const db = {
 
 // ─── UTILISATEURS ─────────────────────────────────────────────────────────────
 const USERS = [
-  { id: "soufiane", nom: "Soufiane Grimet", role: "Gérant", password: "MTS2024", color: "#3b82f6", initiales: "SG" },
-  { id: "ikram",    nom: "Ikram Lakhdar",   role: "Responsable Facturation", password: "IKRAM2024", color: "#8b5cf6", initiales: "IL" },
+  { id: "soufiane", nom: "Soufiane Grimet", role: "Gérant",                   password: "MTS2024",   color: "#3b82f6", initiales: "SG", acces: "admin" },
+  { id: "ikram",    nom: "Ikram Lakhdar",   role: "Responsable Facturation",   password: "IKRAM2024", color: "#8b5cf6", initiales: "IL", acces: "lecture" },
 ];
+// acces: "admin" = tout / "lecture" = lecture seule (pas de créer/modifier/supprimer)
+function canEdit(user) { return user?.acces === "admin"; }
 
 function LoginScreen({ onLogin }) {
   const [selected, setSelected] = useState(null);
@@ -469,7 +471,6 @@ function MainApp({ onLogout, currentUser }) {
     { id: "releves",   icon: "📊", label: "Relevés" },
     { id: "ventes",    icon: "📈", label: "Ventes" },
     { id: "paiements", icon: "💳", label: "Paiements" },
-    { id: "modeles",   icon: "📋", label: "Modèles" },
   ];
 
   const isFactures = ["factures","invoice-detail"].includes(view);
@@ -479,7 +480,7 @@ function MainApp({ onLogout, currentUser }) {
   return (
     <div style={S.root}>
       {/* SIDEBAR */}
-      <aside style={{ ...S.sidebar, width: sidebarOpen ? 230 : 60, transition: "width .2s" }}>
+      <aside style={{ ...S.sidebar, width: sidebarOpen ? 230 : 60, transition: "width .2s", minHeight:"100vh", flexShrink:0 }}>
         <div style={S.logoWrap} onClick={() => setSidebarOpen(o => !o)}>
           <div style={S.logoIcon}>TI</div>
           {sidebarOpen && <div><div style={S.logoName}>Maghreb Trans</div><div style={S.logoSub}>Solutions</div></div>}
@@ -508,6 +509,9 @@ function MainApp({ onLogout, currentUser }) {
                 <div>
                   <div style={{ color:"#e2e8f0", fontSize:12, fontWeight:700 }}>{currentUser.nom}</div>
                   <div style={{ color:"#64748b", fontSize:10 }}>{currentUser.role}</div>
+                  <div style={{ fontSize:9, color: currentUser.acces==="admin" ? "#22c55e" : "#f59e0b", fontWeight:700, marginTop:2 }}>
+                    {currentUser.acces==="admin" ? "✓ Accès complet" : "👁 Lecture seule"}
+                  </div>
                 </div>
               </div>
             )}
@@ -550,15 +554,17 @@ function MainApp({ onLogout, currentUser }) {
         {view === "dashboard" && (
           <Dashboard invoices={invoices} clients={clients} calcTotal={calcTotal}
             onViewInvoice={(inv) => { setSelectedInvoice(inv); setView("invoice-detail"); }}
-            onGoto={goTo} />
+            onGoto={goTo} currentUser={currentUser} />
         )}
 
         {isFactures && !editingInvoice && view === "factures" && (
           <Factures invoices={invoices} clients={clients} calcTotal={calcTotal}
-            onNew={() => setEditingInvoice({ id: nextInvoiceId(), clientId: "", date: today(), echeance: "", status: "draft", lignes: [{ desc: "", qte: 1, pu: 0 }], notes: "", tva: true, devise: "MAD" })}
+            canEdit={canEdit(currentUser)}
+            onNew={canEdit(currentUser) ? () => setEditingInvoice({ id: nextInvoiceId(), clientId: "", date: today(), echeance: "", status: "draft", lignes: [{ desc: "", qte: 1, pu: 0 }], notes: "", tva: true, devise: "MAD" }) : null}
             onSelect={(inv) => { setSelectedInvoice(inv); setView("invoice-detail"); }}
-            onEdit={setEditingInvoice}
-            onDelete={deleteInvoice} onDuplicate={duplicateInvoice}
+            onEdit={canEdit(currentUser) ? setEditingInvoice : null}
+            onDelete={canEdit(currentUser) ? deleteInvoice : null}
+            onDuplicate={canEdit(currentUser) ? duplicateInvoice : null}
             onStatus={(id, s) => { setInvoices(invoices.map(i => i.id === id ? { ...i, status: s } : i)); notify("Statut mis à jour ✓"); }}
           />
         )}
@@ -571,8 +577,9 @@ function MainApp({ onLogout, currentUser }) {
 
         {view === "invoice-detail" && selectedInvoice && !editingInvoice && (
           <InvoiceDetail inv={selectedInvoice} clients={clients} calcTotal={calcTotal} calcHT={calcHT}
-            onEdit={() => setEditingInvoice(selectedInvoice)}
-            onDelete={() => deleteInvoice(selectedInvoice.id)}
+            canEdit={canEdit(currentUser)}
+            onEdit={canEdit(currentUser) ? () => setEditingInvoice(selectedInvoice) : null}
+            onDelete={canEdit(currentUser) ? () => deleteInvoice(selectedInvoice.id) : null}
             onBack={() => { setSelectedInvoice(null); setView("factures"); }}
             onStatus={(s) => {
               const updated = { ...selectedInvoice, status: s };
@@ -635,7 +642,7 @@ function MainApp({ onLogout, currentUser }) {
 }
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
+function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto, currentUser }) {
   const paidInvs  = invoices.filter(i => getStatus(i) === "paid");
   const attente   = invoices.filter(i => getStatus(i) === "sent").reduce((s, i) => s + calcTotal(i), 0);
   const retard    = invoices.filter(i => getStatus(i) === "overdue").reduce((s, i) => s + calcTotal(i), 0);
@@ -665,7 +672,51 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
 
   return (
     <div style={S.page}>
-      <h1 style={S.pageTitle}>Tableau de bord</h1>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
+        <h1 style={S.pageTitle}>Tableau de bord</h1>
+        {currentUser?.acces === "lecture" && (
+          <span style={{ background:"#fffbeb", color:"#92400e", border:"1px solid #fbbf24", borderRadius:6, padding:"4px 12px", fontSize:12, fontWeight:700 }}>
+            👁 Mode lecture seule
+          </span>
+        )}
+      </div>
+      {/* RAPPELS ÉCHÉANCES */}
+      {(() => {
+        const today_ = new Date(); today_.setHours(0,0,0,0);
+        const in7 = new Date(today_); in7.setDate(in7.getDate() + 7);
+        const urgents = invoices.filter(i => {
+          if (getStatus(i) === "paid" || getStatus(i) === "draft") return false;
+          const ech = i.echeance ? new Date(i.echeance) : null;
+          if (!ech) return false;
+          ech.setHours(0,0,0,0);
+          return ech >= today_ && ech <= in7;
+        }).sort((a,b) => new Date(a.echeance) - new Date(b.echeance));
+        if (urgents.length === 0) return null;
+        return (
+          <div style={{ background:"#fffbeb", border:"1.5px solid #fbbf24", borderRadius:10, padding:"12px 18px", marginBottom:16 }}>
+            <div style={{ fontWeight:700, color:"#92400e", fontSize:14, marginBottom:8 }}>
+              ⏰ {urgents.length} facture{urgents.length>1?"s":""} à échéance dans les 7 prochains jours
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
+              {urgents.map(inv => {
+                const cl = clients.find(c => c.id === inv.clientId);
+                const ech = new Date(inv.echeance);
+                const diff = Math.round((ech - today_) / 86400000);
+                return (
+                  <div key={inv.id} style={{ display:"flex", alignItems:"center", gap:10, fontSize:13 }}>
+                    <span style={{ fontFamily:"monospace", color:"#3b82f6", fontWeight:700 }}>{inv.id}</span>
+                    <span style={{ color:"#64748b" }}>{cl?.nom||"—"}</span>
+                    <span style={{ color:"#92400e", fontWeight:700 }}>
+                      {diff === 0 ? "⚠️ Aujourd'hui !" : diff === 1 ? "⚠️ Demain !" : `dans ${diff} jours`}
+                    </span>
+                    <span style={{ color:"#475569" }}>({formatDate(inv.echeance)})</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
       {!migrated && (
         <div style={{ background:"linear-gradient(135deg,#0f172a,#1e3a5f)", borderRadius:12, padding:"18px 24px", marginBottom:20, display:"flex", alignItems:"center", justifyContent:"space-between", gap:16 }}>
           <div>
@@ -801,7 +852,7 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
 }
 
 // ─── FACTURES ─────────────────────────────────────────────────────────────────
-function Factures({ invoices, clients, calcTotal, onNew, onSelect, onEdit, onDelete, onStatus }) {
+function Factures({ invoices, clients, calcTotal, canEdit, onNew, onSelect, onEdit, onDelete, onDuplicate, onStatus }) {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const filtered = invoices
@@ -846,8 +897,8 @@ function Factures({ invoices, clients, calcTotal, onNew, onSelect, onEdit, onDel
                     </select>
                   </td>
                   <td style={S.td}>
-                    <button style={S.iconBtn} onClick={() => onEdit(inv)}>✏️</button>
-                    <button style={S.iconBtn} onClick={() => onDelete(inv.id)}>🗑️</button>
+                    {onEdit && <button style={S.iconBtn} onClick={() => onEdit(inv)}>✏️</button>}
+                    {onDelete && <button style={S.iconBtn} onClick={() => onDelete(inv.id)}>🗑️</button>}
                   </td>
                 </tr>
               );
@@ -861,7 +912,7 @@ function Factures({ invoices, clients, calcTotal, onNew, onSelect, onEdit, onDel
 }
 
 // ─── INVOICE DETAIL ───────────────────────────────────────────────────────────
-function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBack, onStatus }) {
+function InvoiceDetail({ inv, clients, calcTotal, calcHT, canEdit, onEdit, onDelete, onBack, onStatus }) {
   const cl = clients.find(c => c.id === inv.clientId) || {};
   const ht = calcHT(inv);
   const tva = calcTVA(inv);
@@ -1125,7 +1176,7 @@ ${notesHTML}
       <div style={S.pageHdr}>
         <button style={S.backBtn} onClick={onBack}>← Retour</button>
         <div style={{ display:"flex", gap:8 }}>
-          <button style={S.secondaryBtn} onClick={onEdit}>✏️ Modifier</button>
+          {onEdit && <button style={S.secondaryBtn} onClick={onEdit}>✏️ Modifier</button>}
           <button style={S.printBtn} onClick={handlePrint}>🖨️ Imprimer / PDF A4</button>
           <button style={{ ...S.secondaryBtn, background:"#eff6ff", color:"#1d4ed8", border:"1.5px solid #bfdbfe" }} onClick={() => {
             const cl2 = clients.find(c => c.id === inv.clientId) || {};
@@ -1136,7 +1187,7 @@ ${notesHTML}
             const to = cl2.email ? encodeURIComponent(cl2.email) : '';
             window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
           }}>✉️ Email</button>
-          <button style={S.dangerBtn} onClick={onDelete}>🗑️</button>
+          {onDelete && <button style={S.dangerBtn} onClick={onDelete}>🗑️</button>}
         </div>
       </div>
 
@@ -1851,7 +1902,7 @@ function RelevesVentes({ invoices, clients, calcHT, calcTVA, calcTotal }) {
 // ─── STYLES ───────────────────────────────────────────────────────────────────
 const S = {
   root:       { display:"flex", height:"100vh", background:"#f8fafc", fontFamily:"'Segoe UI','Helvetica Neue',sans-serif", overflow:"hidden" },
-  sidebar:    { background:"#0f172a", display:"flex", flexDirection:"column", flexShrink:0, overflow:"hidden" },
+  sidebar:    { background:"#0f172a", display:"flex", flexDirection:"column", flexShrink:0, overflow:"hidden", zIndex:100 },
   logoWrap:   { display:"flex", alignItems:"center", gap:12, padding:"22px 14px 22px", borderBottom:"1px solid #1e293b", cursor:"pointer" },
   logoIcon:   { width:38, height:38, borderRadius:9, background:"linear-gradient(135deg,#3b82f6,#1d4ed8)", color:"#fff", fontWeight:900, fontSize:15, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 },
   logoName:   { color:"#fff", fontWeight:700, fontSize:14, lineHeight:1.2 },
@@ -1863,7 +1914,7 @@ const S = {
   sideFooter: { padding:"12px 16px", borderTop:"1px solid #1e293b" },
   main:       { flex:1, overflow:"auto", position:"relative" },
   notif:      { position:"fixed", top:20, right:20, color:"#fff", borderRadius:8, padding:"10px 20px", fontWeight:600, zIndex:999, fontSize:14, boxShadow:"0 4px 20px rgba(0,0,0,.2)" },
-  page:       { padding:"32px 36px", maxWidth:1100, margin:"0 auto" },
+  page:       { padding:"20px 16px", maxWidth:1100, margin:"0 auto" },
   pageHdr:    { display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:26 },
   pageTitle:  { fontSize:24, fontWeight:800, color:"#0f172a", margin:0 },
   statGrid:   { display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(170px,1fr))", gap:14, marginBottom:24 },
@@ -1888,7 +1939,7 @@ const S = {
   iconBtn:    { border:"none", background:"none", fontSize:15, cursor:"pointer", padding:"4px 6px", borderRadius:6 },
   input:      { width:"100%", padding:"9px 11px", borderRadius:8, border:"1.5px solid #e2e8f0", fontSize:13, color:"#0f172a", background:"#fff", boxSizing:"border-box", outline:"none", marginBottom:2 },
   label:      { display:"block", fontSize:11, fontWeight:600, color:"#64748b", textTransform:"uppercase", letterSpacing:.5, marginBottom:4, marginTop:12 },
-  formGrid:   { display:"grid", gridTemplateColumns:"1fr 1.6fr", gap:20, alignItems:"start" },
+  formGrid:   { display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:20, alignItems:"start" },
   formCard:   { background:"#fff", borderRadius:12, padding:22, boxShadow:"0 1px 4px rgba(0,0,0,.07)" },
   formSec:    { fontSize:15, fontWeight:700, color:"#0f172a", margin:"0 0 16px" },
   addLineBtn: { marginTop:8, padding:"8px 14px", borderRadius:8, border:"1.5px dashed #cbd5e1", background:"#f8fafc", color:"#64748b", fontSize:12, cursor:"pointer", width:"100%" },
@@ -1903,6 +1954,18 @@ const S = {
 // ─── ROOT APP ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [authenticated, setAuthenticated] = useState(() => sessionStorage.getItem("mts_auth") === "1");
+  // Inject mobile CSS
+  if (typeof document !== "undefined" && !document.getElementById("mts-mobile-css")) {
+    const style = document.createElement("style");
+    style.id = "mts-mobile-css";
+    style.textContent = `
+      @media (max-width: 640px) {
+        .mts-table-wrap { overflow-x: auto !important; }
+        .mts-table-wrap table { min-width: 500px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
   const [currentUser, setCurrentUser] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem("mts_user")) || null; } catch { return null; }
   });
