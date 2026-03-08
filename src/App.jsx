@@ -1070,7 +1070,7 @@ ${notesHTML}
         <table style={{ width:"100%", borderCollapse:"collapse", marginBottom:16 }}>
           <thead>
             <tr style={{ background:"#0f172a" }}>
-              {["Description","Qté","Prix unitaire (MAD)","Total HT (MAD)"].map(h => (
+              {["Description","Qté","Prix unitaire","Total HT"].map(h => (
                 <th key={h} style={{ padding:"10px 14px", textAlign:"left", color:"#fff", fontSize:12, fontWeight:600 }}>{h}</th>
               ))}
             </tr>
