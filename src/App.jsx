@@ -912,12 +912,57 @@ function Factures({ invoices, clients, calcTotal, canEdit, onNew, onSelect, onEd
 }
 
 // ─── INVOICE DETAIL ───────────────────────────────────────────────────────────
-function InvoiceDetail({ inv, clients, calcTotal, calcHT, canEdit, onEdit, onDelete, onBack, onStatus }) {
+function InvoiceDetail({ inv, clients, calcTotal, calcHT, canEdit, onEdit, onDelete, onBack, onStatus, onUpdateInv }) {
   const cl = clients.find(c => c.id === inv.clientId) || {};
   const ht = calcHT(inv);
   const tva = calcTVA(inv);
   const ttc = ht + tva;
   const st = STATUS[getStatus(inv)];
+  
+  // Pièces jointes (stockées localement)
+  const PJ_KEY = `mts_pj_${inv.id}`;
+  const [piecesJointes, setPiecesJointes] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(PJ_KEY) || "[]"); } catch { return []; }
+  });
+  function addPJ(e) {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const pj = { name: file.name, size: file.size, type: file.type, data: reader.result, date: new Date().toISOString() };
+      const next = [...piecesJointes, pj];
+      setPiecesJointes(next);
+      localStorage.setItem(PJ_KEY, JSON.stringify(next));
+    };
+    reader.readAsDataURL(file);
+  }
+  function removePJ(idx) {
+    const next = piecesJointes.filter((_,i) => i !== idx);
+    setPiecesJointes(next);
+    localStorage.setItem(PJ_KEY, JSON.stringify(next));
+  }
+
+  // Historique paiements partiels
+  const PAY_KEY = `mts_pay_${inv.id}`;
+  const [paiements, setPaiements] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(PAY_KEY) || "[]"); } catch { return []; }
+  });
+  const [showAddPay, setShowAddPay] = useState(false);
+  const [newPay, setNewPay] = useState({ montant:"", date: new Date().toISOString().split("T")[0], mode:"Virement", note:"" });
+  const totalPaye = paiements.reduce((s,p) => s + Number(p.montant), 0);
+  const resteAPayer = ttc - totalPaye;
+  function addPaiement() {
+    if (!newPay.montant || isNaN(Number(newPay.montant))) return;
+    const next = [...paiements, { ...newPay, id: Date.now().toString() }];
+    setPaiements(next);
+    localStorage.setItem(PAY_KEY, JSON.stringify(next));
+    setNewPay({ montant:"", date: new Date().toISOString().split("T")[0], mode:"Virement", note:"" });
+    setShowAddPay(false);
+  }
+  function removePaiement(id) {
+    const next = paiements.filter(p => p.id !== id);
+    setPaiements(next);
+    localStorage.setItem(PAY_KEY, JSON.stringify(next));
+  }
 
   function handlePrint() {
     const logoSrc = LOGO_B64;
@@ -1140,6 +1185,24 @@ ${notesHTML}
 
 </div><!-- /content -->
 
+<!-- ===== SIGNATURES ===== -->
+<div style="display:flex;gap:20px;margin-bottom:18px;margin-top:10px">
+  <div style="flex:1;border:1px solid #e2e8f0;border-radius:6px;padding:14px 16px;text-align:center">
+    <div style="font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Cachet et Signature Client</div>
+    <div style="font-size:8px;color:#94a3b8;font-style:italic;margin-bottom:30px">Lu et approuvé</div>
+    <div style="border-top:1px dashed #cbd5e1;padding-top:6px;font-size:8px;color:#94a3b8">Date : _______________</div>
+  </div>
+  <div style="flex:1;border:1px solid #e2e8f0;border-radius:6px;padding:14px 16px;text-align:center">
+    <div style="font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Cachet et Signature MTS</div>
+    <div style="height:50px;display:flex;align-items:center;justify-content:center">
+      <div style="border:2px solid #1d4ed8;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0.7">
+        <div style="font-size:7px;font-weight:900;color:#1d4ed8;letter-spacing:0.5px;line-height:1.2;text-align:center">MAGHREB<br>TRANS<br>SOLUTIONS</div>
+      </div>
+    </div>
+    <div style="border-top:1px dashed #cbd5e1;padding-top:6px;font-size:8px;color:#94a3b8;margin-top:4px">Tanger, Maroc</div>
+  </div>
+</div>
+
 <!-- ===== PIED DE PAGE ===== -->
 <div style="border-top:2px solid #0f172a;padding-top:10px;display:flex;justify-content:space-between;align-items:center;margin-top:auto">
   <div style="font-size:9px;color:#64748b;line-height:1.8">
@@ -1187,6 +1250,34 @@ ${notesHTML}
             const to = cl2.email ? encodeURIComponent(cl2.email) : '';
             window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
           }}>✉️ Email</button>
+          {getStatus(inv) === "overdue" && (
+            <button style={{ ...S.secondaryBtn, background:"#fff7ed", color:"#c2410c", border:"1.5px solid #fed7aa" }} onClick={() => {
+              const today_ = new Date(); today_.setHours(0,0,0,0);
+              const ech = inv.echeance ? new Date(inv.echeance) : null;
+              ech && ech.setHours(0,0,0,0);
+              const jours = ech ? Math.round((today_ - ech) / 86400000) : "?";
+              const montant = calcTotal(inv).toLocaleString('fr-FR',{minimumFractionDigits:2}) + ' ' + (inv.devise||'MAD');
+              const subject = encodeURIComponent(`Rappel de paiement — Facture ${inv.id}`);
+              const body = encodeURIComponent(
+                `Madame, Monsieur,
+
+Nous nous permettons de vous contacter concernant la facture ${inv.id} d'un montant de ${montant}, dont l'échéance était fixée au ${formatDate(inv.echeance)}.
+
+À ce jour, cette facture demeure impayée depuis ${jours} jour(s).
+
+Nous vous serions reconnaissants de bien vouloir procéder au règlement dans les meilleurs délais.
+
+Si ce paiement a déjà été effectué, veuillez ignorer ce message et nous en informer.
+
+Cordialement,
+MAGHREB TRANS SOLUTIONS SARL
+Tél : +212 669 60 86 53
+facturation@maghrebtranssolutions.com`
+              );
+              const to = cl.email ? encodeURIComponent(cl.email) : '';
+              window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+            }}>🔔 Relance</button>
+          )}
           {onDelete && <button style={S.dangerBtn} onClick={onDelete}>🗑️</button>}
         </div>
       </div>
@@ -1282,9 +1373,97 @@ ${notesHTML}
       <div style={{ marginTop:20, display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
         <span style={{ color:"#64748b", fontSize:14 }}>Changer le statut :</span>
         {Object.entries(STATUS).map(([k,v]) => (
-          <button key={k} style={{ ...S.badge, color:v.color, background:v.bg, border: inv.status===k ? `2px solid ${v.color}` : "2px solid transparent", cursor:"pointer" }}
+          <button key={k} style={{ ...S.badge, color:v.color, background:v.bg, border: getStatus(inv)===k ? `2px solid ${v.color}` : "2px solid transparent", cursor:"pointer" }}
             onClick={() => onStatus(k)}>{v.label}</button>
         ))}
+      </div>
+
+      {/* ─── HISTORIQUE PAIEMENTS ─── */}
+      <div style={{ background:"#fff", borderRadius:12, padding:"20px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", marginTop:20 }}>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
+          <div style={{ fontWeight:700, fontSize:15, color:"#0f172a" }}>💰 Historique des paiements</div>
+          <div style={{ display:"flex", gap:10, alignItems:"center" }}>
+            <span style={{ fontSize:13, color: resteAPayer <= 0 ? "#22c55e" : "#ef4444", fontWeight:700 }}>
+              {resteAPayer <= 0 ? "✓ Soldé" : `Reste : ${resteAPayer.toLocaleString("fr-FR",{minimumFractionDigits:2})} ${inv.devise||"MAD"}`}
+            </span>
+            {canEdit && <button style={{ ...S.primaryBtn, fontSize:12, padding:"6px 14px" }} onClick={() => setShowAddPay(v => !v)}>+ Ajouter versement</button>}
+          </div>
+        </div>
+
+        {showAddPay && (
+          <div style={{ background:"#f8fafc", borderRadius:8, padding:"14px 16px", marginBottom:14, display:"flex", gap:10, flexWrap:"wrap", alignItems:"flex-end" }}>
+            <div><label style={S.label}>Montant</label><input style={{ ...S.input, width:120 }} type="number" placeholder="0.00" value={newPay.montant} onChange={e => setNewPay(p => ({...p, montant:e.target.value}))} /></div>
+            <div><label style={S.label}>Date</label><input style={{ ...S.input, width:140 }} type="date" value={newPay.date} onChange={e => setNewPay(p => ({...p, date:e.target.value}))} /></div>
+            <div><label style={S.label}>Mode</label>
+              <select style={{ ...S.input, width:130 }} value={newPay.mode} onChange={e => setNewPay(p => ({...p, mode:e.target.value}))}>
+                {["Virement","Chèque","Espèces","Carte"].map(m => <option key={m}>{m}</option>)}
+              </select>
+            </div>
+            <div style={{ flex:1, minWidth:120 }}><label style={S.label}>Note</label><input style={S.input} placeholder="Référence, banque..." value={newPay.note} onChange={e => setNewPay(p => ({...p, note:e.target.value}))} /></div>
+            <button style={S.primaryBtn} onClick={addPaiement}>✓ Enregistrer</button>
+            <button style={S.secondaryBtn} onClick={() => setShowAddPay(false)}>Annuler</button>
+          </div>
+        )}
+
+        {paiements.length === 0 ? (
+          <div style={{ color:"#94a3b8", fontSize:13, textAlign:"center", padding:"12px 0" }}>Aucun versement enregistré</div>
+        ) : (
+          <table style={{ width:"100%", borderCollapse:"collapse" }}>
+            <thead><tr>{["Date","Montant","Mode","Note",""].map(h => <th key={h} style={S.th}>{h}</th>)}</tr></thead>
+            <tbody>
+              {paiements.map(p => (
+                <tr key={p.id} style={S.tr}>
+                  <td style={S.td}>{formatDate(p.date)}</td>
+                  <td style={{ ...S.td, fontWeight:700, color:"#22c55e" }}>{Number(p.montant).toLocaleString("fr-FR",{minimumFractionDigits:2})} {inv.devise||"MAD"}</td>
+                  <td style={S.td}><span style={{ ...S.badge, background:"#f1f5f9", color:"#475569" }}>{p.mode}</span></td>
+                  <td style={{ ...S.td, color:"#64748b" }}>{p.note||"—"}</td>
+                  <td style={S.td}>{canEdit && <button style={S.iconBtn} onClick={() => removePaiement(p.id)}>🗑️</button>}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr style={{ background:"#f8fafc", borderTop:"2px solid #e2e8f0" }}>
+                <td style={{ ...S.td, fontWeight:700 }}>Total versé</td>
+                <td style={{ ...S.td, fontWeight:800, color:"#22c55e" }}>{totalPaye.toLocaleString("fr-FR",{minimumFractionDigits:2})} {inv.devise||"MAD"}</td>
+                <td colSpan={3} style={{ ...S.td, color: resteAPayer > 0 ? "#ef4444" : "#22c55e", fontWeight:700 }}>
+                  {resteAPayer > 0 ? `Reste à payer : ${resteAPayer.toLocaleString("fr-FR",{minimumFractionDigits:2})} ${inv.devise||"MAD"}` : "✓ Intégralement soldé"}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        )}
+      </div>
+
+      {/* ─── PIÈCES JOINTES ─── */}
+      <div style={{ background:"#fff", borderRadius:12, padding:"20px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", marginTop:16 }}>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
+          <div style={{ fontWeight:700, fontSize:15, color:"#0f172a" }}>📎 Pièces jointes ({piecesJointes.length})</div>
+          {canEdit && (
+            <label style={{ ...S.primaryBtn, fontSize:12, padding:"6px 14px", cursor:"pointer" }}>
+              + Ajouter fichier
+              <input type="file" style={{ display:"none" }} onChange={addPJ} accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" />
+            </label>
+          )}
+        </div>
+        {piecesJointes.length === 0 ? (
+          <div style={{ color:"#94a3b8", fontSize:13, textAlign:"center", padding:"12px 0" }}>
+            Aucune pièce jointe — Ajoutez des BL, DUM, documents douaniers...
+          </div>
+        ) : (
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {piecesJointes.map((pj, idx) => (
+              <div key={idx} style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 14px", background:"#f8fafc", borderRadius:8, border:"1px solid #e2e8f0" }}>
+                <span style={{ fontSize:20 }}>{pj.type?.includes("pdf") ? "📄" : pj.type?.includes("image") ? "🖼️" : "📁"}</span>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontWeight:600, fontSize:13, color:"#0f172a" }}>{pj.name}</div>
+                  <div style={{ fontSize:11, color:"#94a3b8" }}>{(pj.size/1024).toFixed(1)} KB · {formatDate(pj.date?.split("T")[0])}</div>
+                </div>
+                <a href={pj.data} download={pj.name} style={{ ...S.secondaryBtn, fontSize:12, padding:"5px 12px", textDecoration:"none", display:"inline-block" }}>⬇ Télécharger</a>
+                {canEdit && <button style={S.iconBtn} onClick={() => removePJ(idx)}>🗑️</button>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
