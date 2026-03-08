@@ -798,6 +798,42 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBa
     }).join('');
 
     // Références optionnelles
+    // Transport info block
+    const tr = inv; // shorthand
+    const hasTransport = tr.transport_matricule || tr.transport_dum || tr.transport_expdest ||
+      tr.transport_date_dechargement || tr.transport_marchandise || tr.transport_nb_colis ||
+      tr.transport_dossier || tr.transport_poids;
+    const transportHTML = hasTransport ? `
+<div style="margin-bottom:16px">
+  <div style="font-size:8.5px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">INFORMATIONS DE TRANSPORT</div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;font-size:10px">
+    ${tr.transport_matricule || tr.transport_dum ? `<tr>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;width:16%;color:#64748b;font-weight:700;white-space:nowrap">Matricule</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;width:34%;color:#0f172a;font-weight:600">${tr.transport_matricule||'—'}</td>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;width:16%;color:#64748b;font-weight:700;white-space:nowrap">DUM N°</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;width:34%;color:#0f172a;font-weight:600">${tr.transport_dum||'—'}</td>
+    </tr>` : ''}
+    ${tr.transport_expdest || tr.transport_date_dechargement ? `<tr>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">Exp / Dest</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#0f172a;font-weight:600">${tr.transport_expdest||'—'}</td>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">Date déchargement</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;color:#0f172a;font-weight:600">${tr.transport_date_dechargement ? new Date(tr.transport_date_dechargement).toLocaleDateString('fr-FR') : '—'}</td>
+    </tr>` : ''}
+    ${tr.transport_marchandise || tr.transport_nb_colis ? `<tr>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">Marchandise</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#0f172a;font-weight:600">${tr.transport_marchandise||'—'}</td>
+      <td style="padding:7px 12px;background:#f8fafc;border-bottom:1px solid #e2e8f0;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">Nbre Colis</td>
+      <td style="padding:7px 12px;background:#fff;border-bottom:1px solid #e2e8f0;color:#0f172a;font-weight:600">${tr.transport_nb_colis||'—'}</td>
+    </tr>` : ''}
+    ${tr.transport_dossier || tr.transport_poids ? `<tr>
+      <td style="padding:7px 12px;background:#f8fafc;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">N° Dossier</td>
+      <td style="padding:7px 12px;background:#fff;border-right:1px solid #e2e8f0;color:#0f172a;font-weight:600">${tr.transport_dossier||'—'}</td>
+      <td style="padding:7px 12px;background:#f8fafc;border-right:1px solid #e2e8f0;color:#64748b;font-weight:700;white-space:nowrap">Poids Brut</td>
+      <td style="padding:7px 12px;background:#fff;color:#0f172a;font-weight:600">${tr.transport_poids||'—'}</td>
+    </tr>` : ''}
+  </table>
+</div>` : '';
+
     const refsHTML = (inv.refClient || inv.refMTS) ? `
       <div style="margin-bottom:10px;padding:8px 12px;background:#f8fafc;border-radius:5px;border:1px solid #e2e8f0;font-size:10px;color:#475569;display:flex;gap:20px">
         ${inv.refClient ? `<span><strong>Réf. client :</strong> ${inv.refClient}</span>` : ''}
@@ -916,6 +952,9 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBa
     <div style="font-size:10px;color:#64748b;line-height:1.8">${clientInfos}</div>
   </div>
 </div>
+
+<!-- ===== TRANSPORT ===== -->
+${transportHTML}
 
 <!-- ===== TABLEAU PRESTATIONS ===== -->
 <table style="margin-bottom:0;border-radius:6px;overflow:hidden">
@@ -1135,6 +1174,27 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
           <select style={S.input} value={form.status} onChange={e => set("status", e.target.value)}>
             {Object.entries(STATUS).map(([k,v]) => <option key={k} value={k}>{v.label}</option>)}
           </select>
+        </div>
+
+        <div style={S.formCard}>
+          <h3 style={S.formSec}>🚛 Informations de transport <span style={{ fontSize:12, fontWeight:400, color:"#94a3b8" }}>(optionnel)</span></h3>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 16px" }}>
+            {[
+              ["transport_matricule","Matricule"],
+              ["transport_dum","DUM N°"],
+              ["transport_expdest","Exp / Dest"],
+              ["transport_date_dechargement","Date de déchargement","date"],
+              ["transport_marchandise","Marchandise"],
+              ["transport_nb_colis","Nbre Colis","number"],
+              ["transport_dossier","N° Dossier"],
+              ["transport_poids","Poids Brut"],
+            ].map(([k,label,type]) => (
+              <div key={k}>
+                <label style={S.label}>{label}</label>
+                <input style={S.input} type={type||"text"} value={form[k]||""} onChange={e => set(k, e.target.value)} placeholder="—" />
+              </div>
+            ))}
+          </div>
         </div>
 
         <div style={S.formCard}>
