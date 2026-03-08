@@ -196,7 +196,14 @@ const INIT_CLIENTS = [{"id": "C001", "nom": "IBERFASHION", "email": "", "tel": "
 const INIT_INVOICES = [{"id": "FAC-2026-0001", "clientId": "C001", "date": "2026-01-01", "echeance": "2026-01-31", "status": "sent", "lignes": [{"desc": "MANAGING TRAILERS IN ALGECIRAS", "qte": 1, "pu": 700.0}, {"desc": "Arrêtée la présente facture à la somme de : SEPT CENT EURO", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0002", "clientId": "C002", "date": "2026-01-05", "echeance": "2026-02-04", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0003", "clientId": "C003", "date": "2026-01-08", "echeance": "2026-02-22", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0004", "clientId": "C001", "date": "2026-01-09", "echeance": "2026-02-08", "status": "sent", "lignes": [{"desc": "TRANSPORT CUNHA -CASA-TEMARA", "qte": 1, "pu": 1515.0}, {"desc": "TRANSPORT TINTOJAL-TEMARA", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT CUNHA- TEMARA", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT CUNHA- TEMARA", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT NOGUEIRA-SALE", "qte": 1, "pu": 1500.0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0005", "clientId": "C001", "date": "2026-01-09", "echeance": "2026-02-08", "status": "sent", "lignes": [{"desc": "BALEARIA", "qte": 1, "pu": 0}, {"desc": "PARKING", "qte": 1, "pu": 0}, {"desc": "CONTENTIEUX TRYPTIQUE", "qte": 1, "pu": 0}, {"desc": "INFRACTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0006", "clientId": "C003", "date": "2026-01-12", "echeance": "2026-02-26", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0007", "clientId": "C001", "date": "2026-01-15", "echeance": "2026-03-16", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0008", "clientId": "C004", "date": "2026-01-15", "echeance": "2026-03-16", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0009", "clientId": "C002", "date": "2026-01-15", "echeance": "2026-02-14", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0010", "clientId": "C002", "date": "2026-01-15", "echeance": "2026-02-14", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0011", "clientId": "C002", "date": "2026-01-19", "echeance": "2026-02-18", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0012", "clientId": "C002", "date": "2026-01-19", "echeance": "2026-02-18", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0013", "clientId": "C003", "date": "2026-01-19", "echeance": "2026-03-05", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0014", "clientId": "C003", "date": "2026-01-23", "echeance": "2026-03-09", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0015", "clientId": "C002", "date": "2026-01-26", "echeance": "2026-02-25", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0016", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0017", "clientId": "C006", "date": "2026-01-27", "echeance": "2026-02-26", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2244.48}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 89.7792}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0018", "clientId": "C007", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 262.01}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 10.4804}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0019", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2088.86}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 83.5544}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0020", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2376.36}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 95.0544}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0021", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2092.9}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 83.716}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0022", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2325.76}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 93.0304}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0023", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0024", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0025", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0026", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 1308.66}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 52.3464}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0027", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2319.85}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 92.794}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0028", "clientId": "C005", "date": "2026-01-27", "echeance": "2026-02-27", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0029", "clientId": "C003", "date": "2026-01-27", "echeance": "2026-03-13", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0030", "clientId": "C008", "date": "2026-01-29", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0031", "clientId": "C005", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 1183.13}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 47.3252}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 100.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0032", "clientId": "C009", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 242.97}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 9.7188}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 100.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0033", "clientId": "C010", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 191.15}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 7.646}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 100.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0034", "clientId": "C011", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 196.53}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 7.8612}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 100.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0035", "clientId": "C005", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0036", "clientId": "C005", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 1991.42}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 79.6568}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0037", "clientId": "C005", "date": "2026-01-30", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0038", "clientId": "C001", "date": "2026-01-30", "echeance": "2026-03-01", "status": "sent", "lignes": [{"desc": "TRANSPORT CUNHA-TINTOJAL-TEMARA-CASA x2", "qte": 1, "pu": 1530.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT TINTOJAL-TEMARA", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT IBERFASHION-TEMARA-CASA", "qte": 1, "pu": 1515.0}, {"desc": "TRANSPORT IBERFASHION- CASA-SALE", "qte": 1, "pu": 1600.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0039", "clientId": "C001", "date": "2026-01-30", "echeance": "2026-03-01", "status": "sent", "lignes": [{"desc": "BALEARIA", "qte": 1, "pu": 0}, {"desc": "PARKING", "qte": 1, "pu": 0}, {"desc": "CONTENTIEUX TRYPTIQUE", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "Arrêtée la présente facture à la somme de : TROIS MILLE NEUF CENT SIX EURO ET QUARANTE CENTIMES", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0046", "clientId": "C001", "date": "2026-01-31", "echeance": "2026-03-02", "status": "sent", "lignes": [{"desc": "MANAGING TRAILERS IN ALGECIRAS", "qte": 1, "pu": 700.0}, {"desc": "Arrêtée la présente facture à la somme de : SEPT CENT EURO", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0041", "clientId": "C005", "date": "2026-01-31", "echeance": "2026-02-28", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2350.48}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 94.0192}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0042", "clientId": "C003", "date": "2026-01-31", "echeance": "2026-03-17", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0043", "clientId": "C003", "date": "2026-01-31", "echeance": "2026-03-17", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0044", "clientId": "C002", "date": "2026-01-31", "echeance": "2026-02-01", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0045", "clientId": "C002", "date": "2026-01-31", "echeance": "2026-02-02", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0046", "clientId": "C002", "date": "2026-02-06", "echeance": "2026-03-08", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0047", "clientId": "C003", "date": "2026-02-09", "echeance": "2026-03-26", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0048", "clientId": "C003", "date": "2026-02-10", "echeance": "2026-03-27", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0049", "clientId": "C003", "date": "2026-02-10", "echeance": "2026-03-27", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0050", "clientId": "C003", "date": "2026-02-10", "echeance": "2026-03-27", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0051", "clientId": "C001", "date": "2026-02-13", "echeance": "2026-04-14", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0052", "clientId": "C008", "date": "2026-02-13", "echeance": "2026-03-15", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0053", "clientId": "C003", "date": "2026-02-13", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0054", "clientId": "C001", "date": "2026-02-16", "echeance": "2026-04-17", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0055", "clientId": "C003", "date": "2026-02-17", "echeance": "2026-04-03", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0056", "clientId": "C005", "date": "2026-02-18", "echeance": "2026-03-18", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2307.12}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 92.2848}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0057", "clientId": "C005", "date": "2026-02-18", "echeance": "2026-03-18", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0058", "clientId": "C005", "date": "2026-02-18", "echeance": "2026-03-18", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0059", "clientId": "C003", "date": "2026-02-19", "echeance": "2026-04-05", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0060", "clientId": "C001", "date": "2026-02-20", "echeance": "2026-03-22", "status": "sent", "lignes": [{"desc": "Paiement en faveur de Administration des Douanes et Impôts Indirects", "qte": 1, "pu": 3045.975946}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0061", "clientId": "C003", "date": "2026-02-23", "echeance": "2026-04-09", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0062", "clientId": "C012", "date": "2026-02-23", "echeance": "2026-03-25", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0063", "clientId": "C008", "date": "2026-02-13", "echeance": "2026-03-15", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0064", "clientId": "C002", "date": "2026-02-23", "echeance": "2026-03-25", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0065", "clientId": "C003", "date": "2026-02-24", "echeance": "2026-04-10", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0066", "clientId": "C001", "date": "2026-02-25", "echeance": "2026-04-26", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0067", "clientId": "C001", "date": "2026-02-26", "echeance": "2026-04-27", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0068", "clientId": "C003", "date": "2026-02-26", "echeance": "2026-04-12", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0069", "clientId": "C001", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "MANAGING TRAILERS IN ALGECIRAS", "qte": 1, "pu": 700.0}, {"desc": "Arrêtée la présente facture à la somme de : SEPT CENT EURO", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0070", "clientId": "C001", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "BALEARIA", "qte": 1, "pu": 0}, {"desc": "PARKING", "qte": 1, "pu": 0}, {"desc": "INFRACTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}, {"desc": "INTERVENTION", "qte": 1, "pu": 0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0071", "clientId": "C001", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT CUNHA-TEMARA", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}, {"desc": "TRANSPORT FAFE-MEKNES", "qte": 1, "pu": 1500.0}], "notes": "", "tva": false, "devise": "EUR"}, {"id": "FAC-2026-0072", "clientId": "C001", "date": "2026-02-28", "echeance": "2026-04-29", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0073", "clientId": "C003", "date": "2026-02-28", "echeance": "2026-04-14", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0074", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0075", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2265.52}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 90.6208}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0076", "clientId": "C006", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 1989.63}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 79.5852}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0077", "clientId": "C007", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 527.77}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 21.1108}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0078", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0079", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2310.81}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 92.4324}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0080", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0081", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0082", "clientId": "C006", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 1618.92}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 64.7568}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0083", "clientId": "C013", "date": "2026-02-28", "echeance": "2026-03-30", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 898.48}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 35.9392}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0084", "clientId": "C005", "date": "2026-02-28", "echeance": "2026-03-02", "status": "sent", "lignes": [{"desc": "TMSA", "qte": 1, "pu": 2294.25}, {"desc": "TAX REGIONAL", "qte": 1, "pu": 91.77}, {"desc": "FRAIS INTERVENTION", "qte": 1, "pu": 200.0}], "notes": "", "tva": true, "devise": "MAD"}, {"id": "FAC-2026-0085", "clientId": "C003", "date": "2026-02-28", "echeance": "2026-04-14", "status": "sent", "lignes": [{"desc": "Prestation de transport", "qte": 1, "pu": 0}], "notes": "", "tva": true, "devise": "MAD"}];
 
 function calcHT(inv) { return inv.lignes.reduce((s, l) => s + (Number(l.qte)||0) * (Number(l.pu)||0), 0); }
-function calcTotal(inv) { const ht = calcHT(inv); return inv.tva ? ht * 1.2 : ht; }
+function calcTVA(inv) {
+  return inv.lignes.reduce((s, l) => {
+    const ht = (Number(l.qte)||0) * (Number(l.pu)||0);
+    const taux = l.tva !== undefined ? Number(l.tva) : (inv.tva ? 20 : 0);
+    return s + ht * (taux / 100);
+  }, 0);
+}
+function calcTotal(inv) { return calcHT(inv) + calcTVA(inv); }
 function getStatus(inv) {
   if (inv.status === "paid") return "paid";
   if (inv.status === "draft") return "draft";
@@ -460,6 +467,7 @@ function MainApp({ onLogout, currentUser }) {
     { id: "factures",  icon: "📄", label: "Factures" },
     { id: "clients",   icon: "👥", label: "Clients" },
     { id: "releves",   icon: "📊", label: "Relevés" },
+    { id: "ventes",    icon: "📈", label: "Ventes" },
     { id: "paiements", icon: "💳", label: "Paiements" },
   ];
 
@@ -605,6 +613,9 @@ function MainApp({ onLogout, currentUser }) {
           />
         )}
 
+        {view === "ventes" && (
+          <RelevesVentes invoices={invoices} clients={clients} calcHT={calcHT} calcTVA={calcTVA} calcTotal={calcTotal} />
+        )}
         {view === "releves" && (
           <Releves clients={clients} invoices={invoices} calcTotal={calcTotal} onReleve={handleReleve} />
         )}
@@ -762,40 +773,52 @@ function Factures({ invoices, clients, calcTotal, onNew, onSelect, onEdit, onDel
 function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBack, onStatus }) {
   const cl = clients.find(c => c.id === inv.clientId) || {};
   const ht = calcHT(inv);
-  const tva = inv.tva ? ht * 0.2 : 0;
+  const tva = calcTVA(inv);
   const ttc = ht + tva;
-  const st = STATUS[inv.status];
+  const st = STATUS[getStatus(inv)];
 
   function handlePrint() {
     const logoSrc = LOGO_B64;
 
-    // Lignes du tableau
+    const devise = inv.devise || 'MAD';
+    const fmtD = (v) => v.toLocaleString('fr-FR',{minimumFractionDigits:2}) + ' ' + devise;
+
+    // Lignes du tableau avec TVA par ligne
     const lignesHTML = inv.lignes.map((l, i) => {
       const mt = (Number(l.qte)||0)*(Number(l.pu)||0);
+      const taux = l.tva !== undefined ? Number(l.tva) : (inv.tva ? 20 : 0);
       const bg = i%2===0 ? '#ffffff' : '#f8fafc';
       return `<tr style="background:${bg}">
         <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#1e293b;line-height:1.4">${l.desc||'—'}</td>
         <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#1e293b;text-align:center">${l.qte}</td>
-        <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#1e293b;text-align:right">${Number(l.pu||0).toLocaleString('fr-FR',{minimumFractionDigits:2})}</td>
-        <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#0f172a;text-align:right;font-weight:700">${mt.toLocaleString('fr-FR',{minimumFractionDigits:2})}</td>
+        <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#1e293b;text-align:right">${fmtD(Number(l.pu||0))}</td>
+        <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#475569;text-align:center;font-size:10px">${taux > 0 ? taux+'%' : '—'}</td>
+        <td style="padding:9px 14px;border-bottom:1px solid #e9eef5;font-size:11px;color:#0f172a;text-align:right;font-weight:700">${fmtD(mt)}</td>
       </tr>`;
     }).join('');
 
-    // TVA conditionnelle
-    const tvaRowHTML = inv.tva
+    // Références optionnelles
+    const refsHTML = (inv.refClient || inv.refMTS) ? `
+      <div style="margin-bottom:10px;padding:8px 12px;background:#f8fafc;border-radius:5px;border:1px solid #e2e8f0;font-size:10px;color:#475569;display:flex;gap:20px">
+        ${inv.refClient ? `<span><strong>Réf. client :</strong> ${inv.refClient}</span>` : ''}
+        ${inv.refMTS ? `<span><strong>Réf. MTS :</strong> ${inv.refMTS}</span>` : ''}
+      </div>` : '';
+
+    // TVA calculée par ligne
+    const tvaRowHTML = tva > 0
       ? `<tr>
           <td style="padding:8px 16px;font-size:11px;color:#64748b;text-align:right">Total HT</td>
-          <td style="padding:8px 16px;font-size:11px;font-weight:600;color:#334155;text-align:right;white-space:nowrap">${ht.toLocaleString('fr-FR',{minimumFractionDigits:2})} MAD</td>
+          <td style="padding:8px 16px;font-size:11px;font-weight:600;color:#334155;text-align:right;white-space:nowrap">${fmtD(ht)}</td>
         </tr>
         <tr>
-          <td style="padding:8px 16px;font-size:11px;color:#64748b;text-align:right">TVA (20%)</td>
-          <td style="padding:8px 16px;font-size:11px;font-weight:600;color:#334155;text-align:right;white-space:nowrap">${tva.toLocaleString('fr-FR',{minimumFractionDigits:2})} MAD</td>
+          <td style="padding:8px 16px;font-size:11px;color:#64748b;text-align:right">Total TVA</td>
+          <td style="padding:8px 16px;font-size:11px;font-weight:600;color:#334155;text-align:right;white-space:nowrap">${fmtD(tva)}</td>
         </tr>`
       : `<tr>
-          <td colspan="2" style="padding:8px 16px;font-size:10px;color:#94a3b8;text-align:right;font-style:italic">Facture hors taxe (TVA non applicable)</td>
+          <td colspan="2" style="padding:8px 16px;font-size:10px;color:#94a3b8;text-align:right;font-style:italic">Exonéré de TVA</td>
         </tr>`;
 
-    const totalLabel = inv.tva ? 'TOTAL TTC' : 'TOTAL HT';
+    const totalLabel = tva > 0 ? 'TOTAL TTC' : 'TOTAL HT';
     const notesHTML = inv.notes
       ? `<div style="border-left:3px solid #3b82f6;background:#eff6ff;padding:10px 14px;margin-bottom:18px;font-size:10px;color:#1e40af;border-radius:0 4px 4px 0">
            <strong>Notes :</strong> ${inv.notes}
@@ -898,10 +921,11 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBa
 <table style="margin-bottom:0;border-radius:6px;overflow:hidden">
   <thead>
     <tr style="background:#0f172a">
-      <th style="padding:11px 14px;text-align:left;color:#fff;font-size:10px;font-weight:700;width:48%">DÉSIGNATION / DESCRIPTION</th>
-      <th style="padding:11px 14px;text-align:center;color:#fff;font-size:10px;font-weight:700;width:10%">QTÉ</th>
-      <th style="padding:11px 14px;text-align:right;color:#fff;font-size:10px;font-weight:700;width:21%">PRIX UNITAIRE (MAD)</th>
-      <th style="padding:11px 14px;text-align:right;color:#fff;font-size:10px;font-weight:700;width:21%">MONTANT (MAD)</th>
+      <th style="padding:11px 14px;text-align:left;color:#fff;font-size:10px;font-weight:700;width:42%">DÉSIGNATION / DESCRIPTION</th>
+      <th style="padding:11px 14px;text-align:center;color:#fff;font-size:10px;font-weight:700;width:8%">QTÉ</th>
+      <th style="padding:11px 14px;text-align:right;color:#fff;font-size:10px;font-weight:700;width:18%">PRIX UNITAIRE</th>
+      <th style="padding:11px 14px;text-align:center;color:#fff;font-size:10px;font-weight:700;width:10%">TVA</th>
+      <th style="padding:11px 14px;text-align:right;color:#fff;font-size:10px;font-weight:700;width:22%">MONTANT HT</th>
     </tr>
   </thead>
   <tbody>
@@ -915,10 +939,13 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, onEdit, onDelete, onBa
     ${tvaRowHTML}
     <tr style="background:#0f172a">
       <td style="padding:12px 16px;font-size:13px;font-weight:800;color:#fff;text-align:right;letter-spacing:0.5px">${totalLabel}</td>
-      <td style="padding:12px 16px;font-size:16px;font-weight:900;color:#fff;text-align:right;white-space:nowrap">${ttc.toLocaleString('fr-FR',{minimumFractionDigits:2})} MAD</td>
+      <td style="padding:12px 16px;font-size:16px;font-weight:900;color:#fff;text-align:right;white-space:nowrap">${fmtD(ttc)}</td>
     </tr>
   </table>
 </div>
+
+<!-- ===== RÉFÉRENCES ===== -->
+${refsHTML}
 
 <!-- ===== NOTES ===== -->
 ${notesHTML}
@@ -1093,7 +1120,7 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
       <div style={S.formGrid}>
         <div style={S.formCard}>
           <h3 style={S.formSec}>Informations</h3>
-          {[["id","N° Facture"],["date","Date","date"],["echeance","Échéance","date"]].map(([k,label,type]) => (
+          {[["id","N° Facture"],["date","Date","date"],["echeance","Échéance","date"],["refClient","Réf. client (optionnel)"],["refMTS","Réf. MTS (optionnel)"]].map(([k,label,type]) => (
             <div key={k}>
               <label style={S.label}>{label}</label>
               <input style={S.input} type={type||"text"} value={form[k]||""} onChange={e => set(k, e.target.value)} />
@@ -1113,17 +1140,24 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
         <div style={S.formCard}>
           <h3 style={S.formSec}>Lignes de facturation</h3>
           {form.lignes.map((l, i) => (
-            <div key={i} style={{ display:"flex", gap:8, marginBottom:8, alignItems:"center" }}>
-              <input style={{ ...S.input, flex:3 }} placeholder="Description" value={l.desc} onChange={e => setL(i,"desc",e.target.value)} />
-              <input style={{ ...S.input, flex:1, textAlign:"center" }} placeholder="Qté" type="number" min="1" value={l.qte} onChange={e => setL(i,"qte",e.target.value)} />
-              <input style={{ ...S.input, flex:1, textAlign:"right" }} placeholder="Prix HT" type="number" min="0" value={l.pu} onChange={e => setL(i,"pu",e.target.value)} />
-              <span style={{ ...S.input, flex:1, background:"#f1f5f9", textAlign:"right", display:"flex", alignItems:"center", justifyContent:"flex-end", fontSize:13 }}>
-                {formatMoney((Number(l.qte)||0)*(Number(l.pu)||0), inv.devise)}
+            <div key={i} style={{ display:"flex", gap:6, marginBottom:8, alignItems:"center", flexWrap:"wrap" }}>
+              <input style={{ ...S.input, flex:3, minWidth:140 }} placeholder="Description" value={l.desc} onChange={e => setL(i,"desc",e.target.value)} />
+              <input style={{ ...S.input, width:60, textAlign:"center" }} placeholder="Qté" type="number" min="1" value={l.qte} onChange={e => setL(i,"qte",e.target.value)} />
+              <input style={{ ...S.input, width:90, textAlign:"right" }} placeholder="Prix HT" type="number" min="0" value={l.pu} onChange={e => setL(i,"pu",e.target.value)} />
+              <select style={{ ...S.input, width:80, textAlign:"center" }} value={l.tva !== undefined ? l.tva : 20} onChange={e => setL(i,"tva",Number(e.target.value))}>
+                <option value={0}>0%</option>
+                <option value={7}>7%</option>
+                <option value={10}>10%</option>
+                <option value={14}>14%</option>
+                <option value={20}>20%</option>
+              </select>
+              <span style={{ ...S.input, width:100, background:"#f1f5f9", textAlign:"right", display:"flex", alignItems:"center", justifyContent:"flex-end", fontSize:13 }}>
+                {formatMoney((Number(l.qte)||0)*(Number(l.pu)||0), form.devise)}
               </span>
               {form.lignes.length > 1 && <button style={S.iconBtn} onClick={() => setForm(f => ({ ...f, lignes: f.lignes.filter((_,j) => j!==i) }))}>✕</button>}
             </div>
           ))}
-          <button style={S.addLineBtn} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0 }] }))}>+ Ajouter une ligne</button>
+          <button style={S.addLineBtn} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0, tva:20 }] }))}>+ Ajouter une ligne</button>
           <div style={{ marginTop:16, borderTop:"2px solid #e2e8f0", paddingTop:12 }}>
             <div style={{ display:"flex", alignItems:"center", gap:10, margin:"12px 0 4px", padding:"10px 14px", background:"#f8fafc", borderRadius:8, border:"1.5px solid #e2e8f0" }}>
               <span style={{ fontSize:14, fontWeight:600, color:"#0f172a", flex:1 }}>💱 Devise</span>
@@ -1134,18 +1168,13 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
                 </button>
               ))}
             </div>
-            <div style={{ display:"flex", alignItems:"center", gap:10, margin:"8px 0 4px", padding:"10px 14px", background:form.tva?"#eff6ff":"#f8fafc", borderRadius:8, border:"1.5px solid "+(form.tva?"#3b82f6":"#e2e8f0") }}>
-              <span style={{ fontSize:14, fontWeight:600, color:"#0f172a", flex:1 }}>TVA (20%)</span>
-              <button onClick={() => setForm(f => ({ ...f, tva: !f.tva }))} style={{ padding:"4px 14px", borderRadius:6, border:"none", background:form.tva?"#3b82f6":"#94a3b8", color:"#fff", fontWeight:700, fontSize:13, cursor:"pointer" }}>
-                {form.tva ? "Activée ✓" : "Désactivée"}
-              </button>
-            </div>
-            {[["Total HT", ht], ...(form.tva ? [["TVA 20%", ht*0.2]] : [[]])].map(([k,v]) => (
-              <div key={k} style={{ display:"flex", justifyContent:"space-between", color:"#64748b", fontSize:14, marginBottom:4 }}><span>{k}</span><span>{formatMoney(v)}</span></div>
-            ))}
-            <div style={{ display:"flex", justifyContent:"space-between", fontSize:18, fontWeight:800, color:"#0f172a", borderTop:"2px solid #0f172a", paddingTop:8, marginTop:4 }}>
-              <span>{form.tva ? "Total TTC" : "Total HT"}</span><span>{formatMoney(form.tva ? ht*1.2 : ht, form.devise)}</span>
-            </div>
+            {(() => { const tvaTotal = calcTVA(form); const htTotal = calcHT(form); const ttc = htTotal + tvaTotal; return (<>
+              <div style={{ display:"flex", justifyContent:"space-between", color:"#64748b", fontSize:14, marginBottom:4 }}><span>Total HT</span><span>{formatMoney(htTotal, form.devise)}</span></div>
+              {tvaTotal > 0 && <div style={{ display:"flex", justifyContent:"space-between", color:"#64748b", fontSize:14, marginBottom:4 }}><span>Total TVA</span><span>{formatMoney(tvaTotal, form.devise)}</span></div>}
+              <div style={{ display:"flex", justifyContent:"space-between", fontSize:18, fontWeight:800, color:"#0f172a", borderTop:"2px solid #0f172a", paddingTop:8, marginTop:4 }}>
+                <span>{tvaTotal > 0 ? "Total TTC" : "Total HT"}</span><span>{formatMoney(ttc, form.devise)}</span>
+              </div>
+            </>); })()}
           </div>
           <label style={S.label}>Notes</label>
           <textarea style={{ ...S.input, minHeight:70, resize:"vertical" }} value={form.notes} onChange={e => set("notes", e.target.value)} />
@@ -1382,6 +1411,153 @@ function Releves({ clients, invoices, calcTotal, onReleve }) {
         {filtered.length === 0 && (
           <div style={{ textAlign:"center", color:"#94a3b8", padding:60, fontSize:15 }}>Aucun client trouvé</div>
         )}
+      </div>
+    </div>
+  );
+}
+
+
+// ─── RELEVÉ GLOBAL DES VENTES ─────────────────────────────────────────────────
+function RelevesVentes({ invoices, clients, calcHT, calcTVA, calcTotal }) {
+  const now = new Date();
+  const [filterType, setFilterType] = useState("month"); // month | year | custom
+  const [filterMonth, setFilterMonth] = useState(now.getMonth() + 1);
+  const [filterYear, setFilterYear]   = useState(now.getFullYear());
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo]     = useState("");
+
+  const years = [...new Set(invoices.map(i => new Date(i.date).getFullYear()))].sort((a,b) => b-a);
+  const months = [
+    {v:1,l:"Janvier"},{v:2,l:"Février"},{v:3,l:"Mars"},{v:4,l:"Avril"},
+    {v:5,l:"Mai"},{v:6,l:"Juin"},{v:7,l:"Juillet"},{v:8,l:"Août"},
+    {v:9,l:"Septembre"},{v:10,l:"Octobre"},{v:11,l:"Novembre"},{v:12,l:"Décembre"}
+  ];
+
+  const filtered = invoices.filter(inv => {
+    const d = new Date(inv.date);
+    if (filterType === "month") return d.getMonth()+1 === filterMonth && d.getFullYear() === filterYear;
+    if (filterType === "year")  return d.getFullYear() === filterYear;
+    if (filterType === "custom") {
+      const from = dateFrom ? new Date(dateFrom) : null;
+      const to   = dateTo   ? new Date(dateTo)   : null;
+      if (from && d < from) return false;
+      if (to   && d > to)   return false;
+      return true;
+    }
+    return true;
+  }).sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  const totHT  = filtered.reduce((s,i) => s + calcHT(i), 0);
+  const totTVA = filtered.reduce((s,i) => s + calcTVA(i), 0);
+  const totTTC = filtered.reduce((s,i) => s + calcTotal(i), 0);
+
+  const btnStyle = (active) => ({
+    padding:"7px 16px", borderRadius:7, border:"none",
+    background: active ? "#0f172a" : "#e2e8f0",
+    color: active ? "#fff" : "#374151",
+    fontWeight:700, fontSize:13, cursor:"pointer"
+  });
+
+  return (
+    <div style={S.page}>
+      <div style={S.pageHdr}>
+        <h1 style={S.pageTitle}>📈 Relevé Global des Ventes</h1>
+      </div>
+
+      {/* FILTRES */}
+      <div style={{ background:"#fff", borderRadius:12, padding:"18px 22px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", marginBottom:20 }}>
+        <div style={{ display:"flex", gap:8, marginBottom:16, flexWrap:"wrap", alignItems:"center" }}>
+          <span style={{ fontWeight:700, color:"#0f172a", fontSize:13, marginRight:4 }}>Période :</span>
+          <button style={btnStyle(filterType==="month")} onClick={() => setFilterType("month")}>Par mois</button>
+          <button style={btnStyle(filterType==="year")}  onClick={() => setFilterType("year")}>Par année</button>
+          <button style={btnStyle(filterType==="custom")} onClick={() => setFilterType("custom")}>Période libre</button>
+        </div>
+
+        {filterType === "month" && (
+          <div style={{ display:"flex", gap:10, flexWrap:"wrap", alignItems:"center" }}>
+            <select style={{ ...S.input, width:140 }} value={filterMonth} onChange={e => setFilterMonth(Number(e.target.value))}>
+              {months.map(m => <option key={m.v} value={m.v}>{m.l}</option>)}
+            </select>
+            <select style={{ ...S.input, width:100 }} value={filterYear} onChange={e => setFilterYear(Number(e.target.value))}>
+              {years.map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </div>
+        )}
+        {filterType === "year" && (
+          <select style={{ ...S.input, width:120 }} value={filterYear} onChange={e => setFilterYear(Number(e.target.value))}>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        )}
+        {filterType === "custom" && (
+          <div style={{ display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+            <div><label style={S.label}>Du</label><input type="date" style={{ ...S.input, width:160 }} value={dateFrom} onChange={e => setDateFrom(e.target.value)} /></div>
+            <div><label style={S.label}>Au</label><input type="date" style={{ ...S.input, width:160 }} value={dateTo}   onChange={e => setDateTo(e.target.value)}   /></div>
+          </div>
+        )}
+      </div>
+
+      {/* TOTAUX */}
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))", gap:14, marginBottom:20 }}>
+        {[
+          { label:"Factures", val:filtered.length, color:"#0f172a", fmt: v => v },
+          { label:"Total HT",  val:totHT,  color:"#3b82f6", fmt: v => v.toLocaleString("fr-FR",{minimumFractionDigits:2})+" MAD" },
+          { label:"Total TVA", val:totTVA, color:"#f59e0b", fmt: v => v.toLocaleString("fr-FR",{minimumFractionDigits:2})+" MAD" },
+          { label:"Total TTC", val:totTTC, color:"#22c55e", fmt: v => v.toLocaleString("fr-FR",{minimumFractionDigits:2})+" MAD" },
+        ].map(({label,val,color,fmt}) => (
+          <div key={label} style={{ background:"#fff", borderRadius:12, padding:"18px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", textAlign:"center" }}>
+            <div style={{ fontSize:20, fontWeight:800, color }}>{fmt(val)}</div>
+            <div style={{ fontSize:11, color:"#94a3b8", textTransform:"uppercase", letterSpacing:1, marginTop:4 }}>{label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* TABLEAU */}
+      <div style={S.tableWrap}>
+        <table style={S.table}>
+          <thead>
+            <tr>
+              {["N° Facture","Date","Client","Devise","Total HT","Total TVA","Total TTC","Statut"].map(h => (
+                <th key={h} style={S.th}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map(inv => {
+              const cl = clients.find(c => c.id === inv.clientId);
+              const iHT  = calcHT(inv);
+              const iTVA = calcTVA(inv);
+              const iTTC = iHT + iTVA;
+              const st   = STATUS[getStatus(inv)];
+              const fmt  = v => v.toLocaleString("fr-FR",{minimumFractionDigits:2});
+              return (
+                <tr key={inv.id} style={S.tr}>
+                  <td style={{ ...S.td, ...S.invNo }}>{inv.id}</td>
+                  <td style={S.td}>{formatDate(inv.date)}</td>
+                  <td style={{ ...S.td, fontWeight:600 }}>{cl?.nom || "—"}</td>
+                  <td style={S.td}><span style={{ background:"#f1f5f9", padding:"2px 8px", borderRadius:4, fontSize:11, fontWeight:700 }}>{inv.devise||"MAD"}</span></td>
+                  <td style={{ ...S.td, textAlign:"right" }}>{fmt(iHT)}</td>
+                  <td style={{ ...S.td, textAlign:"right", color: iTVA > 0 ? "#f59e0b" : "#94a3b8" }}>{fmt(iTVA)}</td>
+                  <td style={{ ...S.td, textAlign:"right", fontWeight:700 }}>{fmt(iTTC)}</td>
+                  <td style={S.td}><span style={{ ...S.badge, color:st?.color, background:st?.bg }}>{st?.label}</span></td>
+                </tr>
+              );
+            })}
+            {filtered.length === 0 && (
+              <tr><td colSpan={8} style={{ ...S.td, textAlign:"center", color:"#94a3b8", padding:40 }}>Aucune facture sur cette période</td></tr>
+            )}
+          </tbody>
+          {filtered.length > 0 && (
+            <tfoot>
+              <tr style={{ background:"#f8fafc", borderTop:"2px solid #e2e8f0" }}>
+                <td colSpan={4} style={{ ...S.td, fontWeight:800, color:"#0f172a" }}>TOTAL ({filtered.length} factures)</td>
+                <td style={{ ...S.td, textAlign:"right", fontWeight:800, color:"#3b82f6" }}>{totHT.toLocaleString("fr-FR",{minimumFractionDigits:2})}</td>
+                <td style={{ ...S.td, textAlign:"right", fontWeight:800, color:"#f59e0b" }}>{totTVA.toLocaleString("fr-FR",{minimumFractionDigits:2})}</td>
+                <td style={{ ...S.td, textAlign:"right", fontWeight:800, color:"#22c55e" }}>{totTTC.toLocaleString("fr-FR",{minimumFractionDigits:2})}</td>
+                <td style={S.td}></td>
+              </tr>
+            </tfoot>
+          )}
+        </table>
       </div>
     </div>
   );
