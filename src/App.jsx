@@ -197,6 +197,12 @@ const INIT_INVOICES = [{"id": "FAC-2026-0001", "clientId": "C001", "date": "2026
 
 function calcHT(inv) { return inv.lignes.reduce((s, l) => s + (Number(l.qte)||0) * (Number(l.pu)||0), 0); }
 function calcTotal(inv) { const ht = calcHT(inv); return inv.tva ? ht * 1.2 : ht; }
+function getStatus(inv) {
+  if (inv.status === "paid") return "paid";
+  if (inv.status === "draft") return "draft";
+  if (inv.echeance && new Date(inv.echeance) < new Date() && inv.status !== "paid") return "overdue";
+  return inv.status || "sent";
+}
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 function MainApp({ onLogout, currentUser }) {
@@ -277,6 +283,15 @@ function MainApp({ onLogout, currentUser }) {
     notify("Facture supprimée", "error");
   }
 
+  function duplicateInvoice(inv) {
+    const newId = nextInvoiceId();
+    const today_ = new Date().toISOString().split("T")[0];
+    const duplicate = { ...inv, id: newId, date: today_, echeance: "", status: "draft", cree: null, modifie: null };
+    setEditingInvoice(duplicate);
+    setView("invoice-form");
+    notify("Facture dupliquée — vérifiez et enregistrez ✓");
+  }
+
   // ─── RELEVÉ CLIENT ──────────────────────────────────────────────────────────
   function handleReleve(client, clientInvoices, format) {
     const dateNow = new Date().toLocaleDateString("fr-FR");
@@ -302,7 +317,7 @@ function MainApp({ onLogout, currentUser }) {
       const tva = inv.tva ? ht * 0.2 : 0;
       const ttc = ht + tva;
       const desc = inv.lignes.map(l => l.desc).filter(Boolean).join(" / ").slice(0, 60);
-      rows.push([inv.id, inv.date, inv.echeance || "", desc, ht.toFixed(2), tva.toFixed(2), ttc.toFixed(2), inv.devise || "MAD", STATUS[inv.status]?.label || inv.status]);
+      rows.push([inv.id, inv.date, inv.echeance || "", desc, ht.toFixed(2), tva.toFixed(2), ttc.toFixed(2), inv.devise || "MAD", STATUS[getStatus(inv)]?.label || inv.status]);
     });
     const totalHT = invs.reduce((s,i) => s + i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0), 0);
     const totalTTC = invs.reduce((s,i) => { const ht = i.lignes.reduce((a,l) => a + (Number(l.qte)||0)*(Number(l.pu)||0), 0); return s + (i.tva ? ht*1.2 : ht); }, 0);
@@ -534,7 +549,7 @@ function MainApp({ onLogout, currentUser }) {
             onNew={() => setEditingInvoice({ id: nextInvoiceId(), clientId: "", date: today(), echeance: "", status: "draft", lignes: [{ desc: "", qte: 1, pu: 0 }], notes: "", tva: true, devise: "MAD" })}
             onSelect={(inv) => { setSelectedInvoice(inv); setView("invoice-detail"); }}
             onEdit={setEditingInvoice}
-            onDelete={deleteInvoice}
+            onDelete={deleteInvoice} onDuplicate={duplicateInvoice}
             onStatus={(id, s) => { setInvoices(invoices.map(i => i.id === id ? { ...i, status: s } : i)); notify("Statut mis à jour ✓"); }}
           />
         )}
@@ -600,9 +615,9 @@ function MainApp({ onLogout, currentUser }) {
 
 // ─── DASHBOARD ────────────────────────────────────────────────────────────────
 function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto }) {
-  const revenu    = invoices.filter(i => i.status === "paid").reduce((s, i) => s + calcTotal(i), 0);
-  const attente   = invoices.filter(i => i.status === "sent").reduce((s, i) => s + calcTotal(i), 0);
-  const retard    = invoices.filter(i => i.status === "overdue").reduce((s, i) => s + calcTotal(i), 0);
+  const revenu    = invoices.filter(i => getStatus(i) === "paid").reduce((s, i) => s + calcTotal(i), 0);
+  const attente   = invoices.filter(i => getStatus(i) === "sent").reduce((s, i) => s + calcTotal(i), 0);
+  const retard    = invoices.filter(i => getStatus(i) === "overdue").reduce((s, i) => s + calcTotal(i), 0);
   const recent    = [...invoices].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 6);
   const [migrating, setMigrating] = useState(false);
   const [migrated, setMigrated] = useState(false); // toujours afficher le bouton migration
@@ -1266,8 +1281,8 @@ function ClientForm({ client, onSave, onCancel }) {
 
 // ─── PAIEMENTS ────────────────────────────────────────────────────────────────
 function Paiements({ invoices, clients, calcTotal, onStatus }) {
-  const pending = invoices.filter(i => i.status === "sent" || i.status === "overdue");
-  const paid    = invoices.filter(i => i.status === "paid");
+  const pending = invoices.filter(i => getStatus(i) === "sent" || getStatus(i) === "overdue");
+  const paid    = invoices.filter(i => getStatus(i) === "paid");
   return (
     <div style={S.page}>
       <h1 style={S.pageTitle}>Suivi des paiements</h1>
