@@ -919,27 +919,6 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, canEdit, onEdit, onDel
   const ttc = ht + tva;
   const st = STATUS[getStatus(inv)];
   
-  // Pièces jointes (stockées localement)
-  const PJ_KEY = `mts_pj_${inv.id}`;
-  const [piecesJointes, setPiecesJointes] = useState(() => {
-    try { return JSON.parse(localStorage.getItem(PJ_KEY) || "[]"); } catch { return []; }
-  });
-  function addPJ(e) {
-    const file = e.target.files[0]; if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const pj = { name: file.name, size: file.size, type: file.type, data: reader.result, date: new Date().toISOString() };
-      const next = [...piecesJointes, pj];
-      setPiecesJointes(next);
-      localStorage.setItem(PJ_KEY, JSON.stringify(next));
-    };
-    reader.readAsDataURL(file);
-  }
-  function removePJ(idx) {
-    const next = piecesJointes.filter((_,i) => i !== idx);
-    setPiecesJointes(next);
-    localStorage.setItem(PJ_KEY, JSON.stringify(next));
-  }
 
   // Historique paiements partiels
   const PAY_KEY = `mts_pay_${inv.id}`;
@@ -1434,37 +1413,6 @@ facturation@maghrebtranssolutions.com`
         )}
       </div>
 
-      {/* ─── PIÈCES JOINTES ─── */}
-      <div style={{ background:"#fff", borderRadius:12, padding:"20px 24px", boxShadow:"0 1px 4px rgba(0,0,0,.07)", marginTop:16 }}>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:14 }}>
-          <div style={{ fontWeight:700, fontSize:15, color:"#0f172a" }}>📎 Pièces jointes ({piecesJointes.length})</div>
-          {canEdit && (
-            <label style={{ ...S.primaryBtn, fontSize:12, padding:"6px 14px", cursor:"pointer" }}>
-              + Ajouter fichier
-              <input type="file" style={{ display:"none" }} onChange={addPJ} accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" />
-            </label>
-          )}
-        </div>
-        {piecesJointes.length === 0 ? (
-          <div style={{ color:"#94a3b8", fontSize:13, textAlign:"center", padding:"12px 0" }}>
-            Aucune pièce jointe — Ajoutez des BL, DUM, documents douaniers...
-          </div>
-        ) : (
-          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-            {piecesJointes.map((pj, idx) => (
-              <div key={idx} style={{ display:"flex", alignItems:"center", gap:12, padding:"10px 14px", background:"#f8fafc", borderRadius:8, border:"1px solid #e2e8f0" }}>
-                <span style={{ fontSize:20 }}>{pj.type?.includes("pdf") ? "📄" : pj.type?.includes("image") ? "🖼️" : "📁"}</span>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontWeight:600, fontSize:13, color:"#0f172a" }}>{pj.name}</div>
-                  <div style={{ fontSize:11, color:"#94a3b8" }}>{(pj.size/1024).toFixed(1)} KB · {formatDate(pj.date?.split("T")[0])}</div>
-                </div>
-                <a href={pj.data} download={pj.name} style={{ ...S.secondaryBtn, fontSize:12, padding:"5px 12px", textDecoration:"none", display:"inline-block" }}>⬇ Télécharger</a>
-                {canEdit && <button style={S.iconBtn} onClick={() => removePJ(idx)}>🗑️</button>}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
