@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 // ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
 const SUPABASE_URL = "https://jwoikieeyjsejyxnkiic.supabase.co";
-const SUPABASE_KEY = "sb_publishable_b5-yWlOhHtI-IA0jzyDr4g_b2KUf3nW";
+const SUPABASE_KEY = "sb_secret_6fXuySsrA6pW7pX6iAk4CA_G9QZ5Luw";
 
 async function sbFetch(path, options = {}) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
