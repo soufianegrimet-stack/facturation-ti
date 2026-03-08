@@ -2,15 +2,41 @@ import { useState, useEffect, useCallback } from "react";
 
 // ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
 const SUPABASE_URL = "https://jwoikieeyjsejyxnkiic.supabase.co";
-const SUPABASE_PUB = "sb_publishable_b5-yWlOhHtI-IA0jzyDr4g_b2KUf3nW";
-// anon JWT généré depuis legacy secret
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3b2lraWVleWpzZWp5eG5raWljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4OTk5MTksImV4cCI6MjA4ODQ3NTkxOX0.NIruTJ37hnPpAqzKQ3C1HaGKgXhO0ZeofTDJZJlxsSk";
 
-async function sbFetch(path, options = {}) {
+// ─── SUPABASE AUTH ────────────────────────────────────────────────────────────
+const sbAuth = {
+  signIn: async (email, password) => {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: "POST",
+      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error_description || data.msg || "Erreur connexion");
+    return data;
+  },
+  signOut: async (token) => {
+    await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+      method: "POST",
+      headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${token}` }
+    });
+  },
+  getProfile: async (userId, token) => {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=*`, {
+      headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${token}` }
+    });
+    const data = await res.json();
+    return data[0] || null;
+  }
+};
+
+async function sbFetch(path, options = {}, token = null) {
+  const authToken = token || sessionStorage.getItem("mts_token") || SUPABASE_KEY;
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: {
       "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Authorization": `Bearer ${authToken}`,
       "Content-Type": "application/json",
       "Prefer": options.prefer || "return=representation",
       ...options.headers
@@ -35,30 +61,47 @@ const db = {
   deleteInvoice: (id) => sbFetch(`invoices?id=eq.${id}`, { method: "DELETE" }),
 };
 
-// ─── UTILISATEURS ─────────────────────────────────────────────────────────────
-const USERS = [
-  { id: "soufiane", nom: "Soufiane Grimet", role: "Gérant",                   password: "MTS2024",   color: "#3b82f6", initiales: "SG", acces: "admin" },
-  { id: "ikram",    nom: "Ikram Lakhdar",   role: "Responsable Facturation",   password: "IKRAM2024", color: "#8b5cf6", initiales: "IL", acces: "lecture" },
-];
-// acces: "admin" = tout / "lecture" = lecture seule (pas de créer/modifier/supprimer)
-function canEdit(user) { return user?.acces === "admin"; }
+// ─── PERMISSIONS ──────────────────────────────────────────────────────────────
+// role: "gerant" = accès total / "facturation" = accès complet aussi
+function canEdit(user) { return user?.role === "gerant" || user?.role === "facturation"; }
+function getUserColor(role) { return role === "gerant" ? "#3b82f6" : "#8b5cf6"; }
+function getUserInitiales(nom) {
+  if (!nom) return "??";
+  const parts = nom.trim().split(" ");
+  return (parts[0]?.[0] || "") + (parts[1]?.[0] || "");
+}
 
 function LoginScreen({ onLogin }) {
-  const [selected, setSelected] = useState(null);
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError]       = useState(false);
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
   const [shake, setShake]       = useState(false);
 
-  const handleSubmit = () => {
-    if (!selected) return;
-    if (password === selected.password) {
+  const handleSubmit = async () => {
+    if (!email || !password) { setError("Veuillez remplir tous les champs"); return; }
+    setLoading(true); setError("");
+    try {
+      const data = await sbAuth.signIn(email, password);
+      const profile = await sbAuth.getProfile(data.user.id, data.access_token);
+      sessionStorage.setItem("mts_token", data.access_token);
+      sessionStorage.setItem("mts_refresh", data.refresh_token);
       sessionStorage.setItem("mts_auth", "1");
-      sessionStorage.setItem("mts_user", JSON.stringify(selected));
-      onLogin(selected);
-    } else {
-      setError(true); setShake(true); setPassword("");
-      setTimeout(() => setShake(false), 500);
+      const user = {
+        id: data.user.id,
+        email: data.user.email,
+        nom: profile?.nom || data.user.email,
+        role: profile?.role || "facturation",
+        color: getUserColor(profile?.role),
+        initiales: getUserInitiales(profile?.nom || data.user.email),
+      };
+      sessionStorage.setItem("mts_user", JSON.stringify(user));
+      onLogin(user);
+    } catch(e) {
+      setError("Email ou mot de passe incorrect");
+      setShake(true); setTimeout(() => setShake(false), 500);
     }
+    setLoading(false);
   };
 
   return (
@@ -90,59 +133,47 @@ function LoginScreen({ onLogin }) {
           <div style={{ fontSize:13, color:"#64748b", marginTop:4 }}>Système de Facturation</div>
         </div>
 
-        {/* Choix utilisateur */}
-        <div style={{ marginBottom:20 }}>
-          <div style={{ fontSize:13, fontWeight:600, color:"#374151", marginBottom:10 }}>👤 Qui êtes-vous ?</div>
-          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-            {USERS.map(u => (
-              <div key={u.id} onClick={() => { setSelected(u); setError(false); setPassword(""); }}
-                style={{
-                  padding:"14px 16px", borderRadius:10, cursor:"pointer", display:"flex", alignItems:"center", gap:12,
-                  border: selected?.id === u.id ? `2px solid ${u.color}` : "2px solid #e2e8f0",
-                  background: selected?.id === u.id ? `${u.color}10` : "#f8fafc",
-                  transition:"all 0.15s"
-                }}>
-                <div style={{ width:40, height:40, borderRadius:10, background:u.color, color:"white", display:"flex", alignItems:"center", justifyContent:"center", fontWeight:800, fontSize:14, flexShrink:0 }}>
-                  {u.initiales}
-                </div>
-                <div>
-                  <div style={{ fontWeight:700, color:"#0f172a", fontSize:14 }}>{u.nom}</div>
-                  <div style={{ fontSize:12, color:"#64748b" }}>{u.role}</div>
-                </div>
-                {selected?.id === u.id && <span style={{ marginLeft:"auto", color:u.color, fontSize:18 }}>✓</span>}
-              </div>
-            ))}
-          </div>
+        {/* Email */}
+        <div style={{ marginBottom:14 }}>
+          <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:6 }}>📧 Email</label>
+          <input
+            type="email" value={email} autoFocus
+            onChange={e => { setEmail(e.target.value); setError(""); }}
+            onKeyDown={e => e.key === "Enter" && document.getElementById("mts-pwd-input").focus()}
+            placeholder="votre@email.com"
+            style={{
+              width:"100%", padding:"11px 14px", fontSize:14, borderRadius:8, boxSizing:"border-box",
+              border: error ? "2px solid #ef4444" : "2px solid #e2e8f0",
+              outline:"none", background: error ? "#fef2f2" : "white"
+            }}
+          />
         </div>
 
         {/* Mot de passe */}
-        {selected && (
-          <div style={{ marginBottom:8 }}>
-            <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:8 }}>
-              🔒 Mot de passe
-            </label>
-            <input
-              type="password" value={password} autoFocus
-              onChange={e => { setPassword(e.target.value); setError(false); }}
-              onKeyDown={e => e.key === "Enter" && handleSubmit()}
-              placeholder="Entrez votre mot de passe..."
-              style={{
-                width:"100%", padding:"12px 16px", fontSize:15, borderRadius:8, boxSizing:"border-box",
-                border: error ? "2px solid #ef4444" : `2px solid ${selected.color}`,
-                outline:"none", background: error ? "#fef2f2" : "white"
-              }}
-            />
-            {error && <div style={{ color:"#ef4444", fontSize:13, marginTop:6, fontWeight:500 }}>❌ Mot de passe incorrect.</div>}
-          </div>
-        )}
+        <div style={{ marginBottom:8 }}>
+          <label style={{ display:"block", fontSize:13, fontWeight:600, color:"#374151", marginBottom:6 }}>🔒 Mot de passe</label>
+          <input
+            id="mts-pwd-input"
+            type="password" value={password}
+            onChange={e => { setPassword(e.target.value); setError(""); }}
+            onKeyDown={e => e.key === "Enter" && handleSubmit()}
+            placeholder="••••••••"
+            style={{
+              width:"100%", padding:"11px 14px", fontSize:14, borderRadius:8, boxSizing:"border-box",
+              border: error ? "2px solid #ef4444" : "2px solid #e2e8f0",
+              outline:"none", background: error ? "#fef2f2" : "white"
+            }}
+          />
+          {error && <div style={{ color:"#ef4444", fontSize:12, marginTop:5, fontWeight:500 }}>❌ {error}</div>}
+        </div>
 
-        <button onClick={handleSubmit} disabled={!selected}
+        <button onClick={handleSubmit} disabled={loading}
           style={{
-            width:"100%", padding:"13px", background: selected ? selected.color : "#94a3b8",
+            width:"100%", padding:"13px", background: loading ? "#94a3b8" : "#3b82f6",
             color:"white", border:"none", borderRadius:8, fontSize:15, fontWeight:700,
-            cursor: selected ? "pointer" : "not-allowed", marginTop:16, letterSpacing:0.5
+            cursor: loading ? "not-allowed" : "pointer", marginTop:16, letterSpacing:0.5
           }}>
-          {selected ? `Connexion — ${selected.nom}` : "Sélectionnez un utilisateur"} →
+          {loading ? "Connexion en cours..." : "Se connecter →"}
         </button>
 
         <div style={{ textAlign:"center", marginTop:16, fontSize:11, color:"#94a3b8" }}>Accès réservé aux équipes MTS</div>
@@ -150,6 +181,7 @@ function LoginScreen({ onLogin }) {
     </div>
   );
 }
+
 
 // ─── PERSISTENCE ──────────────────────────────────────────────────────────────
 const DATA_VERSION = "v2026-01"; // Change this to force reset
@@ -517,7 +549,15 @@ function MainApp({ onLogout, currentUser }) {
             )}
             <div style={{ color: "#475569", fontSize: 11 }}>Tanger · Maroc</div>
             <button
-              onClick={() => { sessionStorage.removeItem("mts_auth"); sessionStorage.removeItem("mts_user"); onLogout(); }}
+              onClick={async () => {
+                const token = sessionStorage.getItem("mts_token");
+                if (token) { try { await sbAuth.signOut(token); } catch(e) {} }
+                sessionStorage.removeItem("mts_auth");
+                sessionStorage.removeItem("mts_user");
+                sessionStorage.removeItem("mts_token");
+                sessionStorage.removeItem("mts_refresh");
+                onLogout();
+              }}
               style={{
                 marginTop: 8, width: "100%", padding: "7px", background: "#1e293b",
                 color: "#94a3b8", border: "1px solid #334155", borderRadius: 6,
@@ -535,7 +575,13 @@ function MainApp({ onLogout, currentUser }) {
               </div>
             )}
             <button
-              onClick={() => { sessionStorage.removeItem("mts_auth"); sessionStorage.removeItem("mts_user"); onLogout(); }}
+              onClick={async () => {
+                const token = sessionStorage.getItem("mts_token");
+                if (token) { try { await sbAuth.signOut(token); } catch(e) {} }
+                sessionStorage.removeItem("mts_auth"); sessionStorage.removeItem("mts_user");
+                sessionStorage.removeItem("mts_token"); sessionStorage.removeItem("mts_refresh");
+                onLogout();
+              }}
               title="Déconnexion"
               style={{ background: "none", border: "none", color: "#475569", cursor: "pointer", fontSize: 16 }}
             >🔒</button>
@@ -2097,5 +2143,5 @@ export default function App() {
     try { return JSON.parse(sessionStorage.getItem("mts_user")) || null; } catch { return null; }
   });
   if (!authenticated) return <LoginScreen onLogin={(user) => { setAuthenticated(true); setCurrentUser(user); }} />;
-  return <MainApp onLogout={() => { sessionStorage.removeItem("mts_user"); setAuthenticated(false); setCurrentUser(null); }} currentUser={currentUser} />;
+  return <MainApp onLogout={() => { sessionStorage.clear(); setAuthenticated(false); setCurrentUser(null); }} currentUser={currentUser} />;
 }
