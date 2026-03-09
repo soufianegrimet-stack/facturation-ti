@@ -39,7 +39,6 @@ async function sbFetch(path, options = {}, token = null) {
       "Authorization": `Bearer ${authToken}`,
       "Content-Type": "application/json",
       "Prefer": options.prefer || "return=representation",
-      ...options.headers
     },
     method: options.method || "GET",
     body: options.body
@@ -55,8 +54,8 @@ async function sbFetch(path, options = {}, token = null) {
 const db = {
   getClients: () => sbFetch("clients?order=id"),
   getInvoices: () => sbFetch("invoices?order=id"),
-  upsertClient: (c) => sbFetch("clients", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", headers: { "Prefer": "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(c) }),
-  upsertInvoice: (i) => sbFetch("invoices", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", headers: { "Prefer": "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(i) }),
+  upsertClient: (c) => sbFetch("clients", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(c) }),
+  upsertInvoice: (i) => sbFetch("invoices", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(i) }),
   deleteClient: (id) => sbFetch(`clients?id=eq.${id}`, { method: "DELETE" }),
   deleteInvoice: (id) => sbFetch(`invoices?id=eq.${id}`, { method: "DELETE" }),
 };
@@ -284,9 +283,10 @@ function MainApp({ onLogout, currentUser }) {
   async function saveInvoiceToDB(inv) {
     try {
       await db.upsertInvoice(inv);
+      console.log("✅ Facture sauvegardée Supabase:", inv.id);
     } catch(e) {
-      console.warn("Sync error invoice:", e.message);
-      notify("⚠️ Erreur sauvegarde Supabase", "error");
+      console.error("❌ Erreur sauvegarde Supabase:", e.message);
+      alert("⚠️ ATTENTION : La facture n'a pas été sauvegardée dans la base de données !\n\nErreur : " + e.message + "\n\nVeuillez réessayer ou contacter le support.");
     }
   }
   const [view, setView] = useState("dashboard");
