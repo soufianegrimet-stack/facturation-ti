@@ -278,7 +278,16 @@ function MainApp({ onLogout, currentUser }) {
   async function setInvoices(updater) {
     const next = typeof updater === "function" ? updater(invoices) : updater;
     setInvoicesState(next);
-    try { for (const i of next) await db.upsertInvoice(i); } catch(e) { console.warn("Sync error:", e.message); }
+    // Ne sync que si c'est un tableau simple (pas utilisé pour save individuel)
+  }
+
+  async function saveInvoiceToDB(inv) {
+    try {
+      await db.upsertInvoice(inv);
+    } catch(e) {
+      console.warn("Sync error invoice:", e.message);
+      notify("⚠️ Erreur sauvegarde Supabase", "error");
+    }
   }
   const [view, setView] = useState("dashboard");
   const [selectedInvoice, setSelectedInvoice] = useState(null);
@@ -300,28 +309,34 @@ function MainApp({ onLogout, currentUser }) {
     return `FAC-${year}-${next}`;
   };
 
-  function saveInvoice(inv) {
+  async function saveInvoice(inv) {
     const now = new Date().toISOString();
     const userInfo = currentUser ? { nom: currentUser.nom, initiales: currentUser.initiales, color: currentUser.color } : { nom: "Inconnu", initiales: "?", color: "#94a3b8" };
+    let saved;
     if (invoices.find(i => i.id === inv.id)) {
-      const updated = { ...inv, modifie: { par: userInfo, le: now } };
-      setInvoices(invoices.map(i => i.id === inv.id ? updated : i));
+      saved = { ...inv, modifie: { par: userInfo, le: now } };
+      setInvoicesState(invoices.map(i => i.id === inv.id ? saved : i));
       notify("Facture mise à jour ✓");
     } else {
-      const created = { ...inv, cree: { par: userInfo, le: now } };
-      setInvoices([created, ...invoices]);
+      saved = { ...inv, cree: { par: userInfo, le: now } };
+      setInvoicesState([saved, ...invoices]);
       notify("Facture créée ✓");
     }
     setEditingInvoice(null);
     setView("factures");
+    // Sauvegarde Supabase uniquement la facture concernée
+    await saveInvoiceToDB(saved);
   }
 
-  function deleteInvoice(id) {
+  async function deleteInvoice(id) {
     if (!window.confirm("Supprimer cette facture ?")) return;
-    setInvoices(invoices.filter(i => i.id !== id));
+    setInvoicesState(invoices.filter(i => i.id !== id));
     setSelectedInvoice(null);
     setView("factures");
     notify("Facture supprimée", "error");
+    try {
+      await sbFetch(`invoices?id=eq.${id}`, { method: "DELETE" });
+    } catch(e) { console.warn("Delete sync error:", e.message); }
   }
 
   function duplicateInvoice(inv) {
