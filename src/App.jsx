@@ -281,12 +281,34 @@ function MainApp({ onLogout, currentUser }) {
   }
 
   async function saveInvoiceToDB(inv) {
+    // Garder uniquement les colonnes qui existent dans Supabase
+    const clean = {
+      id: inv.id,
+      clientId: inv.clientId,
+      date: inv.date,
+      echeance: inv.echeance,
+      status: inv.status,
+      lignes: (inv.lignes || []).map(l => ({ desc: l.desc||"", qte: l.qte||1, pu: l.pu||0, tva: l.tva!==undefined?l.tva:20, dateOp: l.dateOp||null, refClient: l.refClient||null, matricule: l.matricule||null })),
+      notes: inv.notes,
+      tva: inv.tva,
+      devise: inv.devise,
+      refClient: inv.refClient || null,
+      refMTS: inv.refMTS || null,
+      paiements: inv.paiements || null,
+      cree: inv.cree || null,
+      modifie: inv.modifie || null,
+    };
+    // Supprimer les champs transport_* qui n'existent pas dans Supabase
+    delete clean.transport_matricule; delete clean.transport_dum;
+    delete clean.transport_expdest; delete clean.transport_date_dechargement;
+    delete clean.transport_marchandise; delete clean.transport_nb_colis;
+    delete clean.transport_dossier; delete clean.transport_poids;
     try {
-      await db.upsertInvoice(inv);
+      await db.upsertInvoice(clean);
       console.log("✅ Facture sauvegardée Supabase:", inv.id);
     } catch(e) {
       console.error("❌ Erreur sauvegarde Supabase:", e.message);
-      alert("⚠️ ATTENTION : La facture n'a pas été sauvegardée dans la base de données !\n\nErreur : " + e.message + "\n\nVeuillez réessayer ou contacter le support.");
+      alert("⚠️ ATTENTION : La facture n'a pas été sauvegardée !\n\nErreur : " + e.message + "\n\nVeuillez réessayer.");
     }
   }
   const [view, setView] = useState("dashboard");
