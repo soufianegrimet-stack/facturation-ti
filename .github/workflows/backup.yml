@@ -1,0 +1,27 @@
+﻿name: Backup Automatique Supabase
+on:
+  schedule:
+    - cron: '0 7 * * 0'
+  workflow_dispatch:
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Lancer backup
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python backup_supabase.py
+      - name: Sauvegarder dans GitHub
+        run: |
+          git config --local user.email "backup@maghrebtranssolutions.com"
+          git config --local user.name "MTS Backup Bot"
+          git add backups/
+          git diff --staged --quiet || git commit -m "Backup automatique $(date +'%d/%m/%Y')"
+          git push
