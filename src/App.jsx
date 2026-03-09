@@ -1511,37 +1511,70 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
         <div style={S.formCard}>
           <h3 style={S.formSec}>Lignes de facturation</h3>
           {form.lignes.map((l, i) => (
-            <div key={i} style={{ marginBottom:10, background:"#f8fafc", borderRadius:8, border:"1px solid #e2e8f0", padding:"8px 10px" }}>
-              {/* Ligne principale */}
-              <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap" }}>
-                <input style={{ ...S.input, flex:3, minWidth:140 }} placeholder="Description" value={l.desc} onChange={e => setL(i,"desc",e.target.value)} />
-                <input style={{ ...S.input, width:60, textAlign:"center" }} placeholder="Qté" type="number" min="1" value={l.qte} onChange={e => setL(i,"qte",e.target.value)} />
-                <input style={{ ...S.input, width:90, textAlign:"right" }} placeholder="Prix HT" type="number" min="0" value={l.pu} onChange={e => setL(i,"pu",e.target.value)} />
-                <select style={{ ...S.input, width:80, textAlign:"center" }} value={l.tva !== undefined ? l.tva : 20} onChange={e => setL(i,"tva",Number(e.target.value))}>
-                  <option value={0}>0%</option>
-                  <option value={7}>7%</option>
-                  <option value={10}>10%</option>
-                  <option value={14}>14%</option>
-                  <option value={20}>20%</option>
-                </select>
-                <span style={{ ...S.input, width:100, background:"#e2e8f0", textAlign:"right", display:"flex", alignItems:"center", justifyContent:"flex-end", fontSize:13, fontWeight:700 }}>
-                  {formatMoney((Number(l.qte)||0)*(Number(l.pu)||0), form.devise)}
-                </span>
-                {form.lignes.length > 1 && <button style={S.iconBtn} onClick={() => setForm(f => ({ ...f, lignes: f.lignes.filter((_,j) => j!==i) }))}>✕</button>}
+            <div key={i} style={{ marginBottom:14, background:"#fff", borderRadius:10, border:"1.5px solid #e2e8f0", boxShadow:"0 1px 4px rgba(0,0,0,0.05)", overflow:"hidden" }}>
+              {/* En-tête ligne */}
+              <div style={{ background:"#f1f5f9", padding:"8px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid #e2e8f0" }}>
+                <span style={{ fontSize:12, fontWeight:700, color:"#475569" }}>Ligne {i+1}</span>
+                {form.lignes.length > 1 && <button style={{ ...S.iconBtn, background:"#fee2e2", color:"#ef4444", border:"none", borderRadius:6, padding:"2px 8px", fontSize:12, cursor:"pointer" }} onClick={() => setForm(f => ({ ...f, lignes: f.lignes.filter((_,j) => j!==i) }))}>✕ Supprimer</button>}
               </div>
-              {/* Champs optionnels transport */}
-              <div style={{ display:"flex", gap:6, marginTop:6, flexWrap:"wrap", alignItems:"center" }}>
-                <span style={{ fontSize:11, color:"#94a3b8", fontWeight:600, minWidth:80 }}>Optionnel :</span>
-                <input style={{ ...S.input, flex:1, minWidth:110, fontSize:12, padding:"4px 8px", background:"#fff", border:"1px dashed #cbd5e1" }} placeholder="📅 Date opération (ex: 05/12/2025)" value={l.dateOp||""} onChange={e => setL(i,"dateOp",e.target.value)} />
-                <input style={{ ...S.input, flex:1, minWidth:110, fontSize:12, padding:"4px 8px", background:"#fff", border:"1px dashed #cbd5e1" }} placeholder="🔖 Réf. client (ex: 9816338)" value={l.refClient||""} onChange={e => setL(i,"refClient",e.target.value)} />
-                <input style={{ ...S.input, flex:1, minWidth:120, fontSize:12, padding:"4px 8px", background:"#fff", border:"1px dashed #cbd5e1" }} placeholder="🚛 Matricule remorque (ex: 159011//28513A68)" value={l.matricule||""} onChange={e => setL(i,"matricule",e.target.value)} />
-              </div>
-              {/* Aperçu description générée */}
-              {(l.dateOp||l.refClient||l.matricule) && (
-                <div style={{ marginTop:5, fontSize:11, color:"#475569", background:"#eff6ff", borderRadius:4, padding:"4px 8px", fontStyle:"italic" }}>
-                  📄 Sur la facture : <strong>{[l.dateOp, l.refClient, l.matricule, l.desc].filter(Boolean).join(" - ")}</strong>
+              <div style={{ padding:"12px 14px" }}>
+                {/* Description — pleine largeur */}
+                <div style={{ marginBottom:10 }}>
+                  <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>📝 Description</label>
+                  <input style={{ ...S.input, width:"100%", fontSize:14, padding:"10px 12px" }} placeholder="Ex: TRANSPORT CUNHA - CASA-TEMARA" value={l.desc} onChange={e => setL(i,"desc",e.target.value)} />
                 </div>
-              )}
+                {/* Qté / Prix / TVA / Total sur une ligne */}
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 2fr 1fr 1fr", gap:10, marginBottom:10 }}>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Qté</label>
+                    <input style={{ ...S.input, width:"100%", textAlign:"center", fontSize:14, padding:"10px 8px" }} type="number" min="1" value={l.qte} onChange={e => setL(i,"qte",e.target.value)} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Prix unitaire HT</label>
+                    <input style={{ ...S.input, width:"100%", textAlign:"right", fontSize:14, padding:"10px 12px" }} type="number" min="0" placeholder="0.00" value={l.pu} onChange={e => setL(i,"pu",e.target.value)} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>TVA</label>
+                    <select style={{ ...S.input, width:"100%", textAlign:"center", fontSize:14, padding:"10px 8px" }} value={l.tva !== undefined ? l.tva : 20} onChange={e => setL(i,"tva",Number(e.target.value))}>
+                      <option value={0}>0%</option>
+                      <option value={7}>7%</option>
+                      <option value={10}>10%</option>
+                      <option value={14}>14%</option>
+                      <option value={20}>20%</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Total HT</label>
+                    <div style={{ ...S.input, width:"100%", background:"#f0fdf4", textAlign:"right", fontSize:14, fontWeight:800, color:"#15803d", padding:"10px 12px", display:"flex", alignItems:"center", justifyContent:"flex-end" }}>
+                      {formatMoney((Number(l.qte)||0)*(Number(l.pu)||0), form.devise)}
+                    </div>
+                  </div>
+                </div>
+                {/* Champs optionnels transport */}
+                <div style={{ background:"#f8fafc", borderRadius:8, border:"1px dashed #cbd5e1", padding:"10px 12px" }}>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#94a3b8", marginBottom:8, textTransform:"uppercase", letterSpacing:"0.5px" }}>🚛 Informations transport (optionnel)</div>
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
+                    <div>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>📅 Date opération</label>
+                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="05/12/2025" value={l.dateOp||""} onChange={e => setL(i,"dateOp",e.target.value)} />
+                    </div>
+                    <div>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>🔖 Réf. client</label>
+                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="9816338" value={l.refClient||""} onChange={e => setL(i,"refClient",e.target.value)} />
+                    </div>
+                    <div>
+                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>🚛 Matricule remorque</label>
+                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="159011//28513A68" value={l.matricule||""} onChange={e => setL(i,"matricule",e.target.value)} />
+                    </div>
+                  </div>
+                  {/* Aperçu */}
+                  {(l.dateOp||l.refClient||l.matricule) && (
+                    <div style={{ marginTop:8, fontSize:11, color:"#1e40af", background:"#eff6ff", borderRadius:6, padding:"6px 10px", fontStyle:"italic" }}>
+                      📄 <strong>Aperçu sur facture :</strong> {[l.dateOp, l.refClient, l.matricule, l.desc].filter(Boolean).join(" - ")}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
           <button style={S.addLineBtn} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0, tva:20, dateOp:"", refClient:"", matricule:"" }] }))}>+ Ajouter une ligne</button>
