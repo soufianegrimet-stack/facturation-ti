@@ -1213,23 +1213,7 @@ ${notesHTML}
 
 </div><!-- /content -->
 
-<!-- ===== SIGNATURES ===== -->
-<div style="display:flex;gap:20px;margin-bottom:18px;margin-top:10px">
-  <div style="flex:1;border:1px solid #e2e8f0;border-radius:6px;padding:14px 16px;text-align:center">
-    <div style="font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Cachet et Signature Client</div>
-    <div style="font-size:8px;color:#94a3b8;font-style:italic;margin-bottom:30px">Lu et approuvé</div>
-    <div style="border-top:1px dashed #cbd5e1;padding-top:6px;font-size:8px;color:#94a3b8">Date : _______________</div>
-  </div>
-  <div style="flex:1;border:1px solid #e2e8f0;border-radius:6px;padding:14px 16px;text-align:center">
-    <div style="font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Cachet et Signature MTS</div>
-    <div style="height:50px;display:flex;align-items:center;justify-content:center">
-      <div style="border:2px solid #1d4ed8;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0.7">
-        <div style="font-size:7px;font-weight:900;color:#1d4ed8;letter-spacing:0.5px;line-height:1.2;text-align:center">MAGHREB<br>TRANS<br>SOLUTIONS</div>
-      </div>
-    </div>
-    <div style="border-top:1px dashed #cbd5e1;padding-top:6px;font-size:8px;color:#94a3b8;margin-top:4px">Tanger, Maroc</div>
-  </div>
-</div>
+
 
 <!-- ===== PIED DE PAGE ===== -->
 <div style="border-top:2px solid #0f172a;padding-top:10px;display:flex;justify-content:space-between;align-items:center;margin-top:auto">
