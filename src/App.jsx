@@ -674,7 +674,13 @@ function MainApp({ onLogout, currentUser }) {
             onEdit={canEdit(currentUser) ? setEditingInvoice : null}
             onDelete={canEdit(currentUser) ? deleteInvoice : null}
             onDuplicate={canEdit(currentUser) ? duplicateInvoice : null}
-            onStatus={(id, s) => { setInvoices(invoices.map(i => i.id === id ? { ...i, status: s } : i)); notify("Statut mis à jour ✓"); }}
+            onStatus={(id, s) => {
+              const updated = invoices.map(i => i.id === id ? { ...i, status: s } : i);
+              setInvoices(updated);
+              const inv = updated.find(i => i.id === id);
+              if (inv) saveInvoiceToDB(inv);
+              notify("Statut mis à jour ✓");
+            }}
           />
         )}
 
@@ -694,6 +700,7 @@ function MainApp({ onLogout, currentUser }) {
               const updated = { ...selectedInvoice, status: s };
               setInvoices(invoices.map(i => i.id === selectedInvoice.id ? updated : i));
               setSelectedInvoice(updated);
+              saveInvoiceToDB(updated);
               notify("Statut mis à jour ✓");
             }}
           />
@@ -726,7 +733,13 @@ function MainApp({ onLogout, currentUser }) {
 
         {view === "paiements" && (
           <Paiements invoices={invoices} clients={clients} calcTotal={calcTotal}
-            onStatus={(id, s) => { setInvoices(invoices.map(i => i.id === id ? { ...i, status: s } : i)); notify("Paiement enregistré ✓"); }}
+            onStatus={(id, s) => {
+              const updated = invoices.map(i => i.id === id ? { ...i, status: s } : i);
+              setInvoices(updated);
+              const inv = updated.find(i => i.id === id);
+              if (inv) saveInvoiceToDB(inv);
+              notify("Paiement enregistré ✓");
+            }}
           />
         )}
 
