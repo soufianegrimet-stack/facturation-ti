@@ -54,11 +54,54 @@ async function sbFetch(path, options = {}, token = null) {
 const db = {
   getClients: () => sbFetch("clients?order=id"),
   getInvoices: () => sbFetch("invoices?order=id"),
-  upsertClient: (c) => sbFetch("clients", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(c) }),
-  upsertInvoice: (i) => sbFetch("invoices", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(i) }),
+  upsertClient: (c) => sbFetch("clients", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(cleanClient(c)) }),
+  upsertInvoice: (i) => sbFetch("invoices", { method: "POST", prefer: "resolution=merge-duplicates,return=representation", body: JSON.stringify(cleanInvoice(i)) }),
   deleteClient: (id) => sbFetch(`clients?id=eq.${id}`, { method: "DELETE" }),
   deleteInvoice: (id) => sbFetch(`invoices?id=eq.${id}`, { method: "DELETE" }),
 };
+
+// ─── NETTOYAGE AVANT ENVOI SUPABASE ──────────────────────────────────────────
+// Garde uniquement les colonnes qui existent dans la table Supabase
+function cleanInvoice(inv) {
+  return {
+    id: inv.id,
+    clientId: inv.clientId,
+    date: inv.date,
+    echeance: inv.echeance || null,
+    status: inv.status,
+    lignes: (inv.lignes || []).map(l => ({
+      desc: l.desc || "",
+      qte: l.qte || 1,
+      pu: l.pu || 0,
+      tva: l.tva !== undefined ? l.tva : 20,
+      dateOp: l.dateOp || null,
+      refClient: l.refClient || null,
+      matricule: l.matricule || null,
+    })),
+    notes: inv.notes || null,
+    tva: inv.tva || false,
+    devise: inv.devise || "MAD",
+    refClient: inv.refClient || null,
+    refMTS: inv.refMTS || null,
+    paiements: inv.paiements || null,
+    cree: inv.cree || null,
+    modifie: inv.modifie || null,
+  };
+}
+
+function cleanClient(c) {
+  return {
+    id: c.id,
+    nom: c.nom || "",
+    email: c.email || null,
+    tel: c.tel || null,
+    ville: c.ville || null,
+    rc: c.rc || null,
+    ice: c.ice || null,
+    if_num: c.if_num || null,
+    adresse: c.adresse || null,
+  };
+}
 
 // ─── PERMISSIONS ──────────────────────────────────────────────────────────────
 // role: "gerant" = accès total / "facturation" = accès complet aussi
@@ -281,30 +324,9 @@ function MainApp({ onLogout, currentUser }) {
   }
 
   async function saveInvoiceToDB(inv) {
-    // Garder uniquement les colonnes qui existent dans Supabase
-    const clean = {
-      id: inv.id,
-      clientId: inv.clientId,
-      date: inv.date,
-      echeance: inv.echeance,
-      status: inv.status,
-      lignes: (inv.lignes || []).map(l => ({ desc: l.desc||"", qte: l.qte||1, pu: l.pu||0, tva: l.tva!==undefined?l.tva:20, dateOp: l.dateOp||null, refClient: l.refClient||null, matricule: l.matricule||null })),
-      notes: inv.notes,
-      tva: inv.tva,
-      devise: inv.devise,
-      refClient: inv.refClient || null,
-      refMTS: inv.refMTS || null,
-      paiements: inv.paiements || null,
-      cree: inv.cree || null,
-      modifie: inv.modifie || null,
-    };
-    // Supprimer les champs transport_* qui n'existent pas dans Supabase
-    delete clean.transport_matricule; delete clean.transport_dum;
-    delete clean.transport_expdest; delete clean.transport_date_dechargement;
-    delete clean.transport_marchandise; delete clean.transport_nb_colis;
-    delete clean.transport_dossier; delete clean.transport_poids;
+    // cleanInvoice() est appliqué dans db.upsertInvoice — pas de champs parasites
     try {
-      await db.upsertInvoice(clean);
+      await db.upsertInvoice(inv);
       console.log("✅ Facture sauvegardée Supabase:", inv.id);
     } catch(e) {
       console.error("❌ Erreur sauvegarde Supabase:", e.message);
@@ -743,7 +765,7 @@ function Dashboard({ invoices, clients, calcTotal, onViewInvoice, onGoto, curren
     setMigrating(true);
     try {
       for (const c of clients) await db.upsertClient(c);
-      for (const inv of invoices) await db.upsertInvoice(inv);
+      for (const inv of invoices) await db.upsertInvoice(inv); // cleanInvoice() et cleanClient() appliqués automatiquement
       localStorage.setItem("mts_migrated", "1");
       setMigrated(true);
       alert("✅ Migration réussie ! Vos données sont sécurisées sur Supabase.");
@@ -1525,96 +1547,136 @@ function InvoiceForm({ inv, clients, onSave, onCancel }) {
         </div>
 
         <div style={S.formCard}>
-          <h3 style={S.formSec}>🚛 Informations de transport <span style={{ fontSize:12, fontWeight:400, color:"#94a3b8" }}>(optionnel)</span></h3>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 16px" }}>
+          <h3 style={{ ...S.formSec, marginBottom:10 }}>🚛 Transport <span style={{ fontSize:11, fontWeight:400, color:"#94a3b8" }}>(optionnel)</span></h3>
+          {/* Ligne 1 : Matricule · DUM · Exp/Dest */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"0 12px", marginBottom:0 }}>
             {[
               ["transport_matricule","Matricule"],
               ["transport_dum","DUM N°"],
               ["transport_expdest","Exp / Dest"],
-              ["transport_date_dechargement","Date de déchargement","date"],
+            ].map(([k,label]) => (
+              <div key={k}>
+                <label style={{ ...S.label, marginTop:6 }}>{label}</label>
+                <input style={{ ...S.input, fontSize:12, padding:"6px 10px" }} value={form[k]||""} onChange={e => set(k, e.target.value)} placeholder="—" />
+              </div>
+            ))}
+          </div>
+          {/* Ligne 2 : Date déchargement · Marchandise · Colis */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"0 12px", marginBottom:0 }}>
+            {[
+              ["transport_date_dechargement","Date déchargement","date"],
               ["transport_marchandise","Marchandise"],
               ["transport_nb_colis","Nbre Colis","number"],
-              ["transport_dossier","N° Dossier"],
-              ["transport_poids","Poids Brut"],
             ].map(([k,label,type]) => (
               <div key={k}>
-                <label style={S.label}>{label}</label>
-                <input style={S.input} type={type||"text"} value={form[k]||""} onChange={e => set(k, e.target.value)} placeholder="—" />
+                <label style={{ ...S.label, marginTop:6 }}>{label}</label>
+                <input style={{ ...S.input, fontSize:12, padding:"6px 10px" }} type={type||"text"} value={form[k]||""} onChange={e => set(k, e.target.value)} placeholder="—" />
+              </div>
+            ))}
+          </div>
+          {/* Ligne 3 : N° Dossier · Poids */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0 12px" }}>
+            {[
+              ["transport_dossier","N° Dossier"],
+              ["transport_poids","Poids Brut"],
+            ].map(([k,label]) => (
+              <div key={k}>
+                <label style={{ ...S.label, marginTop:6 }}>{label}</label>
+                <input style={{ ...S.input, fontSize:12, padding:"6px 10px" }} value={form[k]||""} onChange={e => set(k, e.target.value)} placeholder="—" />
               </div>
             ))}
           </div>
         </div>
 
-        <div style={S.formCard}>
-          <h3 style={S.formSec}>Lignes de facturation</h3>
-          {form.lignes.map((l, i) => (
-            <div key={i} style={{ marginBottom:14, background:"#fff", borderRadius:10, border:"1.5px solid #e2e8f0", boxShadow:"0 1px 4px rgba(0,0,0,0.05)", overflow:"hidden" }}>
-              {/* En-tête ligne */}
-              <div style={{ background:"#f1f5f9", padding:"8px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", borderBottom:"1px solid #e2e8f0" }}>
-                <span style={{ fontSize:12, fontWeight:700, color:"#475569" }}>Ligne {i+1}</span>
-                {form.lignes.length > 1 && <button style={{ ...S.iconBtn, background:"#fee2e2", color:"#ef4444", border:"none", borderRadius:6, padding:"2px 8px", fontSize:12, cursor:"pointer" }} onClick={() => setForm(f => ({ ...f, lignes: f.lignes.filter((_,j) => j!==i) }))}>✕ Supprimer</button>}
-              </div>
-              <div style={{ padding:"12px 14px" }}>
-                {/* Description — pleine largeur */}
-                <div style={{ marginBottom:10 }}>
-                  <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>📝 Description</label>
-                  <input style={{ ...S.input, width:"100%", fontSize:14, padding:"10px 12px" }} placeholder="Ex: TRANSPORT CUNHA - CASA-TEMARA" value={l.desc} onChange={e => setL(i,"desc",e.target.value)} />
-                </div>
-                {/* Qté / Prix / TVA / Total sur une ligne */}
-                <div style={{ display:"grid", gridTemplateColumns:"1fr 2fr 1fr 1fr", gap:10, marginBottom:10 }}>
-                  <div>
-                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Qté</label>
-                    <input style={{ ...S.input, width:"100%", textAlign:"center", fontSize:14, padding:"10px 8px" }} type="number" min="1" value={l.qte} onChange={e => setL(i,"qte",e.target.value)} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Prix unitaire HT</label>
-                    <input style={{ ...S.input, width:"100%", textAlign:"right", fontSize:14, padding:"10px 12px" }} type="number" min="0" placeholder="0.00" value={l.pu} onChange={e => setL(i,"pu",e.target.value)} />
-                  </div>
-                  <div>
-                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>TVA</label>
-                    <select style={{ ...S.input, width:"100%", textAlign:"center", fontSize:14, padding:"10px 8px" }} value={l.tva !== undefined ? l.tva : 20} onChange={e => setL(i,"tva",Number(e.target.value))}>
+        <div style={{ ...S.formCard, gridColumn: "1 / -1" }}>
+          {/* ── EN-TÊTE TABLE ── */}
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
+            <h3 style={{ ...S.formSec, margin:0 }}>Lignes de facturation</h3>
+            <button style={{ ...S.primaryBtn, fontSize:12, padding:"5px 14px" }} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0, tva:20, dateOp:"", refClient:"", matricule:"" }] }))}>+ Ligne</button>
+          </div>
+
+          {/* ── HEADER COLONNES ── */}
+          <div style={{ display:"grid", gridTemplateColumns:"38px 1fr 70px 130px 80px 110px 28px", gap:"0 6px", padding:"5px 8px", background:"#f1f5f9", borderRadius:"8px 8px 0 0", border:"1.5px solid #e2e8f0", borderBottom:"none" }}>
+            {["#","Description","Qté","Prix HT","TVA","Total HT",""].map((h,idx) => (
+              <div key={idx} style={{ fontSize:10, fontWeight:700, color:"#64748b", textTransform:"uppercase", letterSpacing:"0.5px", textAlign: idx>=2 ? "center" : "left", padding:"2px 0" }}>{h}</div>
+            ))}
+          </div>
+
+          {/* ── LIGNES ── */}
+          <div style={{ border:"1.5px solid #e2e8f0", borderTop:"none", borderRadius:"0 0 8px 8px", overflow:"hidden" }}>
+            {form.lignes.map((l, i) => {
+              const lineHT = (Number(l.qte)||0)*(Number(l.pu)||0);
+              const tvaTaux = l.tva !== undefined ? Number(l.tva) : 20;
+              return (
+                <div key={i}>
+                  {/* Ligne principale */}
+                  <div style={{ display:"grid", gridTemplateColumns:"38px 1fr 70px 130px 80px 110px 28px", gap:"0 6px", padding:"5px 8px", background: i%2===0 ? "#fff" : "#fafafa", alignItems:"center", borderBottom:"1px solid #f1f5f9" }}>
+                    {/* Numéro */}
+                    <div style={{ fontSize:11, fontWeight:700, color:"#94a3b8", textAlign:"center" }}>{i+1}</div>
+                    {/* Description */}
+                    <input
+                      style={{ ...S.input, marginBottom:0, fontSize:13, padding:"6px 10px", width:"100%" }}
+                      placeholder="Ex: TRANSPORT CUNHA - CASA-TEMARA"
+                      value={l.desc}
+                      onChange={e => setL(i,"desc",e.target.value)}
+                    />
+                    {/* Qté */}
+                    <input
+                      style={{ ...S.input, marginBottom:0, fontSize:13, padding:"6px 6px", textAlign:"center", width:"100%" }}
+                      type="number" min="1"
+                      value={l.qte}
+                      onChange={e => setL(i,"qte",e.target.value)}
+                    />
+                    {/* Prix HT */}
+                    <input
+                      style={{ ...S.input, marginBottom:0, fontSize:13, padding:"6px 10px", textAlign:"right", width:"100%" }}
+                      type="number" min="0" placeholder="0.00"
+                      value={l.pu}
+                      onChange={e => setL(i,"pu",e.target.value)}
+                    />
+                    {/* TVA */}
+                    <select
+                      style={{ ...S.input, marginBottom:0, fontSize:13, padding:"6px 4px", width:"100%" }}
+                      value={tvaTaux}
+                      onChange={e => setL(i,"tva",Number(e.target.value))}
+                    >
                       <option value={0}>0%</option>
                       <option value={7}>7%</option>
                       <option value={10}>10%</option>
                       <option value={14}>14%</option>
                       <option value={20}>20%</option>
                     </select>
+                    {/* Total HT */}
+                    <div style={{ fontSize:13, fontWeight:800, color:"#15803d", textAlign:"right", padding:"6px 4px", background:"#f0fdf4", borderRadius:6 }}>
+                      {lineHT > 0 ? lineHT.toLocaleString("fr-FR",{minimumFractionDigits:2}) : "—"}
+                    </div>
+                    {/* Supprimer */}
+                    {form.lignes.length > 1
+                      ? <button style={{ border:"none", background:"none", color:"#ef4444", cursor:"pointer", fontSize:14, padding:"2px", borderRadius:4 }} onClick={() => setForm(f => ({ ...f, lignes: f.lignes.filter((_,j) => j!==i) }))} title="Supprimer">✕</button>
+                      : <div />
+                    }
                   </div>
-                  <div>
-                    <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>Total HT</label>
-                    <div style={{ ...S.input, width:"100%", background:"#f0fdf4", textAlign:"right", fontSize:14, fontWeight:800, color:"#15803d", padding:"10px 12px", display:"flex", alignItems:"center", justifyContent:"flex-end" }}>
-                      {formatMoney((Number(l.qte)||0)*(Number(l.pu)||0), form.devise)}
+                  {/* Sous-ligne transport — compacte, sur une seule rangée */}
+                  <div style={{ display:"grid", gridTemplateColumns:"38px 1fr 1fr 1fr", gap:"0 6px", padding:"4px 8px 6px", background: i%2===0 ? "#fafcff" : "#f5f7fa", borderBottom:"1px solid #e2e8f0" }}>
+                    <div />
+                    <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+                      <span style={{ fontSize:10, color:"#94a3b8", whiteSpace:"nowrap", flexShrink:0 }}>📅 Date op.</span>
+                      <input style={{ ...S.input, marginBottom:0, fontSize:12, padding:"4px 8px", flex:1 }} placeholder="05/12/2025" value={l.dateOp||""} onChange={e => setL(i,"dateOp",e.target.value)} />
+                    </div>
+                    <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+                      <span style={{ fontSize:10, color:"#94a3b8", whiteSpace:"nowrap", flexShrink:0 }}>🔖 Réf.</span>
+                      <input style={{ ...S.input, marginBottom:0, fontSize:12, padding:"4px 8px", flex:1 }} placeholder="9816338" value={l.refClient||""} onChange={e => setL(i,"refClient",e.target.value)} />
+                    </div>
+                    <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+                      <span style={{ fontSize:10, color:"#94a3b8", whiteSpace:"nowrap", flexShrink:0 }}>🚛 Matr.</span>
+                      <input style={{ ...S.input, marginBottom:0, fontSize:12, padding:"4px 8px", flex:1 }} placeholder="159011//28513A68" value={l.matricule||""} onChange={e => setL(i,"matricule",e.target.value)} />
                     </div>
                   </div>
                 </div>
-                {/* Champs optionnels transport */}
-                <div style={{ background:"#f8fafc", borderRadius:8, border:"1px dashed #cbd5e1", padding:"10px 12px" }}>
-                  <div style={{ fontSize:11, fontWeight:700, color:"#94a3b8", marginBottom:8, textTransform:"uppercase", letterSpacing:"0.5px" }}>🚛 Informations transport (optionnel)</div>
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
-                    <div>
-                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>📅 Date opération</label>
-                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="05/12/2025" value={l.dateOp||""} onChange={e => setL(i,"dateOp",e.target.value)} />
-                    </div>
-                    <div>
-                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>🔖 Réf. client</label>
-                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="9816338" value={l.refClient||""} onChange={e => setL(i,"refClient",e.target.value)} />
-                    </div>
-                    <div>
-                      <label style={{ fontSize:11, fontWeight:600, color:"#64748b", display:"block", marginBottom:4 }}>🚛 Matricule remorque</label>
-                      <input style={{ ...S.input, width:"100%", fontSize:13, padding:"8px 10px" }} placeholder="159011//28513A68" value={l.matricule||""} onChange={e => setL(i,"matricule",e.target.value)} />
-                    </div>
-                  </div>
-                  {/* Aperçu */}
-                  {(l.dateOp||l.refClient||l.matricule) && (
-                    <div style={{ marginTop:8, fontSize:11, color:"#1e40af", background:"#eff6ff", borderRadius:6, padding:"6px 10px", fontStyle:"italic" }}>
-                      📄 <strong>Aperçu sur facture :</strong> {[l.dateOp, l.refClient, l.matricule, l.desc].filter(Boolean).join(" - ")}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-          <button style={S.addLineBtn} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0, tva:20, dateOp:"", refClient:"", matricule:"" }] }))}>+ Ajouter une ligne</button>
+              );
+            })}
+          </div>
+          <button style={{ ...S.addLineBtn, marginTop:8 }} onClick={() => setForm(f => ({ ...f, lignes: [...f.lignes, { desc:"", qte:1, pu:0, tva:20, dateOp:"", refClient:"", matricule:"" }] }))}>+ Ajouter une ligne</button>
           <div style={{ marginTop:16, borderTop:"2px solid #e2e8f0", paddingTop:12 }}>
             <div style={{ display:"flex", alignItems:"center", gap:10, margin:"12px 0 4px", padding:"10px 14px", background:"#f8fafc", borderRadius:8, border:"1.5px solid #e2e8f0" }}>
               <span style={{ fontSize:14, fontWeight:600, color:"#0f172a", flex:1 }}>💱 Devise</span>
@@ -2185,7 +2247,7 @@ const S = {
   iconBtn:    { border:"none", background:"none", fontSize:15, cursor:"pointer", padding:"4px 6px", borderRadius:6 },
   input:      { width:"100%", padding:"9px 11px", borderRadius:8, border:"1.5px solid #e2e8f0", fontSize:13, color:"#0f172a", background:"#fff", boxSizing:"border-box", outline:"none", marginBottom:2 },
   label:      { display:"block", fontSize:11, fontWeight:600, color:"#64748b", textTransform:"uppercase", letterSpacing:.5, marginBottom:4, marginTop:12 },
-  formGrid:   { display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:20, alignItems:"start" },
+  formGrid:   { display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:16, alignItems:"start" },
   formCard:   { background:"#fff", borderRadius:12, padding:22, boxShadow:"0 1px 4px rgba(0,0,0,.07)" },
   formSec:    { fontSize:15, fontWeight:700, color:"#0f172a", margin:"0 0 16px" },
   addLineBtn: { marginTop:8, padding:"8px 14px", borderRadius:8, border:"1.5px dashed #cbd5e1", background:"#f8fafc", color:"#64748b", fontSize:12, cursor:"pointer", width:"100%" },
