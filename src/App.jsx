@@ -1231,7 +1231,7 @@ function InvoiceDetail({ inv, clients, calcTotal, calcHT, canEdit, onEdit, onDel
 
   <!-- Logo + coordonnées émetteur -->
   <div style="flex:1">
-    <img src="${logoSrc}" alt="MTS" style="height:68px;max-width:260px;object-fit:contain;display:block;margin-bottom:6px">
+    <img src="${logoSrc}" alt="MTS" style="height:68px;max-width:260px;object-fit:contain;display:block;margin-bottom:6px;mix-blend-mode:multiply">
     <div style="font-size:9.5px;color:#475569;line-height:1.85">
       <div>29 Rue Amr Ibn Ass, 3ème Étg N°2 — Tanger 90000, Maroc</div>
       <div>Tél : +212 669 60 86 53 &nbsp;|&nbsp; facturation@maghrebtranssolutions.com</div>
@@ -1407,7 +1407,7 @@ facturation@maghrebtranssolutions.com`
       <div id="invoice-print" style={S.invPrint}>
         <div style={S.invHdr}>
           <div>
-            <img src={LOGO_B64} alt="MTS" style={{ height:52, maxWidth:200, objectFit:"contain", marginBottom:6, display:"block" }} />
+            <img src={LOGO_B64} alt="MTS" style={{ height:52, maxWidth:200, objectFit:"contain", marginBottom:6, display:"block", mixBlendMode:"multiply" }} />
             <div style={{ fontWeight:800, fontSize:15, color:"#0f172a" }}>MAGHREB TRANS SOLUTIONS SARL</div>
             <div style={{ color:"#64748b", fontSize:11, marginTop:2 }}>29 Rue Amr Ibn Ass 3ème Étg N°2, Tanger 90000</div>
             <div style={{ color:"#64748b", fontSize:11, marginTop:1 }}>Tél: +212 669 60 86 53</div>
