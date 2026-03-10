@@ -31,21 +31,53 @@ const sbAuth = {
   }
 };
 
+async function refreshToken() {
+  const refreshTk = sessionStorage.getItem("mts_refresh");
+  if (!refreshTk) throw new Error("Session expirée, veuillez vous reconnecter.");
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+    method: "POST",
+    headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify({ refresh_token: refreshTk })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error("Session expirée, veuillez vous reconnecter.");
+  sessionStorage.setItem("mts_token", data.access_token);
+  if (data.refresh_token) sessionStorage.setItem("mts_refresh", data.refresh_token);
+  return data.access_token;
+}
+
 async function sbFetch(path, options = {}, token = null) {
   const authToken = token || sessionStorage.getItem("mts_token") || SUPABASE_KEY;
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+  const doFetch = (tk) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: {
       "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${authToken}`,
+      "Authorization": `Bearer ${tk}`,
       "Content-Type": "application/json",
       "Prefer": options.prefer || "return=representation",
     },
     method: options.method || "GET",
     body: options.body
   });
+
+  let res = await doFetch(authToken);
+
+  // JWT expiré → on rafraîchit et on réessaie une fois
   if (!res.ok) {
-    const err = await res.text();
-    throw new Error(err);
+    const errText = await res.text();
+    if (errText.includes("JWT") || errText.includes("expired") || res.status === 401) {
+      try {
+        const newToken = await refreshToken();
+        res = await doFetch(newToken);
+        if (!res.ok) {
+          const err2 = await res.text();
+          throw new Error(err2);
+        }
+      } catch(e) {
+        throw new Error(e.message);
+      }
+    } else {
+      throw new Error(errText);
+    }
   }
   const text = await res.text();
   return text ? JSON.parse(text) : [];
