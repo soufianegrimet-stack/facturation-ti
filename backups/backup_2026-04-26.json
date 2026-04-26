@@ -1,0 +1,4111 @@
+{
+  "date_backup": "2026-04-26",
+  "nb_factures": 86,
+  "nb_clients": 13,
+  "invoices": [
+    {
+      "id": "FAC-2026-0001",
+      "clientId": "C001",
+      "date": "2026-01-01",
+      "echeance": "2026-01-31",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 700,
+          "qte": 1,
+          "tva": 0,
+          "desc": "MANAGING TRAILERS IN ALGECIRAS",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Arrêtée la présente facture à la somme de : SEPT CENT EURO",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-10T13:26:00.698Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:26.611977+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0002",
+      "clientId": "C002",
+      "date": "2026-01-05",
+      "echeance": "2026-03-03",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": "17000",
+          "qte": 1,
+          "desc": "TRANSPORT INTERNATIONALE KENITRA - VALLADOLID"
+        }
+      ],
+      "notes": "",
+      "tva": false,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-08T17:14:47.377Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:26.732956+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0003",
+      "clientId": "C003",
+      "date": "2026-01-08",
+      "echeance": "2026-02-22",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": "17000",
+          "qte": 1,
+          "desc": "TRANSPORT INTERNATIONAL LEONI BOUSKOURA-LEONI VIGO"
+        }
+      ],
+      "notes": "",
+      "tva": false,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-08T17:24:14.526Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:26.83109+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0004",
+      "clientId": "C001",
+      "date": "2026-01-09",
+      "echeance": "2026-02-08",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 1515,
+          "qte": 1,
+          "tva": 0,
+          "desc": "TRANSPORT CUNHA-TEMARA",
+          "dateOp": "05/12/2025",
+          "matricule": " 159011",
+          "refClient": "9816338"
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 0,
+          "desc": " TRANSPORT TINTOJAL-TEMARA",
+          "dateOp": "18/12/2025",
+          "matricule": "147908",
+          "refClient": "9816561 "
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 0,
+          "desc": " TRANSPORT CUNHA-TEMARA",
+          "dateOp": "19/12/2025",
+          "matricule": "159011",
+          "refClient": "9816639"
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 0,
+          "desc": "TRANSPORT CUNHA- TEMARA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 0,
+          "desc": "TRANSPORT NOGUEIRA-SALE",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-09T13:45:41.568Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:26.933664+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0005",
+      "clientId": "C001",
+      "date": "2026-01-09",
+      "echeance": "2026-02-08",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": "118.01",
+          "qte": 1,
+          "tva": 0,
+          "desc": "BALEARIA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": "220",
+          "qte": 1,
+          "tva": 0,
+          "desc": "PARKING",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": "237.13",
+          "qte": 1,
+          "tva": 0,
+          "desc": "CONTENTIEUX TRYPTIQUE",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": "14",
+          "qte": 1,
+          "tva": 0,
+          "desc": "INFRACTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": "60",
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION REF IBRF 9816337 ",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 0,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-08T21:14:29.612Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:27.041575+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0006",
+      "clientId": "C003",
+      "date": "2026-01-12",
+      "echeance": "2026-02-26",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.163136+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0007",
+      "clientId": "C001",
+      "date": "2026-01-15",
+      "echeance": "2026-03-16",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.262773+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0008",
+      "clientId": "C004",
+      "date": "2026-01-15",
+      "echeance": "2026-03-16",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.367748+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0009",
+      "clientId": "C002",
+      "date": "2026-01-15",
+      "echeance": "2026-02-14",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.471922+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0010",
+      "clientId": "C002",
+      "date": "2026-01-15",
+      "echeance": "2026-02-14",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.579313+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0011",
+      "clientId": "C002",
+      "date": "2026-01-19",
+      "echeance": "2026-02-18",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.677808+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0012",
+      "clientId": "C002",
+      "date": "2026-01-19",
+      "echeance": "2026-02-18",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.78311+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0013",
+      "clientId": "C003",
+      "date": "2026-01-19",
+      "echeance": "2026-03-05",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:27.910916+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0014",
+      "clientId": "C003",
+      "date": "2026-01-23",
+      "echeance": "2026-03-09",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.026482+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0015",
+      "clientId": "C002",
+      "date": "2026-01-26",
+      "echeance": "2026-02-25",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.136298+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0016",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "tva": 0,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "tva": 0,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": {
+        "le": "2026-03-08T21:37:04.462Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-08T16:23:28.249336+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0017",
+      "clientId": "C006",
+      "date": "2026-01-27",
+      "echeance": "2026-02-26",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2244.48,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 89.7792,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.359271+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0018",
+      "clientId": "C007",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 262.01,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 10.4804,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.477236+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0019",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2088.86,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 83.5544,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.581108+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0020",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2376.36,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 95.0544,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.689704+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0021",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2092.9,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 83.716,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.797449+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0022",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2325.76,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 93.0304,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:28.907552+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0023",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.012416+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0024",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.116256+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0025",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.217101+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0026",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 1308.66,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 52.3464,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.319243+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0027",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2319.85,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 92.794,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.432547+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0028",
+      "clientId": "C005",
+      "date": "2026-01-27",
+      "echeance": "2026-02-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.545035+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0029",
+      "clientId": "C003",
+      "date": "2026-01-27",
+      "echeance": "2026-03-13",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.668226+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0030",
+      "clientId": "C008",
+      "date": "2026-01-29",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.76917+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0031",
+      "clientId": "C005",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 1183.13,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 47.3252,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 100,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.874047+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0032",
+      "clientId": "C009",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 242.97,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 9.7188,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 100,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:29.985306+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0033",
+      "clientId": "C010",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 191.15,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 7.646,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 100,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.086036+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0034",
+      "clientId": "C011",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 196.53,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 7.8612,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 100,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.187185+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0035",
+      "clientId": "C005",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.293106+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0036",
+      "clientId": "C005",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 1991.42,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 79.6568,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.409398+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0037",
+      "clientId": "C005",
+      "date": "2026-01-30",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.515706+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0038",
+      "clientId": "C001",
+      "date": "2026-01-30",
+      "echeance": "2026-03-01",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 1530,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT CUNHA-TINTOJAL-TEMARA-CASA x2",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT TINTOJAL-TEMARA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1515,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT IBERFASHION-TEMARA-CASA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1600,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT IBERFASHION- CASA-SALE",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.616023+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0039",
+      "clientId": "C001",
+      "date": "2026-01-30",
+      "echeance": "2026-03-01",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "BALEARIA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "PARKING",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "CONTENTIEUX TRYPTIQUE",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Arrêtée la présente facture à la somme de : TROIS MILLE NEUF CENT SIX EURO ET QUARANTE CENTIMES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.717827+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0041",
+      "clientId": "C005",
+      "date": "2026-01-31",
+      "echeance": "2026-02-28",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2350.48,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 94.0192,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.963874+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0042",
+      "clientId": "C003",
+      "date": "2026-01-31",
+      "echeance": "2026-03-17",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.089343+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0043",
+      "clientId": "C003",
+      "date": "2026-01-31",
+      "echeance": "2026-03-17",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.195908+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0044",
+      "clientId": "C002",
+      "date": "2026-01-31",
+      "echeance": "2026-02-01",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.301989+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0045",
+      "clientId": "C002",
+      "date": "2026-01-31",
+      "echeance": "2026-02-02",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.400536+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0046",
+      "clientId": "C002",
+      "date": "2026-02-06",
+      "echeance": "2026-03-08",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:30.862237+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0047",
+      "clientId": "C003",
+      "date": "2026-02-09",
+      "echeance": "2026-03-26",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.606034+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0048",
+      "clientId": "C003",
+      "date": "2026-02-10",
+      "echeance": "2026-03-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.711031+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0049",
+      "clientId": "C003",
+      "date": "2026-02-10",
+      "echeance": "2026-03-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.812071+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0050",
+      "clientId": "C003",
+      "date": "2026-02-10",
+      "echeance": "2026-03-27",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:31.913921+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0051",
+      "clientId": "C001",
+      "date": "2026-02-13",
+      "echeance": "2026-04-14",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.032771+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0052",
+      "clientId": "C008",
+      "date": "2026-02-13",
+      "echeance": "2026-03-15",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.135708+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0053",
+      "clientId": "C003",
+      "date": "2026-02-13",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.234962+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0054",
+      "clientId": "C001",
+      "date": "2026-02-16",
+      "echeance": "2026-04-17",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.340734+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0055",
+      "clientId": "C003",
+      "date": "2026-02-17",
+      "echeance": "2026-04-03",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.452165+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0056",
+      "clientId": "C005",
+      "date": "2026-02-18",
+      "echeance": "2026-03-18",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2307.12,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 92.2848,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.555542+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0057",
+      "clientId": "C005",
+      "date": "2026-02-18",
+      "echeance": "2026-03-18",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.656399+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0058",
+      "clientId": "C005",
+      "date": "2026-02-18",
+      "echeance": "2026-03-18",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.755743+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0059",
+      "clientId": "C003",
+      "date": "2026-02-19",
+      "echeance": "2026-04-05",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:32.860455+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0060",
+      "clientId": "C001",
+      "date": "2026-02-20",
+      "echeance": "2026-03-22",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 3045.975946,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Paiement en faveur de Administration des Douanes et Impôts Indirects",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.069608+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0061",
+      "clientId": "C003",
+      "date": "2026-02-23",
+      "echeance": "2026-04-09",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.186423+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0062",
+      "clientId": "C012",
+      "date": "2026-02-23",
+      "echeance": "2026-03-25",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.295078+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0063",
+      "clientId": "C008",
+      "date": "2026-02-13",
+      "echeance": "2026-03-15",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.456505+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0064",
+      "clientId": "C002",
+      "date": "2026-02-23",
+      "echeance": "2026-03-25",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.689196+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0065",
+      "clientId": "C003",
+      "date": "2026-02-24",
+      "echeance": "2026-04-10",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.807788+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0066",
+      "clientId": "C001",
+      "date": "2026-02-25",
+      "echeance": "2026-04-26",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:33.924754+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0067",
+      "clientId": "C001",
+      "date": "2026-02-26",
+      "echeance": "2026-04-27",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.041294+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0068",
+      "clientId": "C003",
+      "date": "2026-02-26",
+      "echeance": "2026-04-12",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.16202+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0069",
+      "clientId": "C001",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 700,
+          "qte": 1,
+          "tva": 20,
+          "desc": "MANAGING TRAILERS IN ALGECIRAS",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Arrêtée la présente facture à la somme de : SEPT CENT EURO",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.282164+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0070",
+      "clientId": "C001",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "BALEARIA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "PARKING",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INFRACTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "INTERVENTION",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.4017+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0071",
+      "clientId": "C001",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "compensated",
+      "lignes": [
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT CUNHA-TEMARA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        },
+        {
+          "pu": 1500,
+          "qte": 1,
+          "tva": 20,
+          "desc": "TRANSPORT FAFE-MEKNES",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": false,
+      "devise": "EUR",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.512607+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0072",
+      "clientId": "C001",
+      "date": "2026-02-28",
+      "echeance": "2026-04-29",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "tva": 20,
+          "desc": "Prestation de transport",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.625273+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0073",
+      "clientId": "C003",
+      "date": "2026-02-28",
+      "echeance": "2026-04-14",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.734091+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0074",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.866248+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0075",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2265.52,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 90.6208,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:34.985163+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0076",
+      "clientId": "C006",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 1989.63,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 79.5852,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.088391+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0077",
+      "clientId": "C007",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 527.77,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 21.1108,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.197649+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0078",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.300568+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0079",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2310.81,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 92.4324,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.41651+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0080",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.536927+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0081",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.643804+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0082",
+      "clientId": "C006",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 1618.92,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 64.7568,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.754361+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0083",
+      "clientId": "C013",
+      "date": "2026-02-28",
+      "echeance": "2026-03-30",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 898.48,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 35.9392,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.86809+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0084",
+      "clientId": "C005",
+      "date": "2026-02-28",
+      "echeance": "2026-03-02",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 2294.25,
+          "qte": 1,
+          "desc": "TMSA"
+        },
+        {
+          "pu": 91.77,
+          "qte": 1,
+          "desc": "TAX REGIONAL"
+        },
+        {
+          "pu": 200,
+          "qte": 1,
+          "desc": "FRAIS INTERVENTION"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:35.983139+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-0085",
+      "clientId": "C003",
+      "date": "2026-02-28",
+      "echeance": "2026-04-14",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": 0,
+          "qte": 1,
+          "desc": "Prestation de transport"
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": null,
+      "modifie": null,
+      "created_at": "2026-03-08T16:23:36.136141+00:00",
+      "refClient": null,
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-086",
+      "clientId": "C003",
+      "date": "2026-03-09",
+      "echeance": "2026-04-24",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": "18683.96",
+          "qte": 1,
+          "tva": 0,
+          "desc": "TRANSPORT LEONI BOUSKOURA-LEONI MAVIVA +LV",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": "",
+      "tva": true,
+      "devise": "MAD",
+      "cree": {
+        "le": "2026-03-09T14:57:14.877Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "modifie": {
+        "le": "2026-03-10T12:14:33.460Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "created_at": "2026-03-09T14:57:15.485072+00:00",
+      "refClient": "42IMM23781",
+      "refMTS": null,
+      "paiements": null
+    },
+    {
+      "id": "FAC-2026-087",
+      "clientId": "C003",
+      "date": "2026-03-09",
+      "echeance": "2026-04-23",
+      "status": "sent",
+      "lignes": [
+        {
+          "pu": "17000",
+          "qte": 1,
+          "tva": 0,
+          "desc": "TRANSPORT INTERNATIONAL LEONI BOUSKOURA - LEONI MAVIVA",
+          "dateOp": null,
+          "matricule": null,
+          "refClient": null
+        }
+      ],
+      "notes": null,
+      "tva": true,
+      "devise": "MAD",
+      "cree": {
+        "le": "2026-03-10T12:32:58.484Z",
+        "par": {
+          "nom": "Soufiane Grimet",
+          "color": "#3b82f6",
+          "initiales": "SG"
+        }
+      },
+      "modifie": null,
+      "created_at": "2026-03-10T12:32:59.199496+00:00",
+      "refClient": "42IMM23781",
+      "refMTS": "EXP0042",
+      "paiements": null
+    }
+  ],
+  "clients": [
+    {
+      "id": "C001",
+      "nom": "IBERFASHION TRANSITÁRIOS E LOGÍSTICA, LDA. ",
+      "email": "",
+      "tel": "+351 25 284 35 70 / +351 25 284 35 71",
+      "ville": "Guimarães",
+      "rc": "",
+      "ice": "",
+      "if_num": "PT507544706",
+      "adresse": "Rua Casal de Ledoso 726 Selho (S. Jorge), Guimarães Portugal",
+      "created_at": "2026-03-08T16:23:24.979837+00:00"
+    },
+    {
+      "id": "C002",
+      "nom": "CHAIMAE CARGO",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "003782482000018",
+      "if_num": "",
+      "adresse": "Av Yacoub El Mansour 3eme Etg N 06- 90000 - Tanger-Médina (AR)",
+      "created_at": "2026-03-08T16:23:25.120025+00:00"
+    },
+    {
+      "id": "C003",
+      "nom": "Meyer & Meyer Mediam S.A.R.L.",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "001527245000055",
+      "if_num": "",
+      "adresse": "Zone Industrielle Mghogha Route de Tétouan Allée 2 Lot N°58 MA 90000 Tanger",
+      "created_at": "2026-03-08T16:23:25.245559+00:00"
+    },
+    {
+      "id": "C004",
+      "nom": "HITEK LOGISTIC MOROCCO ZDC",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "002109861000010",
+      "if_num": "",
+      "adresse": "Angle Boulevard Mohammed V et Victor Hugo, 8ème étage Bureau 41-42, Tanger",
+      "created_at": "2026-03-08T16:23:25.371633+00:00"
+    },
+    {
+      "id": "C005",
+      "nom": "HANADIL",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "001509171000046",
+      "if_num": "",
+      "adresse": "Lot 39 ZI Massira 1, Temara",
+      "created_at": "2026-03-08T16:23:25.504322+00:00"
+    },
+    {
+      "id": "C006",
+      "nom": "CRC PRODUCTION SARL",
+      "email": "",
+      "tel": "",
+      "ville": "Meknes",
+      "rc": "",
+      "ice": "002282447000068",
+      "if_num": "",
+      "adresse": "LO 100 ZI MEJJAT MEKNES",
+      "created_at": "2026-03-08T16:23:25.624346+00:00"
+    },
+    {
+      "id": "C007",
+      "nom": "CONFECTION SALSABILE",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "001528094000024",
+      "if_num": "",
+      "adresse": "zone ind. Al Majd , lot 826 90080 Tanger - Maroc.",
+      "created_at": "2026-03-08T16:23:25.740719+00:00"
+    },
+    {
+      "id": "C008",
+      "nom": "N LINE LOGISTIQUE",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "003237143000056",
+      "if_num": "",
+      "adresse": "07 Rue Irak Résidence Safa Etage 8 N°45, Tanger",
+      "created_at": "2026-03-08T16:23:25.858458+00:00"
+    },
+    {
+      "id": "C009",
+      "nom": "BABYSHIRT",
+      "email": "",
+      "tel": "",
+      "ville": "Casablanca",
+      "rc": "",
+      "ice": "000191045000051",
+      "if_num": "",
+      "adresse": "96 Zone Industrielle Ain Sebaa Chefchaouni KM 11.5, Casablanca",
+      "created_at": "2026-03-08T16:23:25.984535+00:00"
+    },
+    {
+      "id": "C010",
+      "nom": "GLIMMER",
+      "email": "",
+      "tel": "",
+      "ville": "Casablanca",
+      "rc": "",
+      "ice": "",
+      "if_num": "",
+      "adresse": "46 BD Zerktouni Etg 2 Apt 6, Casablanca",
+      "created_at": "2026-03-08T16:23:26.105165+00:00"
+    },
+    {
+      "id": "C011",
+      "nom": "VALERIUS MOROCCO",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "",
+      "if_num": "",
+      "adresse": "",
+      "created_at": "2026-03-08T16:23:26.223713+00:00"
+    },
+    {
+      "id": "C012",
+      "nom": "HCL TRANS",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "",
+      "if_num": "",
+      "adresse": "",
+      "created_at": "2026-03-08T16:23:26.331011+00:00"
+    },
+    {
+      "id": "C013",
+      "nom": "OKAT",
+      "email": "",
+      "tel": "",
+      "ville": "Tanger",
+      "rc": "",
+      "ice": "",
+      "if_num": "",
+      "adresse": "",
+      "created_at": "2026-03-08T16:23:26.44013+00:00"
+    }
+  ]
+}
